@@ -92,4 +92,6 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <Target Name="Publish" DependsOnTargets="Build">
+  </Target>
 </Project>
