@@ -1,0 +1,47 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{2CCA15D3-1DB8-4080-9A2C-60AF8F8CF1A2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application Services", "Application Services", "{C27080AB-E18A-4A91-9B1E-948476EE8F60}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{8B2D4C24-488F-4A0B-B95A-7A0A41FABF3E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{F05ED0D6-CE7B-4CD7-A44B-08AA8580D05D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sfa.Roatp.Indexer.UnitTests", "Sfa.Roatp.Indexer.UnitTests\Sfa.Roatp.Indexer.UnitTests.csproj", "{29420B8E-8A4D-409F-9743-12C7BE07BB9C}"
+EndProject
+Project("{CC5FD16D-436D-48AD-A40C-5A424C6E3E79}") = "Sfa.Roatp.Indexer.WorkerRole.CloudService", "Sfa.Roatp.Indexer.WorkerRole.CloudService\Sfa.Roatp.Indexer.WorkerRole.CloudService.ccproj", "{6866F830-ACF7-4C83-98DB-44C8AAEC6E8B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sfa.Roatp.Indexer.WorkerRole", "Sfa.Roatp.Indexer.WorkerRole\Sfa.Roatp.Indexer.WorkerRole.csproj", "{5DE5EF2A-13C7-4BF1-90F9-F4D0769E2176}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{29420B8E-8A4D-409F-9743-12C7BE07BB9C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29420B8E-8A4D-409F-9743-12C7BE07BB9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29420B8E-8A4D-409F-9743-12C7BE07BB9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29420B8E-8A4D-409F-9743-12C7BE07BB9C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6866F830-ACF7-4C83-98DB-44C8AAEC6E8B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6866F830-ACF7-4C83-98DB-44C8AAEC6E8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6866F830-ACF7-4C83-98DB-44C8AAEC6E8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6866F830-ACF7-4C83-98DB-44C8AAEC6E8B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5DE5EF2A-13C7-4BF1-90F9-F4D0769E2176}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5DE5EF2A-13C7-4BF1-90F9-F4D0769E2176}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5DE5EF2A-13C7-4BF1-90F9-F4D0769E2176}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5DE5EF2A-13C7-4BF1-90F9-F4D0769E2176}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{29420B8E-8A4D-409F-9743-12C7BE07BB9C} = {F05ED0D6-CE7B-4CD7-A44B-08AA8580D05D}
+		{6866F830-ACF7-4C83-98DB-44C8AAEC6E8B} = {8B2D4C24-488F-4A0B-B95A-7A0A41FABF3E}
+		{5DE5EF2A-13C7-4BF1-90F9-F4D0769E2176} = {8B2D4C24-488F-4A0B-B95A-7A0A41FABF3E}
+	EndGlobalSection
+EndGlobal
