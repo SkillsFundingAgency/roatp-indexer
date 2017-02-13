@@ -32,12 +32,12 @@
   </PropertyGroup>
   <!-- Items for the project -->
   <ItemGroup>
+    <ServiceConfiguration Include="ServiceConfiguration.Release.cscfg" />
     <ServiceDefinition Include="ServiceDefinition.csdef" />
+    <None Include="Configuration\ServiceDefinition.Release.csdef" />
+    <ServiceConfiguration Include="ServiceConfiguration.PreProd.cscfg" />
     <ServiceConfiguration Include="ServiceConfiguration.Local.cscfg" />
     <ServiceConfiguration Include="ServiceConfiguration.Cloud.cscfg" />
-	<Content Include="Transform.ServiceConfiguration.Cloud.config" />
-	<Content Include="Transform.ServiceConfiguration.LoadBalanced.config" />
-	<Content Include="Transform.ServiceDefinition.LoadBalanced.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Sfa.Roatp.Indexer.WorkerRole\Sfa.Roatp.Indexer.WorkerRole.csproj">
@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Sfa.Roatp.Indexer.WorkerRoleContent\" />
+    <Folder Include="Configuration\" />
   </ItemGroup>
   <ItemGroup>
     <DiagnosticsConfiguration Include="Sfa.Roatp.Indexer.WorkerRoleContent\diagnostics.wadcfgx" />
