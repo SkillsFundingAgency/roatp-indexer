@@ -1,14 +1,13 @@
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Diagnostics;
 using Microsoft.WindowsAzure.ServiceRuntime;
-using Microsoft.WindowsAzure.Storage;
+using Sfa.Roatp.Indexer.WorkerRole.DependencyResolution;
+using Sfa.Roatp.Indexer.WorkerRole.Settings;
+using Sfa.Roatp.Registry.Core.Logging;
+using StructureMap;
 
 namespace Sfa.Roatp.Indexer.WorkerRole
 {
@@ -16,18 +15,26 @@ namespace Sfa.Roatp.Indexer.WorkerRole
     {
         private readonly CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
         private readonly ManualResetEvent runCompleteEvent = new ManualResetEvent(false);
+        private IContainer _container;
+        private ILog _logger;
+        private IWorkerRoleSettings _commonSettings;
 
         public override void Run()
         {
             Trace.TraceInformation("Sfa.Roatp.Indexer.WorkerRole is running");
 
-            try
+            while (true)
             {
-                this.RunAsync(this.cancellationTokenSource.Token).Wait();
-            }
-            finally
-            {
-                this.runCompleteEvent.Set();
+                try
+                {
+                    _container.GetInstance<IIndexerJob>().Run();
+                }
+                catch (Exception ex)
+                {
+                    _logger.Error(ex, "Exception worker role");
+                }
+
+                Thread.Sleep(TimeSpan.FromSeconds(double.Parse(_commonSettings.WorkerRolePauseTime ?? "6000")));
             }
         }
 
@@ -35,6 +42,10 @@ namespace Sfa.Roatp.Indexer.WorkerRole
         {
             // Set the maximum number of concurrent connections
             ServicePointManager.DefaultConnectionLimit = 12;
+
+            _container = IoC.Initialize();
+            _logger = _container.GetInstance<ILog>();
+            _commonSettings = _container.GetInstance<IWorkerRoleSettings>();
 
             // For information on handling configuration changes
             // see the MSDN topic at http://go.microsoft.com/fwlink/?LinkId=166357.

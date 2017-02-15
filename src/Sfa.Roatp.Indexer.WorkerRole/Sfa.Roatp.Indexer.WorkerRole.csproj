@@ -62,7 +62,12 @@
       <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="StructureMap, Version=4.4.2.472, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\StructureMap.4.4.2\lib\net45\StructureMap.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Spatial, Version=5.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Spatial.5.7.0\lib\net40\System.Spatial.dll</HintPath>
@@ -75,12 +80,32 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DependencyResolution\IoC.cs" />
+    <Compile Include="DependencyResolution\IndexerRegistry.cs" />
+    <Compile Include="IIndexerJob.cs" />
+    <Compile Include="IndexerJob.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Settings\WorkRoleSettings.cs" />
+    <Compile Include="Settings\IWorkerRoleSettings.cs" />
     <Compile Include="WorkerRole.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Sfa.Roatp.Indexer.ApplicationServices\Sfa.Roatp.Indexer.ApplicationServices.csproj">
+      <Project>{524ea918-a328-4980-a121-2769b7d3a286}</Project>
+      <Name>Sfa.Roatp.Indexer.ApplicationServices</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Sfa.Roatp.Indexer.Core\Sfa.Roatp.Indexer.Core.csproj">
+      <Project>{608fb2c4-cf48-44cf-806c-bcea20cacc9b}</Project>
+      <Name>Sfa.Roatp.Indexer.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Sfa.Roatp.Indexer.Infrastructure\Sfa.Roatp.Indexer.Infrastructure.csproj">
+      <Project>{42957f05-e32c-478e-8554-e2b11e2fff5b}</Project>
+      <Name>Sfa.Roatp.Indexer.Infrastructure</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
