@@ -1,8 +1,9 @@
 ﻿using System;
+using Sfa.Roatp.Indexer.Core.Models;
 
-namespace Sfa.Roatp.Indexer.Core.Models
+namespace Sfa.Roatp.Indexer.ApplicationServices.Models
 {
-    public class RoatpProvider
+    public class RoatpProviderDocument
     {
         public string Ukprn { get; set; }
 

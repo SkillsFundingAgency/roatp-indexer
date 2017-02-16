@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Nest;
+using Sfa.Roatp.Indexer.ApplicationServices.Models;
 using Sfa.Roatp.Indexer.Core.Models;
 
 namespace Sfa.Roatp.Indexer.ApplicationServices

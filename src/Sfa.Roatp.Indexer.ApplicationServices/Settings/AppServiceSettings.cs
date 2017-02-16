@@ -26,7 +26,7 @@ namespace Sfa.Roatp.Indexer.ApplicationServices.Settings
 
         public string QueueName(Type type)
         {
-            var name = $"{type.Name.Replace("IMaintainApprenticeshipIndex", "Apprenticeship").Replace("IMaintainProviderIndex", "Provider").Replace("IMaintainLarsIndex", "Lars").Replace("IMaintainAssessmentOrgsIndex", "AssessmentOrgs")}.QueueName";
+            var name = $"{type.Name.Replace("IMaintainProviderIndex", "RoatpProvider")}.QueueName";
             return _settings.GetSetting(name).ToLower();
         }
     }

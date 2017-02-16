@@ -1,4 +1,6 @@
-﻿using StructureMap;
+﻿using Sfa.Roatp.Indexer.ApplicationServices.DependencyResolution;
+using Sfa.Roatp.Indexer.Infrastructure.DependencyResolution;
+using StructureMap;
 
 namespace Sfa.Roatp.Indexer.WorkerRole.DependencyResolution
 {
@@ -9,6 +11,8 @@ namespace Sfa.Roatp.Indexer.WorkerRole.DependencyResolution
             return new Container(c =>
             {
                 c.AddRegistry<IndexerRegistry>();
+                c.AddRegistry<InfrastructureRegistry>();
+                c.AddRegistry<ApplicationServicesRegistry>();
             });
         }
     }
