@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Nest;
-using Sfa.Roatp.Indexer.ApplicationServices.Models;
 using Sfa.Roatp.Indexer.Core.Models;
 
 namespace Sfa.Roatp.Indexer.ApplicationServices
@@ -11,5 +10,7 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
         Task IndexEntries(string indexName, ICollection<RoatpProvider> entries);
         List<Task<IBulkResponse>> IndexRoatpProviders(string indexName, ICollection<RoatpProvider> indexEntries);
         void LogResponse(IBulkResponse[] elementIndexResult, string documentType);
+        IEnumerable<RoatpProviderDocument> LoadRoatpProvidersFromIndex(string newIndexName);
+        IEnumerable<RoatpProviderDocument> LoadRoatpProvidersFromAlias();
     }
 }

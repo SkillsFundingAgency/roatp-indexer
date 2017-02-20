@@ -46,6 +46,14 @@
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="SFA.DAS.Events.Api.Client, Version=1.14.0.22072, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SFA.DAS.Events.Api.Client.1.14.0.22072\lib\net45\SFA.DAS.Events.Api.Client.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SFA.DAS.Events.Api.Types, Version=1.14.0.22072, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SFA.DAS.Events.Api.Types.1.14.0.22072\lib\net45\SFA.DAS.Events.Api.Types.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="StructureMap, Version=4.4.2.472, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\StructureMap.4.4.2\lib\net45\StructureMap.dll</HintPath>
       <Private>True</Private>
@@ -62,10 +70,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DependencyResolution\ApplicationServicesRegistry.cs" />
+    <Compile Include="Events\EventsConfig.cs" />
     <Compile Include="RoatpProvidersXlsxService.cs" />
     <Compile Include="IGetRoatpProviders.cs" />
     <Compile Include="IndexerHelper.cs" />
-    <Compile Include="Models\RoatpProviderDocument.cs" />
     <Compile Include="ProviderIndexer.cs" />
     <Compile Include="IndexerService.cs" />
     <Compile Include="IMaintainSearchIndexes.cs" />

@@ -8,6 +8,10 @@ namespace Sfa.Roatp.Indexer.ApplicationServices.Settings
 
         string GitPassword { get; }
 
+        string EventsBaseUrl { get; }
+
+        string EventsClientToken { get; }
+
         string VstsRoatpUrl { get; }
 
         string EnvironmentName { get; }

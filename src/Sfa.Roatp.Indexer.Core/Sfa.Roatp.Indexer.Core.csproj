@@ -46,6 +46,7 @@
     <Compile Include="Logging\Models\ILogEntry.cs" />
     <Compile Include="Models\ProviderType.cs" />
     <Compile Include="Models\RoatpProvider.cs" />
+    <Compile Include="Models\RoatpProviderDocument.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\IGenericIndexerHelper{T}.cs" />
     <Compile Include="Settings\IProvideSettings.cs" />

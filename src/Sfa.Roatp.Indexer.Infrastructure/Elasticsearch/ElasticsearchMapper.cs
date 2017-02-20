@@ -1,5 +1,4 @@
 ﻿using System;
-using Sfa.Roatp.Indexer.ApplicationServices.Models;
 using Sfa.Roatp.Indexer.Core.Models;
 using Sfa.Roatp.Indexer.Infrastructure.Settings;
 using Sfa.Roatp.Registry.Core.Logging;

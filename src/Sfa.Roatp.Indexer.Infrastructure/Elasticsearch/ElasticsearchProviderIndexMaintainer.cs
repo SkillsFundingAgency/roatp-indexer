@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Nest;
 using Sfa.Das.Sas.Indexer.Infrastructure.Elasticsearch.Configuration;
 using Sfa.Roatp.Indexer.ApplicationServices;
-using Sfa.Roatp.Indexer.ApplicationServices.Models;
+using Sfa.Roatp.Indexer.ApplicationServices.Settings;
 using Sfa.Roatp.Indexer.Core.Exceptions;
 using Sfa.Roatp.Indexer.Core.Models;
 using Sfa.Roatp.Registry.Core.Logging;
@@ -14,16 +14,19 @@ namespace Sfa.Roatp.Indexer.Infrastructure.Elasticsearch
 {
     public sealed class ElasticsearchProviderIndexMaintainer : ElasticsearchIndexMaintainerBase, IMaintainProviderIndex
     {
+        private readonly IIndexSettings<IMaintainProviderIndex> _settings;
         private readonly ILog _log;
         private readonly IElasticsearchConfiguration _elasticsearchConfiguration;
 
         public ElasticsearchProviderIndexMaintainer(
             IElasticsearchCustomClient elasticsearchClient,
             IElasticsearchMapper elasticsearchMapper,
+            IIndexSettings<IMaintainProviderIndex> settings,
             ILog log,
             IElasticsearchConfiguration elasticsearchConfiguration)
             : base(elasticsearchClient, elasticsearchMapper, log, "RoatpProvider")
         {
+            _settings = settings;
             _log = log;
             _elasticsearchConfiguration = elasticsearchConfiguration;
         }
@@ -72,6 +75,35 @@ namespace Sfa.Roatp.Indexer.Infrastructure.Elasticsearch
             }
 
             return bulkProviderLocation.GetTasks();
+        }
+
+        public IEnumerable<RoatpProviderDocument> LoadRoatpProvidersFromAlias()
+        {
+            return LoadRoatpProvidersFromIndex(_settings.IndexesAlias);
+        }
+
+        public IEnumerable<RoatpProviderDocument> LoadRoatpProvidersFromIndex(string newIndexName)
+        {
+            var take = GetRoatpProvidersAmountFromIndex(newIndexName);
+
+            var response = Client.Search<RoatpProviderDocument>(s =>
+                s.Index(newIndexName)
+                    .Type(Types.Parse("roatpproviderdocument"))
+                    .From(0)
+                    .Take(take)
+                    .MatchAll());
+
+            return response.Documents;
+        }
+
+        private int GetRoatpProvidersAmountFromIndex(string newIndexName)
+        {
+            var result = Client.Search<RoatpProviderDocument>(s =>
+                s.Index(newIndexName)
+                    .Type(Types.Parse("roatpproviderdocument"))
+                    .From(0)
+                    .MatchAll());
+            return (int)result.HitsMetaData.Total;
         }
     }
 }

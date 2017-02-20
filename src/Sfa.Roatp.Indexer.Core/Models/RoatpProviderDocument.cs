@@ -1,7 +1,6 @@
 ﻿using System;
-using Sfa.Roatp.Indexer.Core.Models;
 
-namespace Sfa.Roatp.Indexer.ApplicationServices.Models
+namespace Sfa.Roatp.Indexer.Core.Models
 {
     public class RoatpProviderDocument
     {

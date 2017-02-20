@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using Sfa.Roatp.Indexer.Core.Models;
 
 namespace Sfa.Roatp.Indexer.Core.Services
 {
@@ -14,5 +16,9 @@ namespace Sfa.Roatp.Indexer.Core.Services
         bool CreateIndex(string indexName);
 
         void ChangeUnderlyingIndexForAlias(string newIndexName);
+
+        List<RoatpProviderDocument> CheckNewProviders(string newIndexName);
+
+        void SendNewProviderEvent(List<RoatpProviderDocument> newProviders);
     }
 }

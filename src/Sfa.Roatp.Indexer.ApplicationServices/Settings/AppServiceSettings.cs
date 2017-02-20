@@ -12,7 +12,9 @@ namespace Sfa.Roatp.Indexer.ApplicationServices.Settings
             _settings = settingsProvider;
         }
 
-        public string VstsGitStandardsFolderPath => _settings.GetSetting("VstsGitStandardsFolderPath");
+        public string EventsBaseUrl => _settings.GetSetting("EventsBaseUrl");
+
+        public string EventsClientToken => _settings.GetSetting("EventsClientToken");
 
         public string EnvironmentName => _settings.GetSetting("EnvironmentName");
 

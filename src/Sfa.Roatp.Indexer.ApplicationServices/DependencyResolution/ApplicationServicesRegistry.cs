@@ -1,5 +1,7 @@
-﻿using Sfa.Roatp.Indexer.ApplicationServices.Settings;
+﻿using Sfa.Roatp.Indexer.ApplicationServices.Events;
+using Sfa.Roatp.Indexer.ApplicationServices.Settings;
 using Sfa.Roatp.Indexer.Core.Services;
+using SFA.DAS.Events.Api.Client.Configuration;
 
 namespace Sfa.Roatp.Indexer.ApplicationServices.DependencyResolution
 {
@@ -12,6 +14,7 @@ namespace Sfa.Roatp.Indexer.ApplicationServices.DependencyResolution
             For<IAppServiceSettings>().Use<AppServiceSettings>();
             For<IIndexerService<IMaintainProviderIndex>>().Use<IndexerService<IMaintainProviderIndex>>();
             For<IGenericIndexerHelper<IMaintainProviderIndex>>().Use<ProviderIndexer>();
+            For<IEventsApiClientConfiguration>().Use<EventsConfig>();
         }
     }
 }
