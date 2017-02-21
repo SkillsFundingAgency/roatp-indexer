@@ -48,12 +48,12 @@ namespace Sfa.Roatp.Indexer.Infrastructure.Services
 
         public void Debug(string message, ILogEntry entry)
         {
-            SendLog(message, LogLevel.Debug, new Dictionary<string, object> { { entry.Name, entry } });
+            SendLog(message, LogLevel.Debug, new Dictionary<string, object> {{entry.Name, entry}});
         }
 
         public void Info(string message, ILogEntry entry)
         {
-            SendLog(message, LogLevel.Info, new Dictionary<string, object> { { entry.Name, entry } });
+            SendLog(message, LogLevel.Info, new Dictionary<string, object> {{entry.Name, entry}});
         }
 
         public void Info(object message)
@@ -78,7 +78,7 @@ namespace Sfa.Roatp.Indexer.Infrastructure.Services
 
         public void Warn(string message, ILogEntry entry)
         {
-            SendLog(message, LogLevel.Warn, new Dictionary<string, object> { { entry.Name, entry } });
+            SendLog(message, LogLevel.Warn, new Dictionary<string, object> {{entry.Name, entry}});
         }
 
         public void Warn(Exception exception, object message)
@@ -98,7 +98,7 @@ namespace Sfa.Roatp.Indexer.Infrastructure.Services
 
         public void Error(string message, ILogEntry entry)
         {
-            SendLog(message, LogLevel.Error, new Dictionary<string, object> { { entry.Name, entry } });
+            SendLog(message, LogLevel.Error, new Dictionary<string, object> {{entry.Name, entry}});
         }
 
         public void Fatal(Exception exception, object message)
@@ -108,13 +108,14 @@ namespace Sfa.Roatp.Indexer.Infrastructure.Services
 
         public void Fatal(string message, ILogEntry entry)
         {
-            SendLog(message, LogLevel.Fatal, new Dictionary<string, object> { { entry.Name, entry } });
+            SendLog(message, LogLevel.Fatal, new Dictionary<string, object> {{entry.Name, entry}});
         }
 
         private void SendLog(object message, LogLevel level, Exception exception = null)
         {
             SendLog(message, level, new Dictionary<string, object>(), exception);
         }
+
         private string GetVersion()
         {
             Assembly assembly = Assembly.GetExecutingAssembly();
@@ -139,7 +140,7 @@ namespace Sfa.Roatp.Indexer.Infrastructure.Services
 
             if (exception != null)
             {
-                propertiesLocal.Add("Exception", new { message = exception.Message, source = exception.Source, innerException = exception.InnerException, stackTrace = exception.StackTrace });
+                propertiesLocal.Add("Exception", new {message = exception.Message, source = exception.Source, innerException = exception.InnerException, stackTrace = exception.StackTrace});
             }
 
             foreach (var property in propertiesLocal)

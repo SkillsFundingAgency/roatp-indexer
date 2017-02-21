@@ -22,6 +22,9 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
         private readonly IIndexSettings<IMaintainProviderIndex> _settings;
         private readonly ILog _log;
 
+        private const string NewRoatpProviderContractType = "ProviderAgreement";
+        private const string NewRoatpProviderEvent = "INITIATED";
+
         public ProviderIndexer(
             IIndexSettings<IMaintainProviderIndex> settings,
             IMaintainProviderIndex indexMaintainer,
@@ -112,7 +115,7 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
 
             foreach (var roatpProviderDocument in newProviders)
             {
-                var agreementEvent = new AgreementEvent { ContractType = "ProviderAgreement", Event = "INITIATED", ProviderId = roatpProviderDocument.Ukprn };
+                var agreementEvent = new AgreementEvent { ContractType = NewRoatpProviderContractType, Event = NewRoatpProviderEvent, ProviderId = roatpProviderDocument.Ukprn };
                 var task = new SFA.DAS.Events.Api.Client.EventsApi(_eventsApiClientConfiguration).CreateAgreementEvent(agreementEvent);
                 roatpProviderEventTasks.Add(task);
             }
