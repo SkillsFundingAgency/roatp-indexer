@@ -12,16 +12,8 @@ namespace Sfa.Roatp.Indexer.ApplicationServices.Events
             _appServiceSettings = appServiceSettings;
         }
 
-        public string BaseUrl
-        {
-            get { return _appServiceSettings.EventsBaseUrl; }
-            set { }
-        }
+        public string BaseUrl => _appServiceSettings.EventsBaseUrl;
 
-        public string ClientToken
-        {
-            get { return _appServiceSettings.EventsClientToken; }
-            set { }
-        }
+        public string ClientToken => _appServiceSettings.EventsClientToken;
     }
 }
