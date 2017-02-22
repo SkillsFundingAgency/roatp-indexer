@@ -7,19 +7,18 @@ namespace Sfa.Roatp.Indexer.WorkerRole
 {
     public class IndexerJob : IIndexerJob
     {
-        private readonly IIndexerServiceFactory _indexerServiceFactory;
+        private readonly IIndexerService<IMaintainProviderIndex> _indexerService;
 
-        public IndexerJob(IIndexerServiceFactory indexerServiceFactory)
+        public IndexerJob(IIndexerService<IMaintainProviderIndex> indexerService)
         {
-            _indexerServiceFactory = indexerServiceFactory;
+            _indexerService = indexerService;
         }
 
         public void Run()
         {
-            var indexerService = _indexerServiceFactory.GetIndexerService<IMaintainProviderIndex>();
             var tasks = new List<Task>
             {
-                indexerService.CreateScheduledIndex(DateTime.Now),
+                _indexerService.CreateScheduledIndex(DateTime.Now)
             };
 
             Task.WaitAll(tasks.ToArray());

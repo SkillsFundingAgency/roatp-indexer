@@ -1,8 +1,8 @@
 ﻿using Sfa.Roatp.Indexer.Core.Models;
 
-namespace Sfa.Roatp.Indexer.Infrastructure.Elasticsearch
+namespace Sfa.Roatp.Indexer.ApplicationServices
 {
-    public interface IElasticsearchMapper
+    public interface IElasticsearchRoatpDocumentMapper
     {
         RoatpProviderDocument CreateRoatpProviderDocument(RoatpProvider roatpProvider);
     }

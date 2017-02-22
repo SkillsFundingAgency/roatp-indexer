@@ -12,24 +12,10 @@ namespace Sfa.Roatp.Indexer.ApplicationServices.Settings
             _settings = settingsProvider;
         }
 
-        public string EventsBaseUrl => _settings.GetSetting("EventsBaseUrl");
-
-        public string EventsClientToken => _settings.GetSetting("EventsClientToken");
-
-        public string EnvironmentName => _settings.GetSetting("EnvironmentName");
-
         public string VstsRoatpUrl => _settings.GetSetting("VstsRoatpUrl");
 
         public string GitUsername => _settings.GetSetting("GitUsername");
 
         public string GitPassword => _settings.GetSetting("GitPassword");
-
-        public string ConnectionString => _settings.GetSetting("StorageConnectionString");
-
-        public string QueueName(Type type)
-        {
-            var name = $"{type.Name.Replace("IMaintainProviderIndex", "RoatpProvider")}.QueueName";
-            return _settings.GetSetting(name).ToLower();
-        }
     }
 }

@@ -19,12 +19,14 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
 
         private readonly string _name;
 
+        private const string IndexTypeName = "RoATP Provider Index";
+
         public IndexerService(IIndexSettings<T> indexSettings, IGenericIndexerHelper<T> indexerHelper, ILog log)
         {
             _indexSettings = indexSettings;
             _indexerHelper = indexerHelper;
             _log = log;
-            _name = GetIndexTypeName(typeof(T));
+            _name = IndexTypeName;
         }
 
         public async Task CreateScheduledIndex(DateTime scheduledRefreshDateTime)
@@ -34,7 +36,7 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
 
             var roatpProviders = _indexerHelper.LoadEntries();
 
-            var infoHasChanged = _indexerHelper.InfoHasChanged(roatpProviders);
+            var infoHasChanged = _indexerHelper.HasRoatpInfoChanged(roatpProviders);
 
             if (infoHasChanged)
             {
@@ -84,11 +86,6 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
         {
             var time = _indexSettings.PauseTime;
             Thread.Sleep(int.Parse(time));
-        }
-
-        private string GetIndexTypeName(Type type)
-        {
-            return type == typeof(IMaintainProviderIndex) ? "RoATP Provider Index" : "Unknown";
         }
     }
 }

@@ -27,7 +27,7 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
             _appServiceSettings = appServiceSettings;
         }
 
-        public List<RoatpProvider> GetRoatpData()
+        public IEnumerable<RoatpProvider> GetRoatpData()
         {
             var roatpProviders = new List<RoatpProvider>();
 
@@ -48,11 +48,10 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
                 }
             }
 
-            var response = roatpProviders.Where(roatpProviderResult => roatpProviderResult.Ukprn != string.Empty).ToList();
-            return response;
+            return roatpProviders.Where(roatpProviderResult => roatpProviderResult.Ukprn != string.Empty);
         }
 
-        private static void GetRoatpProviders(ExcelPackage package, List<RoatpProvider> roatpProviders)
+        private void GetRoatpProviders(ExcelPackage package, List<RoatpProvider> roatpProviders)
         {
             var roatpWorkSheet = package.Workbook.Worksheets.FirstOrDefault(x => x.Name == "RoATP");
             if (roatpWorkSheet == null) return;
@@ -107,11 +106,11 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
                     case "Supporting provider":
                         return ProviderType.SupportingProvider;
                     default:
-                        return ProviderType.SupportingProvider;
+                        return ProviderType.Unknow;
                 }
             }
 
-            return ProviderType.SupportingProvider;
+            return ProviderType.Unknow;
         }
     }
 }

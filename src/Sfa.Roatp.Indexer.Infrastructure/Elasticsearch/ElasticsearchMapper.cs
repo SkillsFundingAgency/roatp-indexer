@@ -1,16 +1,16 @@
-﻿using System;
+﻿using Sfa.Roatp.Indexer.ApplicationServices;
 using Sfa.Roatp.Indexer.Core.Models;
 using Sfa.Roatp.Indexer.Infrastructure.Settings;
 using Sfa.Roatp.Registry.Core.Logging;
 
 namespace Sfa.Roatp.Indexer.Infrastructure.Elasticsearch
 {
-    public class ElasticsearchMapper : IElasticsearchMapper
+    public class ElasticsearchRoatpDocumentMapper : IElasticsearchRoatpDocumentMapper
     {
         private readonly ILog _logger;
         private readonly IInfrastructureSettings _settings;
 
-        public ElasticsearchMapper(ILog logger, IInfrastructureSettings settings)
+        public ElasticsearchRoatpDocumentMapper(ILog logger, IInfrastructureSettings settings)
         {
             _logger = logger;
             _settings = settings;

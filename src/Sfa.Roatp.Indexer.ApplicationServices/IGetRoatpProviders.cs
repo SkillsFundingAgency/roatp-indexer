@@ -6,6 +6,6 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
 {
     public interface IGetRoatpProviders
     {
-        List<RoatpProvider> GetRoatpData();
+        IEnumerable<RoatpProvider> GetRoatpData();
     }
 }

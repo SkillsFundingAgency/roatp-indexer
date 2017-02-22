@@ -11,11 +11,11 @@ namespace Sfa.Roatp.Indexer.Infrastructure.Elasticsearch
     {
         private readonly string _typeOfIndex;
 
-        protected ElasticsearchIndexMaintainerBase(IElasticsearchCustomClient elasticsearchCustomClient, IElasticsearchMapper elasticsearchMapper, ILog log, string typeOfIndex)
+        protected ElasticsearchIndexMaintainerBase(IElasticsearchCustomClient elasticsearchCustomClient, IElasticsearchRoatpDocumentMapper elasticsearchRoatpDocumentMapper, ILog log, string typeOfIndex)
         {
             Client = elasticsearchCustomClient;
             Log = log;
-            ElasticsearchMapper = elasticsearchMapper;
+            ElasticsearchRoatpDocumentMapper = elasticsearchRoatpDocumentMapper;
             _typeOfIndex = typeOfIndex;
         }
 
@@ -23,7 +23,7 @@ namespace Sfa.Roatp.Indexer.Infrastructure.Elasticsearch
 
         protected ILog Log { get; }
 
-        protected IElasticsearchMapper ElasticsearchMapper { get; }
+        protected IElasticsearchRoatpDocumentMapper ElasticsearchRoatpDocumentMapper { get; }
 
         public virtual bool AliasExists(string aliasName)
         {

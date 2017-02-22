@@ -11,7 +11,7 @@ namespace Sfa.Roatp.Indexer.Infrastructure.Services
         {
             if (typeof(T) == typeof(IMaintainProviderIndex))
             {
-                ApplicationName = "roatp-regristry-indexer";
+                ApplicationName = "roatp-indexer";
             }
         }
     }

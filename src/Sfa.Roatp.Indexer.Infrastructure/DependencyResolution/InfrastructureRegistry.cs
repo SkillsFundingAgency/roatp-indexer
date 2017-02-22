@@ -12,13 +12,12 @@ namespace Sfa.Roatp.Indexer.Infrastructure.DependencyResolution
     {
         public InfrastructureRegistry()
         {
-            For<ILog>().Use(x => new NLogService(x.ParentType, x.GetInstance<IInfrastructureSettings>())).AlwaysUnique();
-            For<IIndexerServiceFactory>().Use<IndexerServiceFactory>();
+            For<ILog>().Use(x => new NLogService<IMaintainProviderIndex>(x.ParentType, x.GetInstance<IInfrastructureSettings>())).AlwaysUnique();
             For<IInfrastructureSettings>().Use<InfrastructureSettings>();
             For<IMaintainProviderIndex>().Use<ElasticsearchProviderIndexMaintainer>();
             For<IElasticsearchSettings>().Use<ElasticsearchSettings>(); 
             For<IElasticsearchConfiguration>().Use<ElasticsearchConfiguration>();
-            For<IElasticsearchMapper>().Use<ElasticsearchMapper>();
+            For<IElasticsearchRoatpDocumentMapper>().Use<ElasticsearchRoatpDocumentMapper>();
             For<IElasticsearchCustomClient>().Use<ElasticsearchCustomClient>();
         }
     }

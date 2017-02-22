@@ -121,7 +121,6 @@
     <Compile Include="Elasticsearch\IElasticsearchCustomClient.cs" />
     <Compile Include="Elasticsearch\ElasticsearchIndexMaintainerBase.cs" />
     <Compile Include="Elasticsearch\ElasticsearchProviderIndexMaintainer.cs" />
-    <Compile Include="IndexerServiceFactory.cs" />
     <Compile Include="DependencyResolution\InfrastructureRegistry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\NLogService{T}.cs" />

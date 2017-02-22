@@ -20,11 +20,11 @@ namespace Sfa.Roatp.Indexer.Infrastructure.Elasticsearch
 
         public ElasticsearchProviderIndexMaintainer(
             IElasticsearchCustomClient elasticsearchClient,
-            IElasticsearchMapper elasticsearchMapper,
+            IElasticsearchRoatpDocumentMapper elasticsearchRoatpDocumentMapper,
             IIndexSettings<IMaintainProviderIndex> settings,
             ILog log,
             IElasticsearchConfiguration elasticsearchConfiguration)
-            : base(elasticsearchClient, elasticsearchMapper, log, "RoatpProvider")
+            : base(elasticsearchClient, elasticsearchRoatpDocumentMapper, log, "RoatpProvider")
         {
             _settings = settings;
             _log = log;
@@ -48,7 +48,7 @@ namespace Sfa.Roatp.Indexer.Infrastructure.Elasticsearch
             }
         }
 
-        public async Task IndexEntries(string indexName, ICollection<RoatpProvider> entries)
+        public async Task IndexEntries(string indexName, IEnumerable<RoatpProvider> entries)
         {
             var bulkRoatpProviderTasks = new List<Task<IBulkResponse>>();
 
@@ -57,14 +57,14 @@ namespace Sfa.Roatp.Indexer.Infrastructure.Elasticsearch
             LogResponse(await Task.WhenAll(bulkRoatpProviderTasks), "RoatpProviderDocument");
         }
 
-        public  List<Task<IBulkResponse>> IndexRoatpProviders(string indexName, ICollection<RoatpProvider> indexEntries)
+        public  List<Task<IBulkResponse>> IndexRoatpProviders(string indexName, IEnumerable<RoatpProvider> indexEntries)
         {
             var bulkProviderLocation = new BulkProviderClient(indexName, Client);
             try
             {
                 foreach (var provider in indexEntries)
                 {
-                    var mappedProvider = ElasticsearchMapper.CreateRoatpProviderDocument(provider);
+                    var mappedProvider = ElasticsearchRoatpDocumentMapper.CreateRoatpProviderDocument(provider);
                     bulkProviderLocation.Create<RoatpProviderDocument>(c => c.Document(mappedProvider));
                 }
             }
@@ -88,7 +88,7 @@ namespace Sfa.Roatp.Indexer.Infrastructure.Elasticsearch
 
             var response = Client.Search<RoatpProviderDocument>(s =>
                 s.Index(newIndexName)
-                    .Type(Types.Parse("roatpproviderdocument"))
+                    .Type(Types.Type<RoatpProviderDocument>())
                     .From(0)
                     .Take(take)
                     .MatchAll());
@@ -100,7 +100,7 @@ namespace Sfa.Roatp.Indexer.Infrastructure.Elasticsearch
         {
             var result = Client.Search<RoatpProviderDocument>(s =>
                 s.Index(newIndexName)
-                    .Type(Types.Parse("roatpproviderdocument"))
+                    .Type(Types.Type<RoatpProviderDocument>())
                     .From(0)
                     .MatchAll());
             return (int)result.HitsMetaData.Total;

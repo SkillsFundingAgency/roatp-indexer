@@ -7,9 +7,9 @@ namespace Sfa.Roatp.Indexer.Core.Services
 {
     public interface IGenericIndexerHelper<T>
     {
-        List<RoatpProvider> LoadEntries();
+        IEnumerable<RoatpProvider> LoadEntries();
 
-        Task IndexEntries(string indexName, List<RoatpProvider> roatpProviders);
+        Task IndexEntries(string indexName, IEnumerable<RoatpProvider> roatpProviders);
 
         bool IsIndexCorrectlyCreated(string indexName);
 
@@ -17,10 +17,10 @@ namespace Sfa.Roatp.Indexer.Core.Services
 
         void ChangeUnderlyingIndexForAlias(string newIndexName);
 
-        List<RoatpProviderDocument> CheckNewProviders(string newIndexName);
+        IEnumerable<RoatpProviderDocument> CheckNewProviders(string newIndexName);
 
-        void SendNewProviderEvent(List<RoatpProviderDocument> newProviders);
+        void SendNewProviderEvent(IEnumerable<RoatpProviderDocument> newProviders);
 
-        bool InfoHasChanged(List<RoatpProvider> roatpProviders);
+        bool HasRoatpInfoChanged(IEnumerable<RoatpProvider> roatpProviders);
     }
 }
