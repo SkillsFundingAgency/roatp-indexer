@@ -111,8 +111,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Azure\AzureCloudQueueService.cs" />
-    <Compile Include="Azure\AzureQueueMessage.cs" />
     <Compile Include="Elasticsearch\BulkProviderClient.cs" />
     <Compile Include="Elasticsearch\ElasticsearchMapper.cs" />
     <Compile Include="Elasticsearch\Configuration\ElasticsearchConfiguration.cs" />
