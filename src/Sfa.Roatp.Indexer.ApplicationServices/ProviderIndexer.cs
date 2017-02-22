@@ -6,6 +6,7 @@ using Nest;
 using Sfa.Roatp.Indexer.ApplicationServices.Settings;
 using Sfa.Roatp.Indexer.Core.Models;
 using Sfa.Roatp.Indexer.Core.Services;
+using Sfa.Roatp.Indexer.Infrastructure.Elasticsearch;
 using Sfa.Roatp.Registry.Core.Logging;
 using SFA.DAS.Events.Api.Client.Configuration;
 using SFA.DAS.Events.Api.Types;
@@ -18,6 +19,7 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
 
         private readonly IGetRoatpProviders _providerDataService;
         private readonly IEventsApiClientConfiguration _eventsApiClientConfiguration;
+        private readonly IElasticsearchMapper _elasticsearchMapper;
 
         private readonly IIndexSettings<IMaintainProviderIndex> _settings;
         private readonly ILog _log;
@@ -30,13 +32,42 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
             IMaintainProviderIndex indexMaintainer,
             IGetRoatpProviders providerDataService,
             IEventsApiClientConfiguration eventsApiClientConfiguration,
+            IElasticsearchMapper elasticsearchMapper,
             ILog log)
         {
             _settings = settings;
             _providerDataService = providerDataService;
             _eventsApiClientConfiguration = eventsApiClientConfiguration;
+            _elasticsearchMapper = elasticsearchMapper;
             _indexMaintainer = indexMaintainer;
             _log = log;
+        }
+
+        public bool InfoHasChanged(List<RoatpProvider> roatpProviders)
+        {
+            var oldProviders = _indexMaintainer.LoadRoatpProvidersFromAlias();
+
+            if (roatpProviders.Count != oldProviders.Count())
+            {
+                return true;
+            }
+
+            foreach (var roatpProvider in roatpProviders)
+            {
+                var oldRoatpProvider = oldProviders.FirstOrDefault(x => x.Ukprn == roatpProvider.Ukprn);
+
+                if (oldRoatpProvider == null)
+                {
+                    return true;
+                }
+
+                if (!roatpProvider.IsEqual(oldRoatpProvider))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         public bool CreateIndex(string indexName)
@@ -75,23 +106,16 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
             }
         }
 
-        public bool DeleteOldIndexes(DateTime scheduledRefreshDateTime)
+        public List<RoatpProvider> LoadEntries()
         {
-            var today = IndexerHelper.GetIndexNameAndDateExtension(scheduledRefreshDateTime, _settings.IndexesAlias, "yyyy-MM-dd");
-            var oneDayAgo = IndexerHelper.GetIndexNameAndDateExtension(scheduledRefreshDateTime.AddDays(-1), _settings.IndexesAlias, "yyyy-MM-dd");
+            _log.Debug("Loading data at RoATP provider index");
 
-            return _indexMaintainer.DeleteIndexes(x =>
-                !(x.StartsWith(today, StringComparison.InvariantCultureIgnoreCase) ||
-                    x.StartsWith(oneDayAgo, StringComparison.InvariantCultureIgnoreCase)) &&
-                x.StartsWith(_settings.IndexesAlias, StringComparison.InvariantCultureIgnoreCase));
+            return _providerDataService.GetRoatpData();
         }
 
-        public async Task IndexEntries(string indexName)
+        public async Task IndexEntries(string indexName, List<RoatpProvider> roatpProviders)
         {
             var bulkApiProviderTasks = new List<Task<IBulkResponse>>();
-
-            _log.Debug("Loading data at RoATP provider index");
-            var roatpProviders = _providerDataService.GetRoatpData();
 
             _log.Debug($"Received {roatpProviders.Count} RoATP providers");
 

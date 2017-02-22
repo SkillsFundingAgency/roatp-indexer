@@ -1,24 +1,25 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Sfa.Roatp.Indexer.ApplicationServices;
-using Sfa.Roatp.Indexer.ApplicationServices.Queue;
 
 namespace Sfa.Roatp.Indexer.WorkerRole
 {
     public class IndexerJob : IIndexerJob
     {
-        private readonly IGenericControlQueueConsumer _controlQueueConsumer;
+        private readonly IIndexerServiceFactory _indexerServiceFactory;
 
-        public IndexerJob(IGenericControlQueueConsumer controlQueueConsumer)
+        public IndexerJob(IIndexerServiceFactory indexerServiceFactory)
         {
-            _controlQueueConsumer = controlQueueConsumer;
+            _indexerServiceFactory = indexerServiceFactory;
         }
 
         public void Run()
         {
+            var indexerService = _indexerServiceFactory.GetIndexerService<IMaintainProviderIndex>();
             var tasks = new List<Task>
             {
-                _controlQueueConsumer.CheckMessage<IMaintainProviderIndex>(),
+                indexerService.CreateScheduledIndex(DateTime.Now),
             };
 
             Task.WaitAll(tasks.ToArray());

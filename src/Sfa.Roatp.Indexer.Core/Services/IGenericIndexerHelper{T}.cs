@@ -7,9 +7,9 @@ namespace Sfa.Roatp.Indexer.Core.Services
 {
     public interface IGenericIndexerHelper<T>
     {
-        Task IndexEntries(string indexName);
+        List<RoatpProvider> LoadEntries();
 
-        bool DeleteOldIndexes(DateTime scheduledRefreshDateTime);
+        Task IndexEntries(string indexName, List<RoatpProvider> roatpProviders);
 
         bool IsIndexCorrectlyCreated(string indexName);
 
@@ -20,5 +20,7 @@ namespace Sfa.Roatp.Indexer.Core.Services
         List<RoatpProviderDocument> CheckNewProviders(string newIndexName);
 
         void SendNewProviderEvent(List<RoatpProviderDocument> newProviders);
+
+        bool InfoHasChanged(List<RoatpProvider> roatpProviders);
     }
 }

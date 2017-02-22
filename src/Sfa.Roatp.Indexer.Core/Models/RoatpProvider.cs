@@ -17,5 +17,16 @@ namespace Sfa.Roatp.Indexer.Core.Models
         public DateTime StartDate { get; set; }
 
         public DateTime EndDate { get; set; }
+
+        public bool IsEqual(RoatpProviderDocument oldRoatpProvider)
+        {
+            return Ukprn == oldRoatpProvider.Ukprn &&
+                   ProviderType == oldRoatpProvider.ProviderType &&
+                   ContractedForNonLeviedEmployers == oldRoatpProvider.ContractedForNonLeviedEmployers &&
+                   ParentCompanyGuarantee == oldRoatpProvider.ParentCompanyGuarantee &&
+                   NewOrganisationWithoutFinancialTrackRecord == oldRoatpProvider.NewOrganisationWithoutFinancialTrackRecord &&
+                   StartDate == oldRoatpProvider.StartDate &&
+                   EndDate == oldRoatpProvider.EndDate;
+        }
     }
 }

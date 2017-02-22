@@ -115,7 +115,6 @@
     <Compile Include="Azure\AzureQueueMessage.cs" />
     <Compile Include="Elasticsearch\BulkProviderClient.cs" />
     <Compile Include="Elasticsearch\ElasticsearchMapper.cs" />
-    <Compile Include="Elasticsearch\IElasticsearchMapper.cs" />
     <Compile Include="Elasticsearch\Configuration\ElasticsearchConfiguration.cs" />
     <Compile Include="Elasticsearch\Configuration\IElasticsearchConfiguration.cs" />
     <Compile Include="Elasticsearch\ElasticsearchClientFactory.cs" />

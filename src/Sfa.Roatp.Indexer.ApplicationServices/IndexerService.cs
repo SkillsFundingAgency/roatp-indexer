@@ -29,48 +29,54 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
 
         public async Task CreateScheduledIndex(DateTime scheduledRefreshDateTime)
         {
-            _log.Info($"Creating new scheduled {_name}");
 
             Stopwatch stopwatch = Stopwatch.StartNew();
 
-            var newIndexName = IndexerHelper.GetIndexNameAndDateExtension(scheduledRefreshDateTime, _indexSettings.IndexesAlias);
-            var indexProperlyCreated = _indexerHelper.CreateIndex(newIndexName);
+            var roatpProviders = _indexerHelper.LoadEntries();
 
-            if (!indexProperlyCreated)
+            var infoHasChanged = _indexerHelper.InfoHasChanged(roatpProviders);
+
+            if (infoHasChanged)
             {
-                throw new Exception($"{_name} index not created properly, exiting...");
-            }
+                _log.Info($"Something has changed, creating new scheduled {_name}");
 
-            _log.Info($"Indexing documents for {_name}.");
+                var newIndexName = IndexerHelper.GetIndexNameAndDateExtension(scheduledRefreshDateTime, _indexSettings.IndexesAlias);
+                var indexProperlyCreated = _indexerHelper.CreateIndex(newIndexName);
 
-            try
-            {
-                await _indexerHelper.IndexEntries(newIndexName).ConfigureAwait(false);
-
-                PauseWhileIndexingIsBeingRun();
-
-                var indexHasBeenCreated = _indexerHelper.IsIndexCorrectlyCreated(newIndexName);
-                if (indexHasBeenCreated)
+                if (!indexProperlyCreated)
                 {
-                    var newProviders = _indexerHelper.CheckNewProviders(newIndexName);
-
-                    _indexerHelper.SendNewProviderEvent(newProviders);
-
-                    _indexerHelper.ChangeUnderlyingIndexForAlias(newIndexName);
-
-                    _log.Debug("Swap completed...");
-
-                    _indexerHelper.DeleteOldIndexes(scheduledRefreshDateTime);
+                    throw new Exception($"{_name} index not created properly, exiting...");
                 }
 
-                stopwatch.Stop();
-                var properties = new Dictionary<string, object> { { "Alias", _indexSettings.IndexesAlias }, { "ExecutionTime", stopwatch.ElapsedMilliseconds }, { "IndexCorrectlyCreated", indexHasBeenCreated } };
-                _log.Debug($"Created {_name}", properties);
-                _log.Info($"{_name}ing complete.");
-            }
-            catch (Exception ex)
-            {
-                _log.Error(ex, "Error indexing");
+                _log.Info($"Indexing documents for {_name}.");
+
+                try
+                {
+                    await _indexerHelper.IndexEntries(newIndexName, roatpProviders).ConfigureAwait(false);
+
+                    PauseWhileIndexingIsBeingRun();
+
+                    var indexHasBeenCreated = _indexerHelper.IsIndexCorrectlyCreated(newIndexName);
+                    if (indexHasBeenCreated)
+                    {
+                        var newProviders = _indexerHelper.CheckNewProviders(newIndexName);
+
+                        _indexerHelper.SendNewProviderEvent(newProviders);
+
+                        _indexerHelper.ChangeUnderlyingIndexForAlias(newIndexName);
+
+                        _log.Debug("Swap completed...");
+                    }
+
+                    stopwatch.Stop();
+                    var properties = new Dictionary<string, object> { { "Alias", _indexSettings.IndexesAlias }, { "ExecutionTime", stopwatch.ElapsedMilliseconds }, { "IndexCorrectlyCreated", indexHasBeenCreated } };
+                    _log.Debug($"Created {_name}", properties);
+                    _log.Info($"{_name}ing complete.");
+                }
+                catch (Exception ex)
+                {
+                    _log.Error(ex, "Error indexing");
+                }
             }
         }
 
