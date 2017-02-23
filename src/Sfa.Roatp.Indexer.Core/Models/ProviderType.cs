@@ -2,7 +2,7 @@
 {
     public enum ProviderType
     {
-        Unknow = 0,
+        Unknown = 0,
         MainProvider = 1,
         SupportingProvider = 2,
         EmployerProvider = 3

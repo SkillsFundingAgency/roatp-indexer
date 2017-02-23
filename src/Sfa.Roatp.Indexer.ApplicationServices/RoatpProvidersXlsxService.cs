@@ -106,11 +106,11 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
                     case "Supporting provider":
                         return ProviderType.SupportingProvider;
                     default:
-                        return ProviderType.Unknow;
+                        return ProviderType.Unknown;
                 }
             }
 
-            return ProviderType.Unknow;
+            return ProviderType.Unknown;
         }
     }
 }
