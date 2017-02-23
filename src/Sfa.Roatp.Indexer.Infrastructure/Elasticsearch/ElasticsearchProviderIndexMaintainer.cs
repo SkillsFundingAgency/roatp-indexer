@@ -103,7 +103,8 @@ namespace Sfa.Roatp.Indexer.Infrastructure.Elasticsearch
                     .Type(Types.Type<RoatpProviderDocument>())
                     .From(0)
                     .MatchAll());
-            return (int)result.HitsMetaData.Total;
+
+            return result.HitsMetaData != null ? (int) result.HitsMetaData.Total : 0;
         }
     }
 }
