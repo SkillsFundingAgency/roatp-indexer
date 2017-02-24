@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Sfa.Roatp.Indexer.WorkerRole")]
+[assembly: AssemblyTitle("Sfa.Roatp.Indexer.Core")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Sfa.Roatp.Indexer.WorkerRole")]
+[assembly: AssemblyProduct("Sfa.Roatp.Indexer.Core")]
 [assembly: AssemblyCopyright("Copyright ©  2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("5de5ef2a-13c7-4bf1-90f9-f4d0769e2176")]
+[assembly: Guid("608fb2c4-cf48-44cf-806c-bcea20cacc9b")]
 
 // Version information for an assembly consists of the following four values:
 //
