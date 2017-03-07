@@ -97,13 +97,13 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
         {
             if (excelRange.Value != null)
             {
-                switch (excelRange.Value.ToString())
+                switch (excelRange.Value.ToString().ToLower())
                 {
-                    case "Main provider":
+                    case "main provider":
                         return ProviderType.MainProvider;
-                    case "Employer provider":
+                    case "employer provider":
                         return ProviderType.EmployerProvider;
-                    case "Supporting provider":
+                    case "supporting provider":
                         return ProviderType.SupportingProvider;
                     default:
                         return ProviderType.Unknown;
