@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FeatureToggle.Core.Fluent;
 using Nest;
+using Sfa.Roatp.Indexer.ApplicationServices.FeatureToggles;
 using Sfa.Roatp.Indexer.ApplicationServices.Settings;
 using Sfa.Roatp.Indexer.Core.Models;
 using Sfa.Roatp.Indexer.Core.Services;
@@ -130,6 +132,8 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
 
         public void SendNewProviderEvent(IEnumerable<RoatpProviderDocument> newProviders)
         {
+            if (!Is<EventsApiFeature>.Enabled) return;
+
             var roatpProviderEventTasks = new List<Task>();
 
             foreach (var roatpProviderDocument in newProviders)
