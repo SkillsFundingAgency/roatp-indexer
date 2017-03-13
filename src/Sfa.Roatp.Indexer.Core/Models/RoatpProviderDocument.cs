@@ -14,8 +14,8 @@ namespace Sfa.Roatp.Indexer.Core.Models
 
         public bool NewOrganisationWithoutFinancialTrackRecord { get; set; }
 
-        public DateTime StartDate { get; set; }
+        public DateTime? StartDate { get; set; }
 
-        public DateTime EndDate { get; set; }
+        public DateTime? EndDate { get; set; }
     }
 }

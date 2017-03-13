@@ -73,14 +73,20 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
             }
         }
 
-        private static DateTime GetDateTimeValue(ExcelRange excelRange)
+        private static DateTime? GetDateTimeValue(ExcelRange excelRange)
         {
-            if (excelRange.Value != null)
+            var value = excelRange.Value?.ToString();
+            if (!string.IsNullOrEmpty(value))
             {
-                return excelRange.Value.ToString() != string.Empty ? DateTime.FromOADate(double.Parse(excelRange.Value.ToString())) : default(DateTime);
+                if (value.Contains("/"))
+                {
+                    return DateTime.Parse(value);
+                }
+
+                return DateTime.FromOADate(double.Parse(excelRange.Value.ToString()));
             }
 
-            return default(DateTime);
+            return null;
         }
 
         private static bool GetBooleanValue(ExcelRange excelRange)
