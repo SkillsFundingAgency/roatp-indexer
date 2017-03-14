@@ -21,6 +21,7 @@ namespace Sfa.Roatp.Indexer.Infrastructure.Elasticsearch
             return new RoatpProviderDocument
             {
                 Ukprn = roatpProvider.Ukprn,
+                Name = roatpProvider.Name,
                 ContractedForNonLeviedEmployers = roatpProvider.ContractedForNonLeviedEmployers,
                 StartDate = roatpProvider.StartDate,
                 EndDate = roatpProvider.EndDate,

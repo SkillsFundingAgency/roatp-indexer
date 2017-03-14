@@ -6,6 +6,8 @@ namespace Sfa.Roatp.Indexer.Core.Models
     {
         public string Ukprn { get; set; }
 
+        public string Name { get; set; }
+
         public ProviderType ProviderType { get; set; }
 
         public bool ContractedForNonLeviedEmployers { get; set; }
