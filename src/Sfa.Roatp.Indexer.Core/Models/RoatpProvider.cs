@@ -17,6 +17,9 @@ namespace Sfa.Roatp.Indexer.Core.Models
         public DateTime? StartDate { get; set; }
 
         public DateTime? EndDate { get; set; }
+        
+        [Obsolete("This value shouldn't be trusted as it should come from UKRLP")]
+        public string Name { get; set; }
 
         public bool IsEqual(RoatpProviderDocument oldRoatpProvider)
         {

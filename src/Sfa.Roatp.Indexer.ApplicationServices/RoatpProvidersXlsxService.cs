@@ -13,6 +13,7 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
     public class RoatpProvidersXlsxService : IGetRoatpProviders
     {
         private const int UkprnPosition = 1;
+        private const int NamePosition = 2;
         private const int ProviderTypePosition = 3;
         private const int ContractedForNonLeviedEmployersPosition = 4;
         private const int ParentCompanyGuaranteePosition = 5;
@@ -61,6 +62,7 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
                 var roatpData = new RoatpProvider
                 {
                     Ukprn = roatpWorkSheet.Cells[i, UkprnPosition].Value != null ? roatpWorkSheet.Cells[i, UkprnPosition].Value.ToString() : string.Empty,
+                    Name = roatpWorkSheet.Cells[i, NamePosition].Value != null ? roatpWorkSheet.Cells[i, NamePosition].Value.ToString() : string.Empty,
                     ProviderType = GetProviderType(roatpWorkSheet.Cells[i, ProviderTypePosition]),
                     ContractedForNonLeviedEmployers = GetBooleanValue(roatpWorkSheet.Cells[i, ContractedForNonLeviedEmployersPosition]),
                     ParentCompanyGuarantee = GetBooleanValue(roatpWorkSheet.Cells[i, ParentCompanyGuaranteePosition]),
