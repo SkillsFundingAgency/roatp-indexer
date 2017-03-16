@@ -1,17 +1,25 @@
 ﻿using System.Configuration;
 using System.Linq;
+using Sfa.Roatp.Indexer.Core.Settings;
 
 namespace Sfa.Roatp.Indexer.Infrastructure.Settings
 {
     public class ElasticsearchSettings : IElasticsearchSettings
     {
-        public string RoatpProviderIndexShards => GetSetting("RoatpProviderIndexShards").FirstOrDefault();
+        private readonly IProvideSettings _settings;
 
-        public string RoatpProviderIndexReplicas => GetSetting("RoatpProviderIndexReplicas").FirstOrDefault();
+        public ElasticsearchSettings(IProvideSettings settingsProvider)
+        {
+            _settings = settingsProvider;
+        }
+
+        public string RoatpProviderIndexShards => GetSetting("ElasticSearch.IndexShards").FirstOrDefault();
+
+        public string RoatpProviderIndexReplicas => GetSetting("ElasticSearch.IndexReplicas").FirstOrDefault();
 
         private string[] GetSetting(string configName)
         {
-            var str = ConfigurationManager.AppSettings[configName];
+            var str = _settings.GetSetting(configName);
             return !string.IsNullOrEmpty(str) ? str.Split('|') : new[] { string.Empty };
         }
     }

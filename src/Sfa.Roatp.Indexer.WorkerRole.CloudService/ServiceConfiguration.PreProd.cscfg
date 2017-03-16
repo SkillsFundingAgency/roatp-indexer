@@ -4,6 +4,20 @@
     <Instances count="1" />
     <ConfigurationSettings>
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="UseDevelopmentStorage=true" />
+      <Setting name="FeatureToggle.EventsApiFeature" value="false" />
+      <Setting name="WorkerRole.RunFrequencySeconds" value="__WorkerRole.RunFrequencySeconds__" />
+      <Setting name="WorkerRole.EnvironmentName" value="__WorkerRole.EnvironmentName__" />
+
+      <Setting name="ElasticSearch.IndexShards" value="1" />
+      <Setting name="ElasticSearch.IndexReplicas" value="0" />
+      <Setting name="ElasticSearch.ServerUrls" value="__ElasticSearch.ServerUrls__" />
+
+      <Setting name="EventsApi.BaseUrl" value="__EventsApi.BaseUrl__" />
+      <Setting name="EventsApi.ClientToken" value="__EventsApi.ClientToken__" />
+
+      <Setting name="Vsts.RoatpUrl" value="__Vsts.RoatpUrl__" />
+      <Setting name="Vsts.GitUsername" value="__Vsts.GitUsername__"/>
+      <Setting name="Vsts.GitPassword" value="__Vsts.GitPassword__"/>
     </ConfigurationSettings>
   </Role>
   <NetworkConfiguration>

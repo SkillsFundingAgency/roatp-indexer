@@ -14,7 +14,7 @@ namespace Sfa.Roatp.Indexer.ApplicationServices.DependencyResolution
             For<IAppServiceSettings>().Use<AppServiceSettings>();
             For<IIndexerService<IMaintainProviderIndex>>().Use<IndexerService<IMaintainProviderIndex>>();
             For<IGenericIndexerHelper<IMaintainProviderIndex>>().Use<ProviderIndexer>();
-            For<IEventsApiClientConfiguration>().Use<EventsConfig>();
+            For<IEventsApiClientConfiguration>().Use<EventsSettings>();
         }
     }
 }

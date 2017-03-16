@@ -15,11 +15,11 @@ namespace Sfa.Roatp.Indexer.Infrastructure.Settings
             _settingsProvider = settingsProvider;
         }
 
-        public string EnvironmentName => ConfigurationManager.AppSettings["EnvironmentName"];
+        public string EnvironmentName => ConfigurationManager.AppSettings["WorkerRole.EnvironmentName"];
 
-        public string ApplicationName => ConfigurationManager.AppSettings["ApplicationName"];
+        public string ApplicationName => ConfigurationManager.AppSettings["WorkerRole.ApplicationName"];
 
-        public IEnumerable<Uri> ElasticServerUrls => GetElasticIPs("ElasticServerUrls");
+        public IEnumerable<Uri> ElasticServerUrls => GetElasticIPs("ElasticSearch.ServerUrls");
 
         private IEnumerable<Uri> GetElasticIPs(string appSetting)
         {

@@ -46,6 +46,10 @@
       <HintPath>..\packages\FeatureToggle.Core.3.5.0\lib\portable-net40+sl50+wp81+wpa+win\FeatureToggle.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Configuration, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.WindowsAzure.ConfigurationManager.3.2.1\lib\net40\Microsoft.WindowsAzure.Configuration.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Nest, Version=2.0.0.0, Culture=neutral, PublicKeyToken=96c599bbe3e70f5d, processorArchitecture=MSIL">
       <HintPath>..\packages\NEST.2.4.1\lib\net45\Nest.dll</HintPath>
       <Private>True</Private>
@@ -78,7 +82,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DependencyResolution\ApplicationServicesRegistry.cs" />
-    <Compile Include="Events\EventsConfig.cs" />
+    <Compile Include="Events\EventsSettings.cs" />
     <Compile Include="FeatureToggles\EventsApiFeature.cs" />
     <Compile Include="IElasticsearchMapper.cs" />
     <Compile Include="RoatpProvidersXlsxService.cs" />

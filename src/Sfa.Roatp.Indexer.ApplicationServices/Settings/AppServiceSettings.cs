@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.Azure;
 using Sfa.Roatp.Indexer.Core.Settings;
 
 namespace Sfa.Roatp.Indexer.ApplicationServices.Settings
@@ -12,10 +13,10 @@ namespace Sfa.Roatp.Indexer.ApplicationServices.Settings
             _settings = settingsProvider;
         }
 
-        public string VstsRoatpUrl => _settings.GetSetting("VstsRoatpUrl");
+        public string VstsRoatpUrl => string.Format(_settings.GetSetting("Vsts.RoatpUrlFormat"), _settings.GetSetting("WorkerRole.EnvironmentName"));
 
-        public string GitUsername => _settings.GetSetting("GitUsername");
+        public string GitUsername => _settings.GetSetting("Vsts.GitUsername");
 
-        public string GitPassword => _settings.GetSetting("GitPassword");
+        public string GitPassword => _settings.GetSetting("Vsts.GitPassword");
     }
 }

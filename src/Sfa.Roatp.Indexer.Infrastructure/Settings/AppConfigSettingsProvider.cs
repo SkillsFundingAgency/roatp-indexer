@@ -1,4 +1,5 @@
 ﻿using System.Configuration;
+using Microsoft.Azure;
 using Sfa.Roatp.Indexer.Core.Settings;
 
 namespace Sfa.Roatp.Indexer.Infrastructure.Settings
@@ -14,7 +15,7 @@ namespace Sfa.Roatp.Indexer.Infrastructure.Settings
 
         public string GetSetting(string settingKey)
         {
-            var setting = ConfigurationManager.AppSettings[settingKey];
+            var setting = CloudConfigurationManager.GetSetting(settingKey);
 
             if (string.IsNullOrWhiteSpace(setting))
             {

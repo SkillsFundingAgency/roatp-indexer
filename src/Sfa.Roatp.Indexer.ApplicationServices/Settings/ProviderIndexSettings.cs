@@ -1,11 +1,20 @@
 ﻿using System.Configuration;
+using Microsoft.Azure;
+using Sfa.Roatp.Indexer.Core.Settings;
 
 namespace Sfa.Roatp.Indexer.ApplicationServices.Settings
 {
     public class ProviderIndexSettings : IIndexSettings<IMaintainProviderIndex>
     {
-        public string IndexesAlias => ConfigurationManager.AppSettings["RoatpProviderIndexAlias"];
+        private readonly IProvideSettings _settings;
 
-        public string PauseTime => ConfigurationManager.AppSettings["PauseTime"];
+        public ProviderIndexSettings(IProvideSettings settingsProvider)
+        {
+            _settings = settingsProvider;
+        }
+
+        public string IndexesAlias => string.Format(_settings.GetSetting("ElasticSearch.IndexAliasFormat"), _settings.GetSetting("EnvironmentName"));
+
+        public string PauseTime => _settings.GetSetting("PauseTime");
     }
 }

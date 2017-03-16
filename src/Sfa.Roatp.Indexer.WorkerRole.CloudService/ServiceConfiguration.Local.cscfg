@@ -4,6 +4,21 @@
     <Instances count="1" />
     <ConfigurationSettings>
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="UseDevelopmentStorage=true" />
+      <Setting name="FeatureToggle.EventsApiFeature" value="false" />
+
+      <Setting name="WorkerRole.RunFrequencySeconds" value="1000" />
+      <Setting name="WorkerRole.EnvironmentName" value="local" />
+
+      <Setting name="ElasticSearch.IndexShards" value="1" />
+      <Setting name="ElasticSearch.IndexReplicas" value="0" />
+      <Setting name="ElasticSearch.ServerUrls" value="http://127.0.0.1:9200,http://192.168.99.100:9200,http://docker.local:9200" />
+
+      <Setting name="EventsApi.BaseUrl" value="" />
+      <Setting name="EventsApi.ClientToken" value="" />
+
+      <Setting name="Vsts.RoatpUrl" value="" />
+      <Setting name="Vsts.GitUsername" value=""/>
+      <Setting name="Vsts.GitPassword" value=""/>
     </ConfigurationSettings>
   </Role>
 </ServiceConfiguration>

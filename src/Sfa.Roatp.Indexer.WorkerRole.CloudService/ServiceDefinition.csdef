@@ -3,6 +3,20 @@
   <WorkerRole name="Sfa.Roatp.Indexer.WorkerRole" vmsize="Small">
     <ConfigurationSettings>
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
+      <Setting name="FeatureToggle.EventsApiFeature" />
+      <Setting name="WorkerRole.RunFrequencySeconds"/>
+      <Setting name="WorkerRole.EnvironmentName" />
+
+      <Setting name="ElasticSearch.IndexShards" />
+      <Setting name="ElasticSearch.IndexReplicas" />
+      <Setting name="ElasticSearch.ServerUrls" />
+
+      <Setting name="EventsApi.BaseUrl" />
+      <Setting name="EventsApi.ClientToken" />
+
+      <Setting name="Vsts.RoatpUrl" />
+      <Setting name="Vsts.GitUsername" />
+      <Setting name="Vsts.GitPassword" />
     </ConfigurationSettings>
   </WorkerRole>
 </ServiceDefinition>
