@@ -12,7 +12,7 @@ namespace Sfa.Roatp.Indexer.Infrastructure.DependencyResolution
     {
         public InfrastructureRegistry()
         {
-            For<ILog>().Use(x => new NLogService<IMaintainProviderIndex>(x.ParentType, x.GetInstance<IInfrastructureSettings>())).AlwaysUnique();
+            For<ILog>().Use(x => new NLogService(x.ParentType, x.GetInstance<IInfrastructureSettings>())).AlwaysUnique();
             For<IInfrastructureSettings>().Use<InfrastructureSettings>();
             For<IMaintainProviderIndex>().Use<ElasticsearchProviderIndexMaintainer>();
             For<IElasticsearchSettings>().Use<ElasticsearchSettings>(); 
