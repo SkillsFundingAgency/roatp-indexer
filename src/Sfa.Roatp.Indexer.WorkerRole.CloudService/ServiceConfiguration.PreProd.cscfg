@@ -4,7 +4,7 @@
     <Instances count="1" />
     <ConfigurationSettings>
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="UseDevelopmentStorage=true" />
-      <Setting name="FeatureToggle.EventsApiFeature" value="false" />
+      <Setting name="FeatureToggle.EventsApiFeature" value="__FeatureToggle.EventsApiFeature__" />
       <Setting name="WorkerRole.RunFrequencySeconds" value="__WorkerRole.RunFrequencySeconds__" />
       <Setting name="WorkerRole.EnvironmentName" value="__WorkerRole.EnvironmentName__" />
 
