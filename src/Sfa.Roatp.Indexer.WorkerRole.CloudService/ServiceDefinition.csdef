@@ -14,7 +14,7 @@
       <Setting name="EventsApi.BaseUrl" />
       <Setting name="EventsApi.ClientToken" />
 
-      <Setting name="Vsts.RoatpUrl" />
+      <Setting name="Vsts.RoatpUrlFormat" />
       <Setting name="Vsts.GitUsername" />
       <Setting name="Vsts.GitPassword" />
     </ConfigurationSettings>
