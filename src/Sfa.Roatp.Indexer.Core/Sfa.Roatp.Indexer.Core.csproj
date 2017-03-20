@@ -41,9 +41,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Exceptions\ConnectionException.cs" />
-    <Compile Include="Logging\ILog.cs" />
-    <Compile Include="Logging\Models\ElasticSearchLogEntry.cs" />
-    <Compile Include="Logging\Models\ILogEntry.cs" />
     <Compile Include="Models\ProviderType.cs" />
     <Compile Include="Models\RoatpProvider.cs" />
     <Compile Include="Models\RoatpProviderDocument.cs" />

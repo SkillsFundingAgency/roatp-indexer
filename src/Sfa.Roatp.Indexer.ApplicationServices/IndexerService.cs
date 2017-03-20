@@ -5,7 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Sfa.Roatp.Indexer.ApplicationServices.Settings;
 using Sfa.Roatp.Indexer.Core.Services;
-using Sfa.Roatp.Registry.Core.Logging;
+using SFA.DAS.NLog.Logger;
 
 namespace Sfa.Roatp.Indexer.ApplicationServices
 {

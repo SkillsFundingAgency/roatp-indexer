@@ -5,16 +5,14 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Elasticsearch.Net;
 using Nest;
-using Sfa.Roatp.Indexer.Core.Logging.Models;
-using Sfa.Roatp.Registry.Core.Logging;
+using SFA.DAS.NLog.Logger;
 
 namespace Sfa.Roatp.Indexer.Infrastructure.Elasticsearch
 {
     public class ElasticsearchCustomClient : IElasticsearchCustomClient
     {
-        private readonly ILog _logger;
-
         private readonly IElasticClient _client;
+        private ILog _logger;
 
         public ElasticsearchCustomClient(IElasticsearchClientFactory elasticsearchClientFactory, ILog logger)
         {
@@ -137,16 +135,16 @@ namespace Sfa.Roatp.Indexer.Infrastructure.Elasticsearch
                 body = System.Text.Encoding.Default.GetString(apiCallDetails.RequestBodyInBytes);
             }
 
-            var logEntry = new ElasticSearchLogEntry
+            var properties = new Dictionary<string, object>
             {
-                ReturnCode = apiCallDetails?.HttpStatusCode,
-                SearchTime = took,
-                NetworkTime = networkTime,
-                Url = apiCallDetails?.Uri?.AbsoluteUri,
-                Body = body
+                {"ReturnCode", apiCallDetails?.HttpStatusCode},
+                {"SearchTime", took},
+                {"NetworkTime", networkTime},
+                {"Url", apiCallDetails?.Uri?.AbsoluteUri},
+                {"Body", body}
             };
 
-            _logger.Debug($"ElasticsearchQuery: {identifier}", logEntry);
+            _logger.Debug($"ElasticsearchQuery: {identifier}", properties);
         }
     }
 }

@@ -7,9 +7,9 @@ using Sfa.Roatp.Indexer.ApplicationServices.FeatureToggles;
 using Sfa.Roatp.Indexer.ApplicationServices.Settings;
 using Sfa.Roatp.Indexer.Core.Models;
 using Sfa.Roatp.Indexer.Core.Services;
-using Sfa.Roatp.Registry.Core.Logging;
 using SFA.DAS.Events.Api.Client.Configuration;
 using SFA.DAS.Events.Api.Types;
+using SFA.DAS.NLog.Logger;
 
 namespace Sfa.Roatp.Indexer.ApplicationServices
 {

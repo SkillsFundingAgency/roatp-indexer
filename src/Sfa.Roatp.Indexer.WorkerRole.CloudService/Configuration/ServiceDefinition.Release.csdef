@@ -17,6 +17,8 @@
       <Setting name="Vsts.RoatpUrlFormat" />
       <Setting name="Vsts.GitUsername" />
       <Setting name="Vsts.GitPassword" />
+
+      <Setting name="Logging.RedisConnectionString"/>
     </ConfigurationSettings>
   </WorkerRole>
 </ServiceDefinition>

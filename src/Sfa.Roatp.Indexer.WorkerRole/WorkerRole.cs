@@ -2,11 +2,10 @@ using System;
 using System.Diagnostics;
 using System.Net;
 using System.Threading;
-using System.Threading.Tasks;
 using Microsoft.WindowsAzure.ServiceRuntime;
 using Sfa.Roatp.Indexer.WorkerRole.DependencyResolution;
 using Sfa.Roatp.Indexer.WorkerRole.Settings;
-using Sfa.Roatp.Registry.Core.Logging;
+using SFA.DAS.NLog.Logger;
 using StructureMap;
 
 namespace Sfa.Roatp.Indexer.WorkerRole
@@ -21,7 +20,7 @@ namespace Sfa.Roatp.Indexer.WorkerRole
 
         public override void Run()
         {
-            Trace.TraceInformation("Sfa.Roatp.Indexer.WorkerRole is running");
+            Trace.TraceInformation(GetType().FullName + " is running");
 
             while (true)
             {
@@ -52,14 +51,14 @@ namespace Sfa.Roatp.Indexer.WorkerRole
 
             bool result = base.OnStart();
 
-            Trace.TraceInformation("Sfa.Roatp.Indexer.WorkerRole has been started");
+            Trace.TraceInformation(GetType().FullName + " has been started");
 
             return result;
         }
 
         public override void OnStop()
         {
-            Trace.TraceInformation("Sfa.Roatp.Indexer.WorkerRole is stopping");
+            Trace.TraceInformation(GetType().FullName + " is stopping");
 
             this.cancellationTokenSource.Cancel();
             this.runCompleteEvent.WaitOne();
@@ -67,16 +66,6 @@ namespace Sfa.Roatp.Indexer.WorkerRole
             base.OnStop();
 
             Trace.TraceInformation("Sfa.Roatp.Indexer.WorkerRole has stopped");
-        }
-
-        private async Task RunAsync(CancellationToken cancellationToken)
-        {
-            // TODO: Replace the following with your own logic.
-            while (!cancellationToken.IsCancellationRequested)
-            {
-                Trace.TraceInformation("Working");
-                await Task.Delay(1000);
-            }
         }
     }
 }
