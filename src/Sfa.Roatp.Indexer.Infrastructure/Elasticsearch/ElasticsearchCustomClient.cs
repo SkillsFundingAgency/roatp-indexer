@@ -80,11 +80,12 @@ namespace Sfa.Roatp.Indexer.Infrastructure.Elasticsearch
             return result;
         }
 
-        public IBulkAliasResponse Alias(Func<BulkAliasDescriptor, IBulkAliasRequest> selector, string callerName = "")
+        public IBulkAliasResponse Alias(string aliasName, string indexName, string callerName = "")
         {
+            Func<BulkAliasDescriptor, IBulkAliasRequest> selector = a => a.Add(add => add.Index(indexName).Alias(aliasName));
             var timer = Stopwatch.StartNew();
             var result = _client.Alias(selector);
-            SendLog(result.ApiCall, null, timer.ElapsedMilliseconds, $"Alias {callerName}");
+            SendLog(result.ApiCall, null, timer.ElapsedMilliseconds, $"Alias {aliasName} > {indexName}");
             return result;
         }
 

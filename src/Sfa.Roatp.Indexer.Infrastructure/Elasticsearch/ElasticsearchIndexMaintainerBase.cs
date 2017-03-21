@@ -36,7 +36,7 @@ namespace Sfa.Roatp.Indexer.Infrastructure.Elasticsearch
 
         public virtual void CreateIndexAlias(string aliasName, string indexName)
         {
-            Client.Alias(a => a.Add(add => add.Index(indexName).Alias(aliasName)));
+            Client.Alias(aliasName, indexName);
         }
 
         public virtual bool DeleteIndex(string indexName)

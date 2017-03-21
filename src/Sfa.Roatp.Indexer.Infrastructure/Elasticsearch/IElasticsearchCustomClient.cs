@@ -24,7 +24,7 @@ namespace Sfa.Roatp.Indexer.Infrastructure.Elasticsearch
 
         IExistsResponse AliasExists(Func<AliasExistsDescriptor, IAliasExistsRequest> selector, [CallerMemberName] string callerName = "");
 
-        IBulkAliasResponse Alias(Func<BulkAliasDescriptor, IBulkAliasRequest> selector, [CallerMemberName] string callerName = "");
+        IBulkAliasResponse Alias(string aliasName, string indexName, [CallerMemberName] string callerName = "");
 
         IBulkAliasResponse Alias(IBulkAliasRequest request, [CallerMemberName] string callerName = "");
 
