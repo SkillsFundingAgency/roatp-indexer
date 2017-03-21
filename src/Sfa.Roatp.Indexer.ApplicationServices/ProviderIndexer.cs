@@ -8,7 +8,6 @@ using Sfa.Roatp.Indexer.ApplicationServices.Settings;
 using Sfa.Roatp.Indexer.Core.Models;
 using Sfa.Roatp.Indexer.Core.Services;
 using SFA.DAS.Events.Api.Client.Configuration;
-using SFA.DAS.Events.Api.Types;
 using SFA.DAS.NLog.Logger;
 
 namespace Sfa.Roatp.Indexer.ApplicationServices
@@ -18,24 +17,21 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
         private readonly IMaintainProviderIndex _indexMaintainer;
 
         private readonly IGetRoatpProviders _providerDataService;
-        private readonly IEventsApiSettings _eventsApiClientConfiguration;
+        private readonly IConsumeProviderEvents _providerEventConsumer;
 
         private readonly IIndexSettings<IMaintainProviderIndex> _settings;
         private readonly ILog _log;
-
-        private const string NewRoatpProviderContractType = "ProviderAgreement";
-        private const string NewRoatpProviderEvent = "INITIATED";
 
         public ProviderIndexer(
             IIndexSettings<IMaintainProviderIndex> settings,
             IMaintainProviderIndex indexMaintainer,
             IGetRoatpProviders providerDataService,
-            IEventsApiSettings eventsApiClientConfiguration,
+            IConsumeProviderEvents providerEventConsumer,
             ILog log)
         {
             _settings = settings;
             _providerDataService = providerDataService;
-            _eventsApiClientConfiguration = eventsApiClientConfiguration;
+            _providerEventConsumer = providerEventConsumer;
             _indexMaintainer = indexMaintainer;
             _log = log;
         }
@@ -65,6 +61,16 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
             }
 
             return false;
+        }
+
+        public void SendNewProviderEvents(string newIndexName)
+        {
+            var eventsList = new List<Task>();
+            foreach (var provider in CheckNewProviders(newIndexName))
+            {
+                eventsList.Add(_providerEventConsumer.NewProvider(provider.Ukprn));
+            }
+            Task.WaitAll(eventsList.ToArray());
         }
 
         public bool CreateIndex(string indexName)
@@ -113,6 +119,7 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
         public async Task IndexEntries(string indexName, IEnumerable<RoatpProvider> roatpProviders)
         {
             var bulkApiProviderTasks = new List<Task<IBulkResponse>>();
+            roatpProviders = roatpProviders.ToList();
 
             _log.Debug("Indexing " + roatpProviders.Count() + " RoATP providers");
             bulkApiProviderTasks.AddRange(_indexMaintainer.IndexRoatpProviders(indexName, roatpProviders));
@@ -128,23 +135,6 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
             return (from roatpProviderDocument in actualRoatpProviders
                     let roatpProvider = oldProviders.FirstOrDefault(x => x.Ukprn == roatpProviderDocument.Ukprn)
                     where roatpProvider == null select roatpProviderDocument);
-        }
-
-        public void SendNewProviderEvent(IEnumerable<RoatpProviderDocument> newProviders)
-        {
-            if (_eventsApiClientConfiguration.Enabled)
-            {
-                var roatpProviderEventTasks = new List<Task>();
-
-                foreach (var roatpProviderDocument in newProviders)
-                {
-                    var agreementEvent = new AgreementEvent { ContractType = NewRoatpProviderContractType, Event = NewRoatpProviderEvent, ProviderId = roatpProviderDocument.Ukprn };
-                    var task = new SFA.DAS.Events.Api.Client.EventsApi(_eventsApiClientConfiguration).CreateAgreementEvent(agreementEvent);
-                    roatpProviderEventTasks.Add(task);
-                }
-
-                Task.WaitAll(roatpProviderEventTasks.ToArray());
-            }
         }
     }
 }

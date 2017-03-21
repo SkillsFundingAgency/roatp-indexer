@@ -17,10 +17,7 @@ namespace Sfa.Roatp.Indexer.Core.Services
 
         void ChangeUnderlyingIndexForAlias(string newIndexName);
 
-        IEnumerable<RoatpProviderDocument> CheckNewProviders(string newIndexName);
-
-        void SendNewProviderEvent(IEnumerable<RoatpProviderDocument> newProviders);
-
         bool HasRoatpInfoChanged(IEnumerable<RoatpProvider> roatpProviders);
+        void SendNewProviderEvents(string newIndexName);
     }
 }

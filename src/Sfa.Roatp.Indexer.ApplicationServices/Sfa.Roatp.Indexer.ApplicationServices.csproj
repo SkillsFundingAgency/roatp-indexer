@@ -89,6 +89,7 @@
     <Compile Include="Events\IEventsApiSettings.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="FeatureToggles\EventsApiFeature.cs" />
+    <Compile Include="Events\IConsumeProviderEvents.cs" />
     <Compile Include="IElasticsearchMapper.cs" />
     <Compile Include="RoatpProvidersXlsxService.cs" />
     <Compile Include="IGetRoatpProviders.cs" />

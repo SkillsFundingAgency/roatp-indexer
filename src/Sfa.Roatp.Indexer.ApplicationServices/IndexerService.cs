@@ -62,13 +62,11 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
                     var indexHasBeenCreated = _indexerHelper.IsIndexCorrectlyCreated(newIndexName);
                     if (indexHasBeenCreated)
                     {
-                        var newProviders = _indexerHelper.CheckNewProviders(newIndexName);
-
-                        _indexerHelper.SendNewProviderEvent(newProviders);
-
                         _indexerHelper.ChangeUnderlyingIndexForAlias(newIndexName);
 
                         _log.Debug("Swap completed...");
+
+                        _indexerHelper.SendNewProviderEvents(newIndexName);
                     }
 
                     stopwatch.Stop();
