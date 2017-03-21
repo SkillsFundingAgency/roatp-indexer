@@ -4,6 +4,6 @@
     {
         string IndexesAlias { get; }
 
-        int PauseTime { get; }
+        int PauseAfterIndexing { get; }
     }
 }

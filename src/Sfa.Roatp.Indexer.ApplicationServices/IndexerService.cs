@@ -57,7 +57,8 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
                 {
                     await _indexerHelper.IndexEntries(newIndexName, roatpProviders).ConfigureAwait(false);
 
-                    PauseWhileIndexingIsBeingRun();
+                    Thread.Sleep(_indexSettings.PauseAfterIndexing);
+
 
                     var indexHasBeenCreated = _indexerHelper.IsIndexCorrectlyCreated(newIndexName);
                     if (indexHasBeenCreated)
@@ -79,12 +80,6 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
                     _log.Error(ex, ex.Message);
                 }
             }
-        }
-
-        private void PauseWhileIndexingIsBeingRun()
-        {
-            var time = _indexSettings.PauseTime;
-            Thread.Sleep(int.Parse(time));
         }
     }
 }
