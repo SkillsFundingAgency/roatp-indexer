@@ -8,7 +8,5 @@ namespace Sfa.Roatp.Indexer.Infrastructure.Settings
         string EnvironmentName { get; }
 
         IEnumerable<Uri> ElasticServerUrls { get; }
-
-        string ApplicationName { get; }
     }
 }

@@ -17,8 +17,6 @@ namespace Sfa.Roatp.Indexer.Infrastructure.Settings
 
         public string EnvironmentName => _settingsProvider.GetSetting("WorkerRole.EnvironmentName");
 
-        public string ApplicationName => ConfigurationManager.AppSettings["WorkerRole.ApplicationName"];
-
         public IEnumerable<Uri> ElasticServerUrls => GetElasticIPs("ElasticSearch.ServerUrls");
 
         private IEnumerable<Uri> GetElasticIPs(string appSetting)
