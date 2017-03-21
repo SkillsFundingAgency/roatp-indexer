@@ -13,7 +13,7 @@ namespace Sfa.Roatp.Indexer.ApplicationServices.Settings
             _settings = settingsProvider;
         }
 
-        public string IndexesAlias => string.Format(_settings.GetSetting("ElasticSearch.IndexAliasFormat"), _settings.GetSetting("EnvironmentName"));
+        public string IndexesAlias => string.Format(_settings.GetSetting("ElasticSearch.IndexAliasFormat"), _settings.GetSetting("WorkerRole.EnvironmentName"));
 
         public string PauseTime => _settings.GetSetting("PauseTime");
     }
