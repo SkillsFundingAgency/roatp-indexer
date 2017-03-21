@@ -19,7 +19,7 @@ namespace Sfa.Roatp.Indexer.WorkerRole
 
         public override void Run()
         {
-            _logger.Info(GetType().FullName + " is running");
+            _logger.Info("Worker role is running");
 
             while (true)
             {
@@ -50,21 +50,21 @@ namespace Sfa.Roatp.Indexer.WorkerRole
 
             bool result = base.OnStart();
 
-            _logger.Info(GetType().FullName + " has been started");
+            _logger.Info("Worker role has been started");
 
             return result;
         }
 
         public override void OnStop()
         {
-            _logger.Info(GetType().FullName + " is stopping");
+            _logger.Info("Worker role is stopping");
 
             this.cancellationTokenSource.Cancel();
             this.runCompleteEvent.WaitOne();
 
             base.OnStop();
 
-            _logger.Info(GetType().FullName + " has stopped");
+            _logger.Info("Worker role has stopped");
         }
     }
 }
