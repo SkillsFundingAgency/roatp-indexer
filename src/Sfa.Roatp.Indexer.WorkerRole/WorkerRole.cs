@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics;
 using System.Net;
 using System.Threading;
 using Microsoft.WindowsAzure.ServiceRuntime;
@@ -20,7 +19,7 @@ namespace Sfa.Roatp.Indexer.WorkerRole
 
         public override void Run()
         {
-            Trace.TraceInformation(GetType().FullName + " is running");
+            _logger.Info(GetType().FullName + " is running");
 
             while (true)
             {
@@ -30,7 +29,7 @@ namespace Sfa.Roatp.Indexer.WorkerRole
                 }
                 catch (Exception ex)
                 {
-                    _logger.Error(ex, "Exception worker role");
+                    _logger.Error(ex, ex.Message);
                 }
 
                 Thread.Sleep(TimeSpan.FromSeconds(double.Parse(_commonSettings.WorkerRolePauseTime ?? "6000")));
@@ -51,21 +50,21 @@ namespace Sfa.Roatp.Indexer.WorkerRole
 
             bool result = base.OnStart();
 
-            Trace.TraceInformation(GetType().FullName + " has been started");
+            _logger.Info(GetType().FullName + " has been started");
 
             return result;
         }
 
         public override void OnStop()
         {
-            Trace.TraceInformation(GetType().FullName + " is stopping");
+            _logger.Info(GetType().FullName + " is stopping");
 
             this.cancellationTokenSource.Cancel();
             this.runCompleteEvent.WaitOne();
 
             base.OnStop();
 
-            Trace.TraceInformation("Sfa.Roatp.Indexer.WorkerRole has stopped");
+            _logger.Info(GetType().FullName + " has stopped");
         }
     }
 }

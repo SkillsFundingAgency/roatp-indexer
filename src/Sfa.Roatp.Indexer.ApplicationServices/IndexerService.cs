@@ -78,7 +78,7 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
                 }
                 catch (Exception ex)
                 {
-                    _log.Error(ex, "Error indexing");
+                    _log.Error(ex, ex.Message);
                 }
             }
         }
