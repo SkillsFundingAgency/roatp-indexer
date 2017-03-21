@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using FeatureToggle.Core.Fluent;
 using Nest;
+using Sfa.Roatp.Indexer.ApplicationServices.Events;
 using Sfa.Roatp.Indexer.ApplicationServices.FeatureToggles;
 using Sfa.Roatp.Indexer.ApplicationServices.Settings;
 using Sfa.Roatp.Indexer.Core.Models;
@@ -18,7 +18,7 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
         private readonly IMaintainProviderIndex _indexMaintainer;
 
         private readonly IGetRoatpProviders _providerDataService;
-        private readonly IEventsApiClientConfiguration _eventsApiClientConfiguration;
+        private readonly IEventsApiSettings _eventsApiClientConfiguration;
 
         private readonly IIndexSettings<IMaintainProviderIndex> _settings;
         private readonly ILog _log;
@@ -30,7 +30,7 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
             IIndexSettings<IMaintainProviderIndex> settings,
             IMaintainProviderIndex indexMaintainer,
             IGetRoatpProviders providerDataService,
-            IEventsApiClientConfiguration eventsApiClientConfiguration,
+            IEventsApiSettings eventsApiClientConfiguration,
             ILog log)
         {
             _settings = settings;
@@ -132,18 +132,19 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
 
         public void SendNewProviderEvent(IEnumerable<RoatpProviderDocument> newProviders)
         {
-            if (!Is<EventsApiFeature>.Enabled) return;
-
-            var roatpProviderEventTasks = new List<Task>();
-
-            foreach (var roatpProviderDocument in newProviders)
+            if (_eventsApiClientConfiguration.Enabled)
             {
-                var agreementEvent = new AgreementEvent { ContractType = NewRoatpProviderContractType, Event = NewRoatpProviderEvent, ProviderId = roatpProviderDocument.Ukprn };
-                var task = new SFA.DAS.Events.Api.Client.EventsApi(_eventsApiClientConfiguration).CreateAgreementEvent(agreementEvent);
-                roatpProviderEventTasks.Add(task);
-            }
+                var roatpProviderEventTasks = new List<Task>();
 
-            Task.WaitAll(roatpProviderEventTasks.ToArray());
+                foreach (var roatpProviderDocument in newProviders)
+                {
+                    var agreementEvent = new AgreementEvent { ContractType = NewRoatpProviderContractType, Event = NewRoatpProviderEvent, ProviderId = roatpProviderDocument.Ukprn };
+                    var task = new SFA.DAS.Events.Api.Client.EventsApi(_eventsApiClientConfiguration).CreateAgreementEvent(agreementEvent);
+                    roatpProviderEventTasks.Add(task);
+                }
+
+                Task.WaitAll(roatpProviderEventTasks.ToArray());
+            }
         }
     }
 }
