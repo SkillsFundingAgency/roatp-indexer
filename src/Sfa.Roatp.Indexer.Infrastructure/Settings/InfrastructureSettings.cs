@@ -15,7 +15,7 @@ namespace Sfa.Roatp.Indexer.Infrastructure.Settings
             _settingsProvider = settingsProvider;
         }
 
-        public string EnvironmentName => ConfigurationManager.AppSettings["WorkerRole.EnvironmentName"];
+        public string EnvironmentName => _settingsProvider.GetSetting("WorkerRole.EnvironmentName");
 
         public string ApplicationName => ConfigurationManager.AppSettings["WorkerRole.ApplicationName"];
 
