@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Sfa.Roatp.Indexer.ApplicationServices.Settings;
@@ -34,7 +35,7 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
 
             Stopwatch stopwatch = Stopwatch.StartNew();
 
-            var roatpProviders = _indexerHelper.LoadEntries();
+            var roatpProviders = _indexerHelper.LoadEntries().ToList();
 
             var infoHasChanged = _indexerHelper.HasRoatpInfoChanged(roatpProviders);
 
