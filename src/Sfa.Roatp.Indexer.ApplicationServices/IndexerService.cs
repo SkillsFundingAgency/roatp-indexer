@@ -35,13 +35,15 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
 
             Stopwatch stopwatch = Stopwatch.StartNew();
 
+            _log.Info("Checking for updates to ROATP");
+
             var roatpProviders = _indexerHelper.LoadEntries().ToList();
 
             var infoHasChanged = _indexerHelper.HasRoatpInfoChanged(roatpProviders);
 
             if (infoHasChanged)
             {
-                _log.Info($"Something has changed, creating new scheduled {_name}");
+                _log.Info($"Update to ROATP spreadsheet detected");
 
                 var newIndexName = IndexerHelper.GetIndexNameAndDateExtension(scheduledRefreshDateTime, _indexSettings.IndexesAlias);
                 var indexProperlyCreated = _indexerHelper.CreateIndex(newIndexName);
@@ -50,8 +52,6 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
                 {
                     throw new Exception($"{_name} index not created properly, exiting...");
                 }
-
-                _log.Info($"Indexing documents for {_name}.");
 
                 try
                 {
