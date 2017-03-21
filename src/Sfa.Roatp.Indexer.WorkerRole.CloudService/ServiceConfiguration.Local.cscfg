@@ -8,6 +8,8 @@
 
       <Setting name="WorkerRole.RunFrequencySeconds" value="1000" />
       <Setting name="WorkerRole.EnvironmentName" value="local" />
+      <Setting name="WorkerRole.PauseAfterIndexing" value="10" />
+
 
       <Setting name="ElasticSearch.IndexShards" value="1" />
       <Setting name="ElasticSearch.IndexReplicas" value="0" />

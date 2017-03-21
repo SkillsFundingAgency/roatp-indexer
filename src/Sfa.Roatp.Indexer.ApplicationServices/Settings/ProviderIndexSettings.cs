@@ -15,6 +15,6 @@ namespace Sfa.Roatp.Indexer.ApplicationServices.Settings
 
         public string IndexesAlias => string.Format(_settings.GetSetting("ElasticSearch.IndexAliasFormat"), _settings.GetSetting("WorkerRole.EnvironmentName")).ToLower();
 
-        public string PauseTime => _settings.GetSetting("WorkerRole.RunFrequencySeconds");
+        public int PauseTime => int.Parse(_settings.GetSetting("WorkerRole.PauseAfterIndexing") ?? "2" );
     }
 }
