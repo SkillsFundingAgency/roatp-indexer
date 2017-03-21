@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Elasticsearch.Net;
 using Nest;
+using Sfa.Roatp.Indexer.ApplicationServices.Extensions;
 using SFA.DAS.NLog.Logger;
 
 namespace Sfa.Roatp.Indexer.Infrastructure.Elasticsearch
@@ -26,7 +27,7 @@ namespace Sfa.Roatp.Indexer.Infrastructure.Elasticsearch
             var timer = Stopwatch.StartNew();
             var result = _client.Search(selector);
 
-            SendLog(result.ApiCall, result.Took, timer.ElapsedMilliseconds, $"Elasticsearch.Search.{callerName}");
+            SendLog(result.ApiCall, result.Took, timer.ElapsedMilliseconds, $"Search : {callerName.CamelCaseToSentence()}");
             return result;
         }
 
@@ -34,7 +35,7 @@ namespace Sfa.Roatp.Indexer.Infrastructure.Elasticsearch
         {
             var timer = Stopwatch.StartNew();
             var result = _client.IndexExists(index);
-            SendLog(result.ApiCall, null, timer.ElapsedMilliseconds, $"Elasticsearch.IndexExists.{callerName}");
+            SendLog(result.ApiCall, null, timer.ElapsedMilliseconds, $"Index Exists {index.Name}");
             return result;
         }
 
@@ -42,7 +43,7 @@ namespace Sfa.Roatp.Indexer.Infrastructure.Elasticsearch
         {
             var timer = Stopwatch.StartNew();
             var result = _client.DeleteIndex(index);
-            SendLog(result.ApiCall, null, timer.ElapsedMilliseconds, $"Elasticsearch.DeleteIndex.{callerName}");
+            SendLog(result.ApiCall, null, timer.ElapsedMilliseconds, $"Delete Index {index.Name}");
             return result;
         }
 
@@ -51,7 +52,7 @@ namespace Sfa.Roatp.Indexer.Infrastructure.Elasticsearch
         {
             var timer = Stopwatch.StartNew();
             var result = _client.GetMapping(selector);
-            SendLog(result.ApiCall, null, timer.ElapsedMilliseconds, $"Elasticsearch.GetMapping.{callerName}");
+            SendLog(result.ApiCall, null, timer.ElapsedMilliseconds, $"Get Mapping {callerName}");
             return result;
         }
 
@@ -59,7 +60,7 @@ namespace Sfa.Roatp.Indexer.Infrastructure.Elasticsearch
         {
             var timer = Stopwatch.StartNew();
             var result = _client.Refresh(request);
-            SendLog(result.ApiCall, null, timer.ElapsedMilliseconds, $"Elasticsearch.Refresh.{callerName}");
+            SendLog(result.ApiCall, null, timer.ElapsedMilliseconds, $"Refresh {callerName}");
             return result;
         }
 
@@ -67,7 +68,7 @@ namespace Sfa.Roatp.Indexer.Infrastructure.Elasticsearch
         {
             var timer = Stopwatch.StartNew();
             var result = _client.Refresh(indices);
-            SendLog(result.ApiCall, null, timer.ElapsedMilliseconds, $"Elasticsearch.Refresh.{callerName}");
+            SendLog(result.ApiCall, null, timer.ElapsedMilliseconds, $"Refresh {callerName}");
             return result;
         }
 
@@ -75,7 +76,7 @@ namespace Sfa.Roatp.Indexer.Infrastructure.Elasticsearch
         {
             var timer = Stopwatch.StartNew();
             var result = _client.AliasExists(selector);
-            SendLog(result.ApiCall, null, timer.ElapsedMilliseconds, $"Elasticsearch.AliasExists.{callerName}");
+            SendLog(result.ApiCall, null, timer.ElapsedMilliseconds, $"Alias Exists {callerName}");
             return result;
         }
 
@@ -83,7 +84,7 @@ namespace Sfa.Roatp.Indexer.Infrastructure.Elasticsearch
         {
             var timer = Stopwatch.StartNew();
             var result = _client.Alias(selector);
-            SendLog(result.ApiCall, null, timer.ElapsedMilliseconds, $"Elasticsearch.Alias.{callerName}");
+            SendLog(result.ApiCall, null, timer.ElapsedMilliseconds, $"Alias {callerName}");
             return result;
         }
 
@@ -91,7 +92,7 @@ namespace Sfa.Roatp.Indexer.Infrastructure.Elasticsearch
         {
             var timer = Stopwatch.StartNew();
             var result = _client.Alias(request);
-            SendLog(result.ApiCall, null, timer.ElapsedMilliseconds, $"Elasticsearch.Alias.{callerName}");
+            SendLog(result.ApiCall, null, timer.ElapsedMilliseconds, $"Alias {callerName}");
             return result;
         }
 
@@ -99,7 +100,7 @@ namespace Sfa.Roatp.Indexer.Infrastructure.Elasticsearch
         {
             var timer = Stopwatch.StartNew();
             var result = _client.IndicesStats(indices, selector);
-            SendLog(result.ApiCall, null, timer.ElapsedMilliseconds, $"Elasticsearch.IndicesStats.{callerName}");
+            SendLog(result.ApiCall, null, timer.ElapsedMilliseconds, $"Indices Stats {callerName}");
             return result;
         }
 
@@ -107,7 +108,7 @@ namespace Sfa.Roatp.Indexer.Infrastructure.Elasticsearch
         {
             var timer = Stopwatch.StartNew();
             var result = _client.GetIndicesPointingToAlias(aliasName);
-            SendLog(null, null, timer.ElapsedMilliseconds, $"Elasticsearch.GetIndicesPointingToAlias.{callerName}");
+            SendLog(null, null, timer.ElapsedMilliseconds, $"Get Indices Pointing To Alias {aliasName}");
             return result;
         }
 
@@ -115,7 +116,7 @@ namespace Sfa.Roatp.Indexer.Infrastructure.Elasticsearch
         {
             var timer = Stopwatch.StartNew();
             var result = _client.CreateIndex(index, selector);
-            SendLog(result.ApiCall, null, timer.ElapsedMilliseconds, $"Elasticsearch.CreateIndex.{callerName}");
+            SendLog(result.ApiCall, null, timer.ElapsedMilliseconds, $"Create Index {index.Name}");
             return result;
         }
 
@@ -123,7 +124,7 @@ namespace Sfa.Roatp.Indexer.Infrastructure.Elasticsearch
         {
             var timer = Stopwatch.StartNew();
             var result = _client.BulkAsync(request);
-            SendLog(null, null, timer.ElapsedMilliseconds, $"Elasticsearch.BulkAsync.{callerName}");
+            SendLog(null, null, timer.ElapsedMilliseconds, $"Bulk Async {callerName}");
             return result;
         }
 
@@ -144,7 +145,7 @@ namespace Sfa.Roatp.Indexer.Infrastructure.Elasticsearch
                 {"Body", body}
             };
 
-            _logger.Debug($"ElasticsearchQuery: {identifier}", properties);
+            _logger.Debug($"Elasticsearch {identifier}", properties);
         }
     }
 }

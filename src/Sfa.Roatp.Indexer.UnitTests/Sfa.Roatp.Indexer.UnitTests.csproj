@@ -67,6 +67,12 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Sfa.Roatp.Indexer.ApplicationServices\Sfa.Roatp.Indexer.ApplicationServices.csproj">
+      <Project>{524EA918-A328-4980-A121-2769B7D3A286}</Project>
+      <Name>Sfa.Roatp.Indexer.ApplicationServices</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>
