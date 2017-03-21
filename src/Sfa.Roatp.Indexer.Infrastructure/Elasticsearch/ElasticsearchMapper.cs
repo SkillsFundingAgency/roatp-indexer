@@ -1,7 +1,7 @@
 ﻿using Sfa.Roatp.Indexer.ApplicationServices;
 using Sfa.Roatp.Indexer.Core.Models;
 using Sfa.Roatp.Indexer.Infrastructure.Settings;
-using Sfa.Roatp.Registry.Core.Logging;
+using SFA.DAS.NLog.Logger;
 
 namespace Sfa.Roatp.Indexer.Infrastructure.Elasticsearch
 {

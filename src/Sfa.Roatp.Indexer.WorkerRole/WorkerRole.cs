@@ -1,12 +1,10 @@
 using System;
-using System.Diagnostics;
 using System.Net;
 using System.Threading;
-using System.Threading.Tasks;
 using Microsoft.WindowsAzure.ServiceRuntime;
 using Sfa.Roatp.Indexer.WorkerRole.DependencyResolution;
 using Sfa.Roatp.Indexer.WorkerRole.Settings;
-using Sfa.Roatp.Registry.Core.Logging;
+using SFA.DAS.NLog.Logger;
 using StructureMap;
 
 namespace Sfa.Roatp.Indexer.WorkerRole
@@ -21,7 +19,7 @@ namespace Sfa.Roatp.Indexer.WorkerRole
 
         public override void Run()
         {
-            Trace.TraceInformation("Sfa.Roatp.Indexer.WorkerRole is running");
+            _logger.Info(GetType().FullName + " is running");
 
             while (true)
             {
@@ -31,7 +29,7 @@ namespace Sfa.Roatp.Indexer.WorkerRole
                 }
                 catch (Exception ex)
                 {
-                    _logger.Error(ex, "Exception worker role");
+                    _logger.Error(ex, ex.Message);
                 }
 
                 Thread.Sleep(TimeSpan.FromSeconds(double.Parse(_commonSettings.WorkerRolePauseTime ?? "6000")));
@@ -52,31 +50,21 @@ namespace Sfa.Roatp.Indexer.WorkerRole
 
             bool result = base.OnStart();
 
-            Trace.TraceInformation("Sfa.Roatp.Indexer.WorkerRole has been started");
+            _logger.Info(GetType().FullName + " has been started");
 
             return result;
         }
 
         public override void OnStop()
         {
-            Trace.TraceInformation("Sfa.Roatp.Indexer.WorkerRole is stopping");
+            _logger.Info(GetType().FullName + " is stopping");
 
             this.cancellationTokenSource.Cancel();
             this.runCompleteEvent.WaitOne();
 
             base.OnStop();
 
-            Trace.TraceInformation("Sfa.Roatp.Indexer.WorkerRole has stopped");
-        }
-
-        private async Task RunAsync(CancellationToken cancellationToken)
-        {
-            // TODO: Replace the following with your own logic.
-            while (!cancellationToken.IsCancellationRequested)
-            {
-                Trace.TraceInformation("Working");
-                await Task.Delay(1000);
-            }
+            _logger.Info(GetType().FullName + " has stopped");
         }
     }
 }

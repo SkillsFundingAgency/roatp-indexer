@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Sfa.Roatp.Indexer.ApplicationServices.Settings;
 using Sfa.Roatp.Indexer.Core.Services;
-using Sfa.Roatp.Registry.Core.Logging;
+using SFA.DAS.NLog.Logger;
 
 namespace Sfa.Roatp.Indexer.ApplicationServices
 {
@@ -34,7 +35,7 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
 
             Stopwatch stopwatch = Stopwatch.StartNew();
 
-            var roatpProviders = _indexerHelper.LoadEntries();
+            var roatpProviders = _indexerHelper.LoadEntries().ToList();
 
             var infoHasChanged = _indexerHelper.HasRoatpInfoChanged(roatpProviders);
 
@@ -77,7 +78,7 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
                 }
                 catch (Exception ex)
                 {
-                    _log.Error(ex, "Error indexing");
+                    _log.Error(ex, ex.Message);
                 }
             }
         }

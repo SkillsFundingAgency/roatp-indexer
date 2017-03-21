@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Nest;
 using Sfa.Roatp.Indexer.ApplicationServices;
-using Sfa.Roatp.Registry.Core.Logging;
+using SFA.DAS.NLog.Logger;
 
 namespace Sfa.Roatp.Indexer.Infrastructure.Elasticsearch
 {

@@ -8,7 +8,7 @@ using Sfa.Roatp.Indexer.ApplicationServices;
 using Sfa.Roatp.Indexer.ApplicationServices.Settings;
 using Sfa.Roatp.Indexer.Core.Exceptions;
 using Sfa.Roatp.Indexer.Core.Models;
-using Sfa.Roatp.Registry.Core.Logging;
+using SFA.DAS.NLog.Logger;
 
 namespace Sfa.Roatp.Indexer.Infrastructure.Elasticsearch
 {
@@ -70,7 +70,7 @@ namespace Sfa.Roatp.Indexer.Infrastructure.Elasticsearch
             }
             catch (Exception ex)
             {
-                _log.Error("Something failed indexing roatp provider documents:" + ex.Message);
+                _log.Error(ex, "Something failed indexing roatp provider documents:" + ex.Message);
                 throw;
             }
 
