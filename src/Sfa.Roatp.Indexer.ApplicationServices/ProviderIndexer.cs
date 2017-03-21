@@ -105,7 +105,7 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
 
         public IEnumerable<RoatpProvider> LoadEntries()
         {
-            _log.Debug("Loading data at RoATP provider index");
+            _log.Debug("Loading data at RoATP spreadsheet");
 
             return _providerDataService.GetRoatpData();
         }
