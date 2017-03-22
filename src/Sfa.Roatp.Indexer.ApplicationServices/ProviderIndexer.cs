@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Nest;
-using Newtonsoft.Json;
 using Sfa.Roatp.Indexer.ApplicationServices.Events;
 using Sfa.Roatp.Indexer.ApplicationServices.FeatureToggles;
 using Sfa.Roatp.Indexer.ApplicationServices.Settings;
@@ -23,22 +22,19 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
 
         private readonly IIndexSettings<IMaintainProviderIndex> _settings;
         private readonly ILog _log;
-        private readonly IEventsApiClientConfiguration _configuration;
 
         public ProviderIndexer(
             IIndexSettings<IMaintainProviderIndex> settings,
             IMaintainProviderIndex indexMaintainer,
             IGetRoatpProviders providerDataService,
             IConsumeProviderEvents providerEventConsumer,
-            ILog log,
-            IEventsApiClientConfiguration configuration)
+            ILog log)
         {
             _settings = settings;
             _providerDataService = providerDataService;
             _providerEventConsumer = providerEventConsumer;
             _indexMaintainer = indexMaintainer;
             _log = log;
-            _configuration = configuration;
         }
 
         public bool HasRoatpInfoChanged(ICollection<RoatpProvider> roatpProviders)
@@ -78,7 +74,7 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
                 }
                 catch (Exception ex)
                 {
-                    _log.Error(ex, ex.Message, new Dictionary<string, object>() { { "ukprn", provider.Ukprn}, {"config", JsonConvert.SerializeObject(_configuration)} });
+                    _log.Error(ex, ex.Message, new Dictionary<string, object>() { { "ukprn", provider.Ukprn} });
                 }
             }
         }
