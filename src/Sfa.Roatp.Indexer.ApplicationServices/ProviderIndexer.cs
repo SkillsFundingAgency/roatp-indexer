@@ -36,9 +36,9 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
             _log = log;
         }
 
-        public bool HasRoatpInfoChanged(IEnumerable<RoatpProvider> roatpProviders)
+        public bool HasRoatpInfoChanged(ICollection<RoatpProvider> roatpProviders)
         {
-            var oldProviders = _indexMaintainer.LoadRoatpProvidersFromAlias();
+            var oldProviders = _indexMaintainer.LoadRoatpProvidersFromAlias().ToList();
 
             if (roatpProviders.Count() != oldProviders.Count())
             {
