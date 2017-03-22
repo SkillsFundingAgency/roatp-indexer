@@ -79,7 +79,7 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
 
         private void CheckIfIndexHasBeenCreated(string newIndexName)
         {
-            Thread.Sleep(_indexSettings.PauseAfterIndexing);
+            Thread.Sleep(TimeSpan.FromSeconds(_indexSettings.PauseAfterIndexing));
 
             for (int i = 0; i < 3; i++)
             {
@@ -88,7 +88,7 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
                     break;
                 }
 
-                Thread.Sleep(_indexSettings.PauseAfterIndexing);
+                Thread.Sleep(TimeSpan.FromSeconds(_indexSettings.PauseAfterIndexing));
             }
 
             throw new ApplicationException("The new index wasn't found after 3 checks");
