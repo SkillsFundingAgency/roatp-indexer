@@ -59,11 +59,11 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
 
                     CheckIfIndexHasBeenCreated(newIndexName);
 
+                    _indexerHelper.SendNewProviderEvents(newIndexName);
+
                     _indexerHelper.ChangeUnderlyingIndexForAlias(newIndexName);
 
                     _log.Debug("Swap completed...");
-
-                    _indexerHelper.SendNewProviderEvents(newIndexName);
 
                     stopwatch.Stop();
                     var properties = new Dictionary<string, object> { { "Alias", _indexSettings.IndexesAlias }, { "ExecutionTime", stopwatch.ElapsedMilliseconds } };
