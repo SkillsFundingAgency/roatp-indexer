@@ -70,7 +70,7 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
             {
                 try
                 {
-                    _providerEventConsumer.NewProvider(provider.Ukprn);
+                    _providerEventConsumer.NewProvider(provider);
                 }
                 catch (Exception ex)
                 {

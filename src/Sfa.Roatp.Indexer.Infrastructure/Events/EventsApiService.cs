@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Sfa.Roatp.Indexer.ApplicationServices.Events;
+using Sfa.Roatp.Indexer.Core.Models;
 using SFA.DAS.Events.Api.Client;
 using SFA.DAS.Events.Api.Types;
 using SFA.DAS.NLog.Logger;
@@ -23,14 +24,17 @@ namespace Sfa.Roatp.Indexer.Infrastructure.Events
             _log = log;
         }
 
-        public void NewProvider(string ukprn)
+        public void NewProvider(RoatpProviderDocument provider)
         {
-            _log.Info($"New provider", new Dictionary<string, object> { { "ukprn", ukprn } });
+            _log.Info($"New provider", new Dictionary<string, object> { { "ukprn", provider.Ukprn } });
 
             if (_eventsApiClientConfiguration.Enabled)
             {
-                var agreementEvent = new AgreementEvent { ContractType = NewRoatpProviderContractType, Event = NewRoatpProviderEvent, ProviderId = ukprn };
-                Task.WaitAll(_client.CreateAgreementEvent(agreementEvent));
+                if (provider.ProviderType == ProviderType.EmployerProvider || provider.ProviderType == ProviderType.MainProvider)
+                {
+                    var agreementEvent = new AgreementEvent {ContractType = NewRoatpProviderContractType, Event = NewRoatpProviderEvent, ProviderId = provider.Ukprn};
+                    Task.WaitAll(_client.CreateAgreementEvent(agreementEvent));
+                }
             }
         }
     }
