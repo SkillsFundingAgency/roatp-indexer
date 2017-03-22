@@ -85,7 +85,7 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
             {
                 if (_indexerHelper.IsIndexCorrectlyCreated(newIndexName))
                 {
-                    break;
+                    return;
                 }
 
                 Thread.Sleep(TimeSpan.FromSeconds(_indexSettings.PauseAfterIndexing));
