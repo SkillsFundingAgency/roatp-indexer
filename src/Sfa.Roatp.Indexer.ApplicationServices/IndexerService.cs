@@ -57,21 +57,16 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
                 {
                     await _indexerHelper.IndexEntries(newIndexName, roatpProviders).ConfigureAwait(false);
 
-                    Thread.Sleep(_indexSettings.PauseAfterIndexing);
+                    CheckIfIndexHasBeenCreated(newIndexName);
 
+                    _indexerHelper.ChangeUnderlyingIndexForAlias(newIndexName);
 
-                    var indexHasBeenCreated = _indexerHelper.IsIndexCorrectlyCreated(newIndexName);
-                    if (indexHasBeenCreated)
-                    {
-                        _indexerHelper.ChangeUnderlyingIndexForAlias(newIndexName);
+                    _log.Debug("Swap completed...");
 
-                        _log.Debug("Swap completed...");
-
-                        _indexerHelper.SendNewProviderEvents(newIndexName);
-                    }
+                    _indexerHelper.SendNewProviderEvents(newIndexName);
 
                     stopwatch.Stop();
-                    var properties = new Dictionary<string, object> { { "Alias", _indexSettings.IndexesAlias }, { "ExecutionTime", stopwatch.ElapsedMilliseconds }, { "IndexCorrectlyCreated", indexHasBeenCreated } };
+                    var properties = new Dictionary<string, object> { { "Alias", _indexSettings.IndexesAlias }, { "ExecutionTime", stopwatch.ElapsedMilliseconds } };
                     _log.Debug($"Created {_name}", properties);
                     _log.Info($"{_name}ing complete.");
                 }
@@ -80,6 +75,23 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
                     _log.Error(ex, ex.Message);
                 }
             }
+        }
+
+        private void CheckIfIndexHasBeenCreated(string newIndexName)
+        {
+            Thread.Sleep(_indexSettings.PauseAfterIndexing);
+
+            for (int i = 0; i < 3; i++)
+            {
+                if (_indexerHelper.IsIndexCorrectlyCreated(newIndexName))
+                {
+                    break;
+                }
+
+                Thread.Sleep(_indexSettings.PauseAfterIndexing);
+            }
+
+            throw new ApplicationException("The new index wasn't found after 3 checks");
         }
     }
 }
