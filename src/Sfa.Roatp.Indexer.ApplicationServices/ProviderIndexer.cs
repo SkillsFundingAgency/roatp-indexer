@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Nest;
@@ -65,12 +66,17 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
 
         public void SendNewProviderEvents(string newIndexName)
         {
-            var eventsList = new List<Task>();
             foreach (var provider in CheckNewProviders(newIndexName))
             {
-                eventsList.Add(_providerEventConsumer.NewProvider(provider.Ukprn));
+                try
+                {
+                    _providerEventConsumer.NewProvider(provider.Ukprn);
+                }
+                catch (Exception ex)
+                {
+                    _log.Error(ex, ex.Message, new Dictionary<string, object>() { { "ukprn", provider.Ukprn} });
+                }
             }
-            Task.WaitAll(eventsList.ToArray());
         }
 
         public bool CreateIndex(string indexName)

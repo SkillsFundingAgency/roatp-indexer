@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Sfa.Roatp.Indexer.ApplicationServices.Events;
 using SFA.DAS.Events.Api.Client;
@@ -22,17 +23,15 @@ namespace Sfa.Roatp.Indexer.Infrastructure.Events
             _log = log;
         }
 
-        public Task NewProvider(string ukprn)
+        public void NewProvider(string ukprn)
         {
-            _log.Info($"New provider {ukprn}");
+            _log.Info($"New provider", new Dictionary<string, object> { { "ukprn", ukprn } });
 
             if (_eventsApiClientConfiguration.Enabled)
             {
                 var agreementEvent = new AgreementEvent { ContractType = NewRoatpProviderContractType, Event = NewRoatpProviderEvent, ProviderId = ukprn };
-                return _client.CreateAgreementEvent(agreementEvent);
+                Task.WaitAll(_client.CreateAgreementEvent(agreementEvent));
             }
-
-            return Task.FromResult(0);
         }
     }
 }
