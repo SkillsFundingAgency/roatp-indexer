@@ -18,6 +18,6 @@ namespace Sfa.Roatp.Indexer.ApplicationServices.Events
 
         public string BaseUrl => _settings.GetSetting("EventsApi.BaseUrl");
 
-        public string ClientToken => ConfigurationManager.AppSettings["EventsApi.ClientToken"];
+        public string ClientToken => _settings.GetSetting("EventsApi.ClientToken");
     }
 }
