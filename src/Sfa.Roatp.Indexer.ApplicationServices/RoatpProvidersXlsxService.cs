@@ -7,6 +7,7 @@ using System.Text;
 using OfficeOpenXml;
 using Sfa.Roatp.Indexer.ApplicationServices.Settings;
 using Sfa.Roatp.Indexer.Core.Models;
+using SFA.DAS.NLog.Logger;
 
 namespace Sfa.Roatp.Indexer.ApplicationServices
 {
@@ -22,10 +23,12 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
         private const int EndDatePosition = 8;
 
         private readonly IAppServiceSettings _appServiceSettings;
+        private readonly ILog _log;
 
-        public RoatpProvidersXlsxService(IAppServiceSettings appServiceSettings)
+        public RoatpProvidersXlsxService(IAppServiceSettings appServiceSettings, ILog log)
         {
             _appServiceSettings = appServiceSettings;
+            _log = log;
         }
 
         public IEnumerable<RoatpProvider> GetRoatpData()
@@ -41,11 +44,21 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
                 }
 
                 var filePath = Path.GetTempFileName();
-                client.DownloadFile(new Uri(_appServiceSettings.VstsRoatpUrl), filePath);
-
-                using (ExcelPackage package = new ExcelPackage(new FileInfo(filePath)))
+                try
                 {
-                    GetRoatpProviders(package, roatpProviders);
+                    client.DownloadFile(new Uri(_appServiceSettings.VstsRoatpUrl), filePath);
+
+                    using (ExcelPackage package = new ExcelPackage(new FileInfo(filePath)))
+                    {
+                        GetRoatpProviders(package, roatpProviders);
+                    }
+                }
+                catch (WebException wex)
+                {
+                    IDictionary<string, object> extras = new Dictionary<string, object>();
+                    extras.Add("DependencyLogEntry.Url", _appServiceSettings.VstsRoatpUrl);
+                    extras.Add("DependencyLogEntry.ResponseCode", ((HttpWebResponse)wex.Response).StatusCode);
+                    _log.Error(wex, "Problem downloading ROATP from VSTS", extras);
                 }
             }
 
