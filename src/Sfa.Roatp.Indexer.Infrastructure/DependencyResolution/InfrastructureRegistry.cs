@@ -1,4 +1,7 @@
-﻿using Microsoft.WindowsAzure.Storage.File;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
+using System.Reflection;
+using Microsoft.WindowsAzure.Storage.File;
 using Sfa.Das.Sas.Indexer.Infrastructure.Elasticsearch.Configuration;
 using Sfa.Roatp.Indexer.ApplicationServices;
 using Sfa.Roatp.Indexer.ApplicationServices.Events;
@@ -6,7 +9,6 @@ using Sfa.Roatp.Indexer.Infrastructure.Elasticsearch;
 using Sfa.Roatp.Indexer.Infrastructure.Elasticsearch.Configuration;
 using Sfa.Roatp.Indexer.Infrastructure.Events;
 using Sfa.Roatp.Indexer.Infrastructure.Settings;
-using SFA.DAS.Events.Api.Client;
 using SFA.DAS.NLog.Logger;
 
 namespace Sfa.Roatp.Indexer.Infrastructure.DependencyResolution
@@ -15,7 +17,7 @@ namespace Sfa.Roatp.Indexer.Infrastructure.DependencyResolution
     {
         public InfrastructureRegistry()
         {
-            For<ILog>().Use(x => new NLogLogger(x.ParentType, null)).AlwaysUnique();
+            For<ILog>().Use(x => new NLogLogger(x.ParentType, null, GetProperties())).AlwaysUnique();
             For<IInfrastructureSettings>().Use<InfrastructureSettings>();
             For<IMaintainProviderIndex>().Use<ElasticsearchProviderIndexMaintainer>();
             For<IElasticsearchSettings>().Use<ElasticsearchSettings>();
@@ -23,6 +25,20 @@ namespace Sfa.Roatp.Indexer.Infrastructure.DependencyResolution
             For<IElasticsearchRoatpDocumentMapper>().Use<ElasticsearchRoatpDocumentMapper>();
             For<IElasticsearchCustomClient>().Use<ElasticsearchCustomClient>();
             For<IConsumeProviderEvents>().Use<EventsApiService>();
+        }
+
+        private IDictionary<string, object> GetProperties()
+        {
+            var properties = new Dictionary<string, object>();
+            properties.Add("Version", GetVersion());
+            return properties;
+        }
+
+        private string GetVersion()
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+            var fileVersionInfo = FileVersionInfo.GetVersionInfo(assembly.Location);
+            return fileVersionInfo.ProductVersion;
         }
     }
 }
