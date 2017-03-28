@@ -37,42 +37,46 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
 
             _log.Info("Checking for updates to ROATP");
 
-            var roatpProviders = _indexerHelper.LoadEntries().ToList();
-
-            var infoHasChanged = _indexerHelper.HasRoatpInfoChanged(roatpProviders);
-
-            if (infoHasChanged)
+            var roatpProviders = _indexerHelper.LoadEntries();
+            if (roatpProviders != null)
             {
-                _log.Info($"Update to ROATP spreadsheet detected");
+                var providers = roatpProviders.ToList();
 
-                var newIndexName = IndexerHelper.GetIndexNameAndDateExtension(scheduledRefreshDateTime, _indexSettings.IndexesAlias);
-                var indexProperlyCreated = _indexerHelper.CreateIndex(newIndexName);
+                var infoHasChanged = _indexerHelper.HasRoatpInfoChanged(providers);
 
-                if (!indexProperlyCreated)
+                if (infoHasChanged)
                 {
-                    throw new Exception($"{_name} index not created properly, exiting...");
-                }
+                    _log.Info($"Update to ROATP spreadsheet detected");
 
-                try
-                {
-                    await _indexerHelper.IndexEntries(newIndexName, roatpProviders).ConfigureAwait(false);
+                    var newIndexName = IndexerHelper.GetIndexNameAndDateExtension(scheduledRefreshDateTime, _indexSettings.IndexesAlias);
+                    var indexProperlyCreated = _indexerHelper.CreateIndex(newIndexName);
 
-                    CheckIfIndexHasBeenCreated(newIndexName);
+                    if (!indexProperlyCreated)
+                    {
+                        throw new Exception($"{_name} index not created properly, exiting...");
+                    }
 
-                    _indexerHelper.SendNewProviderEvents(newIndexName);
+                    try
+                    {
+                        await _indexerHelper.IndexEntries(newIndexName, providers).ConfigureAwait(false);
 
-                    _indexerHelper.ChangeUnderlyingIndexForAlias(newIndexName);
+                        CheckIfIndexHasBeenCreated(newIndexName);
 
-                    _log.Debug("Swap completed...");
+                        _indexerHelper.SendNewProviderEvents(newIndexName);
 
-                    stopwatch.Stop();
-                    var properties = new Dictionary<string, object> { { "Alias", _indexSettings.IndexesAlias }, { "ExecutionTime", stopwatch.ElapsedMilliseconds } };
-                    _log.Debug($"Created {_name}", properties);
-                    _log.Info($"{_name}ing complete.");
-                }
-                catch (Exception ex)
-                {
-                    _log.Error(ex, ex.Message);
+                        _indexerHelper.ChangeUnderlyingIndexForAlias(newIndexName);
+
+                        _log.Debug("Swap completed...");
+
+                        stopwatch.Stop();
+                        var properties = new Dictionary<string, object> {{"Alias", _indexSettings.IndexesAlias}, {"ExecutionTime", stopwatch.ElapsedMilliseconds}};
+                        _log.Debug($"Created {_name}", properties);
+                        _log.Info($"{_name}ing complete.");
+                    }
+                    catch (Exception ex)
+                    {
+                        _log.Error(ex, ex.Message);
+                    }
                 }
             }
         }

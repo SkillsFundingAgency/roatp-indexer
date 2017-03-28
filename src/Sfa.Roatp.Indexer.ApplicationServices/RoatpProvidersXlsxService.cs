@@ -34,6 +34,8 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
         public IEnumerable<RoatpProvider> GetRoatpData()
         {
             var roatpProviders = new List<RoatpProvider>();
+            IDictionary<string, object> extras = new Dictionary<string, object>();
+            extras.Add("DependencyLogEntry.Url", _appServiceSettings.VstsRoatpUrl);
 
             using (var client = new WebClient())
             {
@@ -55,10 +57,13 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
                 }
                 catch (WebException wex)
                 {
-                    IDictionary<string, object> extras = new Dictionary<string, object>();
-                    extras.Add("DependencyLogEntry.Url", _appServiceSettings.VstsRoatpUrl);
-                    extras.Add("DependencyLogEntry.ResponseCode", ((HttpWebResponse)wex.Response).StatusCode);
+                    extras.Add("DependencyLogEntry.ResponseCode", ((HttpWebResponse) wex.Response).StatusCode);
                     _log.Error(wex, "Problem downloading ROATP from VSTS", extras);
+                    return null;
+                }
+                catch (Exception ex)
+                {
+                    _log.Error(ex, "Problem downloading ROATP from VSTS", extras);
                 }
             }
 
