@@ -54,12 +54,13 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
                     {
                         GetRoatpProviders(package, roatpProviders);
                     }
+
+                    return roatpProviders.Where(roatpProviderResult => roatpProviderResult.Ukprn != string.Empty);
                 }
                 catch (WebException wex)
                 {
                     extras.Add("DependencyLogEntry.ResponseCode", ((HttpWebResponse) wex.Response).StatusCode);
                     _log.Error(wex, "Problem downloading ROATP from VSTS", extras);
-                    return null;
                 }
                 catch (Exception ex)
                 {
@@ -67,7 +68,7 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
                 }
             }
 
-            return roatpProviders.Where(roatpProviderResult => roatpProviderResult.Ukprn != string.Empty);
+            return null;
         }
 
         private void GetRoatpProviders(ExcelPackage package, List<RoatpProvider> roatpProviders)
