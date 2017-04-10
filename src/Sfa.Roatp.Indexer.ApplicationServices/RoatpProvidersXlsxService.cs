@@ -59,7 +59,11 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
                 }
                 catch (WebException wex)
                 {
-                    extras.Add("DependencyLogEntry.ResponseCode", ((HttpWebResponse) wex.Response).StatusCode);
+                    var response = (HttpWebResponse) wex.Response;
+                    if (response != null)
+                    {
+                        extras.Add("DependencyLogEntry.ResponseCode", response.StatusCode);
+                    }
                     _log.Error(wex, "Problem downloading ROATP from VSTS", extras);
                 }
                 catch (Exception ex)
