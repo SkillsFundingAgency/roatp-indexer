@@ -15,7 +15,7 @@ namespace Sfa.Roatp.Indexer.UnitTests.ApplicationServices
         [TestCase("MainProvider", ProviderType.Unknown)]
         [TestCase(" ", ProviderType.Unknown)]
         [TestCase("", ProviderType.Unknown)]
-        [TestCase("null", ProviderType.Unknown)]
+        [TestCase(null, ProviderType.Unknown)]
         [TestCase("Supporting Provider", ProviderType.SupportingProvider)]
         [TestCase("Employer Provider", ProviderType.EmployerProvider)]
         [TestCase(" Employer Provider", ProviderType.EmployerProvider)]
@@ -26,7 +26,7 @@ namespace Sfa.Roatp.Indexer.UnitTests.ApplicationServices
             var sut = new RoatpProvidersXlsxService(null, new Mock<ILog>().Object);
 
             // Act
-            var result = sut.GetProviderType(input);
+            var result = sut.GetProviderType(input, null);
 
             // Assert
             Assert.AreEqual(expected, result);

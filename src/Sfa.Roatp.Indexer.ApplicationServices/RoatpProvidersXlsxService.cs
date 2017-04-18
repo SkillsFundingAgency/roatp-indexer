@@ -75,26 +75,29 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
             return null;
         }
 
-        public ProviderType GetProviderType(object providerType)
+        public ProviderType GetProviderType(object providerType, string ukprn)
         {
             if (providerType != null)
             {
-                switch (providerType.ToString().ToLower().Trim())
+                var type = providerType.ToString().ToLower().Trim();
+
+                if (type == "main provider")
                 {
-                    case "main provider":
-                        return ProviderType.MainProvider;
-                    case "supporting provider":
-                        return ProviderType.SupportingProvider;
-                    case "employer provider":
-                        return ProviderType.EmployerProvider;
-                    default:
-                        {
-                            _log.Warn($"Couldn't find the provider type \"{providerType}\"");
-                            return ProviderType.Unknown;
-                        }
+                    return ProviderType.MainProvider;
+                }
+
+                if (type == "supporting provider")
+                {
+                    return ProviderType.SupportingProvider;
+                }
+
+                if (type == "employer provider")
+                {
+                    return ProviderType.EmployerProvider;
                 }
             }
 
+            _log.Warn($"Couldn't find the provider type \"{providerType}\"", new Dictionary<string, object> { { "UKPRN", ukprn } });
             return ProviderType.Unknown;
         }
 
@@ -105,11 +108,12 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
 
             for (var i = roatpWorkSheet.Dimension.Start.Row + 1; i <= roatpWorkSheet.Dimension.End.Row; i++)
             {
+                var ukprn = roatpWorkSheet.Cells[i, UkprnPosition].Value != null ? roatpWorkSheet.Cells[i, UkprnPosition].Value.ToString() : string.Empty;
                 var roatpData = new RoatpProvider
                 {
-                    Ukprn = roatpWorkSheet.Cells[i, UkprnPosition].Value != null ? roatpWorkSheet.Cells[i, UkprnPosition].Value.ToString() : string.Empty,
+                    Ukprn = ukprn,
                     Name = roatpWorkSheet.Cells[i, NamePosition].Value != null ? roatpWorkSheet.Cells[i, NamePosition].Value.ToString() : string.Empty,
-                    ProviderType = GetProviderType(roatpWorkSheet.Cells[i, ProviderTypePosition].Value),
+                    ProviderType = GetProviderType(roatpWorkSheet.Cells[i, ProviderTypePosition].Value, ukprn),
                     ContractedForNonLeviedEmployers = GetBooleanValue(roatpWorkSheet.Cells[i, ContractedForNonLeviedEmployersPosition]),
                     ParentCompanyGuarantee = GetBooleanValue(roatpWorkSheet.Cells[i, ParentCompanyGuaranteePosition]),
                     NewOrganisationWithoutFinancialTrackRecord = GetBooleanValue(roatpWorkSheet.Cells[i, NewOrganisationWithoutFinancialTrackRecordPosition]),
