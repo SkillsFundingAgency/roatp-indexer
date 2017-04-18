@@ -12,9 +12,14 @@ namespace Sfa.Roatp.Indexer.UnitTests.ApplicationServices
         [TestCase("main provider", ProviderType.MainProvider)]
         [TestCase("Main Provider", ProviderType.MainProvider)]
         [TestCase("Mian provider", ProviderType.Unknown)]
+        [TestCase("MainProvider", ProviderType.Unknown)]
+        [TestCase(" ", ProviderType.Unknown)]
+        [TestCase("", ProviderType.Unknown)]
+        [TestCase("null", ProviderType.Unknown)]
         [TestCase("Supporting Provider", ProviderType.SupportingProvider)]
         [TestCase("Employer Provider", ProviderType.EmployerProvider)]
         [TestCase(" Employer Provider", ProviderType.EmployerProvider)]
+        [TestCase("Employer Provider ", ProviderType.EmployerProvider)]
         public void ShouldMatchTheProviderType(string input, ProviderType expected)
         {
             // Arrange
