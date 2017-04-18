@@ -3,6 +3,7 @@ using NUnit.Framework;
 using Sfa.Roatp.Indexer.ApplicationServices;
 using Sfa.Roatp.Indexer.Core.Models;
 using SFA.DAS.NLog.Logger;
+using System.Collections.Generic;
 
 namespace Sfa.Roatp.Indexer.UnitTests.ApplicationServices
 {
@@ -30,6 +31,24 @@ namespace Sfa.Roatp.Indexer.UnitTests.ApplicationServices
 
             // Assert
             Assert.AreEqual(expected, result);
+        }
+
+        [TestCase("Mian provider")]
+        [TestCase("MainProvider")]
+        [TestCase(" ")]
+        [TestCase("")]
+        [TestCase(null)]
+        public void ShouldLogAWarningMessageForUnKnownProvider(string input)
+        {
+            // Arrange
+            var logObject = new Mock<ILog>();
+            var sut = new RoatpProvidersXlsxService(null, logObject.Object);
+
+            // Act
+            var result = sut.GetProviderType(input, null);
+
+            // Assert
+            logObject.Verify(x => x.Warn(It.IsAny<string>(), It.IsAny<IDictionary<string, object>>()), Times.Once());
         }
     }
 }
