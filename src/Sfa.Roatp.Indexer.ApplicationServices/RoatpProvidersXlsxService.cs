@@ -75,6 +75,29 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
             return null;
         }
 
+        public ProviderType GetProviderType(object providerType)
+        {
+            if (providerType != null)
+            {
+                switch (providerType.ToString().ToLower().Trim())
+                {
+                    case "main provider":
+                        return ProviderType.MainProvider;
+                    case "supporting provider":
+                        return ProviderType.SupportingProvider;
+                    case "employer provider":
+                        return ProviderType.EmployerProvider;
+                    default:
+                        {
+                            _log.Warn($"Couldn't find the provider type \"{providerType}\"");
+                            return ProviderType.Unknown;
+                        }
+                }
+            }
+
+            return ProviderType.Unknown;
+        }
+
         private void GetRoatpProviders(ExcelPackage package, List<RoatpProvider> roatpProviders)
         {
             var roatpWorkSheet = package.Workbook.Worksheets.FirstOrDefault(x => x.Name == "RoATP");
@@ -122,26 +145,6 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
             }
 
             return false;
-        }
-
-        private static ProviderType GetProviderType(ExcelRange excelRange)
-        {
-            if (excelRange.Value != null)
-            {
-                switch (excelRange.Value.ToString().ToLower())
-                {
-                    case "main provider":
-                        return ProviderType.MainProvider;
-                    case "employer provider":
-                        return ProviderType.EmployerProvider;
-                    case "supporting provider":
-                        return ProviderType.SupportingProvider;
-                    default:
-                        return ProviderType.Unknown;
-                }
-            }
-
-            return ProviderType.Unknown;
         }
     }
 }
