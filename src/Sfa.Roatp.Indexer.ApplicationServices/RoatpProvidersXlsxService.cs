@@ -109,7 +109,7 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
                 {
                     Ukprn = roatpWorkSheet.Cells[i, UkprnPosition].Value != null ? roatpWorkSheet.Cells[i, UkprnPosition].Value.ToString() : string.Empty,
                     Name = roatpWorkSheet.Cells[i, NamePosition].Value != null ? roatpWorkSheet.Cells[i, NamePosition].Value.ToString() : string.Empty,
-                    ProviderType = GetProviderType(roatpWorkSheet.Cells[i, ProviderTypePosition]),
+                    ProviderType = GetProviderType(roatpWorkSheet.Cells[i, ProviderTypePosition].Value),
                     ContractedForNonLeviedEmployers = GetBooleanValue(roatpWorkSheet.Cells[i, ContractedForNonLeviedEmployersPosition]),
                     ParentCompanyGuarantee = GetBooleanValue(roatpWorkSheet.Cells[i, ParentCompanyGuaranteePosition]),
                     NewOrganisationWithoutFinancialTrackRecord = GetBooleanValue(roatpWorkSheet.Cells[i, NewOrganisationWithoutFinancialTrackRecordPosition]),
