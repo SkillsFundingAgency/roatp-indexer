@@ -14,9 +14,9 @@ namespace Sfa.Roatp.Indexer.ApplicationServices.Settings
         }
 
         public string VstsRoatpUrl => string.Format(_settings.GetSetting("Vsts.RoatpUrlFormat"), _settings.GetSetting("WorkerRole.EnvironmentName"));
+        
+        public string GitUsername => _settings.GetSetting("GitUsername");
 
-        public string GitUsername => _settings.GetSetting("Vsts.GitUsername");
-
-        public string GitPassword => _settings.GetSetting("Vsts.GitPassword");
+        public string GitPassword => _settings.GetSetting("GitPassword");
     }
 }

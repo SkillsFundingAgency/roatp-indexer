@@ -19,8 +19,8 @@
       <Setting name="EventsApi.ClientToken" value="" />
 
       <Setting name="Vsts.RoatpUrlFormat" value="" />
-      <Setting name="Vsts.GitUsername" value=""/>
-      <Setting name="Vsts.GitPassword" value=""/>
+      <Setting name="GitUsername" value=""/>
+      <Setting name="GitPassword" value=""/>
 
       <Setting name="Logging.RedisConnectionString" value=""/>
     </ConfigurationSettings>
