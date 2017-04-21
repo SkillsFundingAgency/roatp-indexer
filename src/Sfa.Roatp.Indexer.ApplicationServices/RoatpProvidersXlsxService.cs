@@ -48,6 +48,7 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
                 var filePath = Path.GetTempFileName();
                 try
                 {
+                    _log.Debug("Downloading ROATP", new Dictionary<string, object> { { "Url", _appServiceSettings.VstsRoatpUrl } });
                     client.DownloadFile(new Uri(_appServiceSettings.VstsRoatpUrl), filePath);
 
                     using (ExcelPackage package = new ExcelPackage(new FileInfo(filePath)))
