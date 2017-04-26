@@ -45,14 +45,14 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
                     client.Headers[HttpRequestHeader.Authorization] = $"Basic {credentials}";
                 }
 
-                var filePath = Path.GetTempFileName();
                 try
                 {
                     _log.Debug("Downloading ROATP", new Dictionary<string, object> { { "Url", _appServiceSettings.VstsRoatpUrl } });
-                    client.DownloadFile(new Uri(_appServiceSettings.VstsRoatpUrl), filePath);
 
-                    using (ExcelPackage package = new ExcelPackage(new FileInfo(filePath)))
+                    using (var stream = new MemoryStream(client.DownloadData(new Uri(_appServiceSettings.VstsRoatpUrl))))
+                    using (var package = new ExcelPackage(stream))
                     {
+
                         GetRoatpProviders(package, roatpProviders);
                     }
 
