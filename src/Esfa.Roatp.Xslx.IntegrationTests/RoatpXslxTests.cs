@@ -1,15 +1,15 @@
 ﻿using System.Linq;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Sfa.Roatp.Indexer.ApplicationServices;
 using Sfa.Roatp.Indexer.Core.Models;
 using Sfa.Roatp.Indexer.WorkerRole.DependencyResolution;
 
 namespace Esfa.Roatp.Xslx.IntegrationTests
 {
-    [TestFixture]
+    [TestClass]
     public class RoatpXslxTests
     {
-        [Test]
+        [TestMethod]
         public void ShouldLoadValidSpreadsheet()
         {
             // Arrange
