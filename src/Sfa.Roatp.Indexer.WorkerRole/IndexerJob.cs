@@ -18,7 +18,7 @@ namespace Sfa.Roatp.Indexer.WorkerRole
         {
             var tasks = new List<Task>
             {
-                _indexerService.CreateScheduledIndex(DateTime.Now)
+                _indexerService.CheckRoatpAndCreateIndexAndUpdateAlias(DateTime.Now)
             };
 
             Task.WaitAll(tasks.ToArray());

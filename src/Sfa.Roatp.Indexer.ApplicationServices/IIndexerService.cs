@@ -5,6 +5,6 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
 {
     public interface IIndexerService<T>
     {
-        Task CreateScheduledIndex(DateTime scheduledRefreshDateTime);
+        Task CheckRoatpAndCreateIndexAndUpdateAlias(DateTime scheduledRefreshDateTime);
     }
 }

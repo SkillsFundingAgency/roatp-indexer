@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Sfa.Roatp.Indexer.Core.Models;
 
@@ -18,6 +17,6 @@ namespace Sfa.Roatp.Indexer.Core.Services
         void ChangeUnderlyingIndexForAlias(string newIndexName);
 
         bool HasRoatpInfoChanged(ICollection<RoatpProvider> roatpProviders);
-        void SendNewProviderEvents(string newIndexName);
+        NewProviderStats SendNewProviderEvents(string newIndexName);
     }
 }

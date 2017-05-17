@@ -64,9 +64,10 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
             return false;
         }
 
-        public void SendNewProviderEvents(string newIndexName)
+        public NewProviderStats SendNewProviderEvents(string newIndexName)
         {
-            foreach (var provider in CheckNewProviders(newIndexName))
+            var newProviders = CheckNewProviders(newIndexName).ToList();
+            foreach (var provider in newProviders)
             {
                 try
                 {
@@ -74,9 +75,17 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
                 }
                 catch (Exception ex)
                 {
-                    _log.Error(ex, ex.Message, new Dictionary<string, object>() { { "ukprn", provider.Ukprn} });
+                    _log.Error(ex, ex.Message, new Dictionary<string, object> { { "ukprn", provider.Ukprn} });
                 }
             }
+
+            return new NewProviderStats
+            {
+                TotalCount = newProviders.Count,
+                TotalMainProviders = newProviders.Count(x => x.ProviderType == ProviderType.MainProvider),
+                TotalSupportProviders = newProviders.Count(x => x.ProviderType == ProviderType.SupportingProvider),
+                TotalEmployerProviders = newProviders.Count(x => x.ProviderType == ProviderType.EmployerProvider)
+            };
         }
 
         public bool CreateIndex(string indexName)

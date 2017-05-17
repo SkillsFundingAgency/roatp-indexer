@@ -30,12 +30,12 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
             _name = IndexTypeName;
         }
 
-        public async Task CreateScheduledIndex(DateTime scheduledRefreshDateTime)
+        public async Task CheckRoatpAndCreateIndexAndUpdateAlias(DateTime scheduledRefreshDateTime)
         {
 
             Stopwatch stopwatch = Stopwatch.StartNew();
 
-            _log.Info("Checking for updates to ROATP");
+            _log.Debug("Checking for updates to ROATP");
 
             var roatpProviders = _indexerHelper.LoadEntries();
             if (roatpProviders != null)
@@ -46,7 +46,7 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
 
                 if (infoHasChanged)
                 {
-                    _log.Info($"Update to ROATP spreadsheet detected");
+                    _log.Debug($"Update to ROATP spreadsheet detected");
 
                     var newIndexName = IndexerHelper.GetIndexNameAndDateExtension(scheduledRefreshDateTime, _indexSettings.IndexesAlias);
                     var indexProperlyCreated = _indexerHelper.CreateIndex(newIndexName);
@@ -62,7 +62,7 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
 
                         CheckIfIndexHasBeenCreated(newIndexName);
 
-                        _indexerHelper.SendNewProviderEvents(newIndexName);
+                        var stats = _indexerHelper.SendNewProviderEvents(newIndexName);
 
                         _indexerHelper.ChangeUnderlyingIndexForAlias(newIndexName);
 
@@ -71,12 +71,25 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
                         stopwatch.Stop();
                         var properties = new Dictionary<string, object> {{"Alias", _indexSettings.IndexesAlias}, {"ExecutionTime", stopwatch.ElapsedMilliseconds}};
                         _log.Debug($"Created {_name}", properties);
-                        _log.Info($"{_name}ing complete.");
+                        _log.Debug($"{_name}ing complete.");
+
+                        if (stats.TotalCount == 0)
+                        {
+                            _log.Info("Successfully made changes to existing providers");
+                        }
+                        else
+                        {
+                            _log.Info("Successfully updated and added new providers", new Dictionary<string, object> { { "TotalCount", stats.TotalCount } });
+                        }
                     }
                     catch (Exception ex)
                     {
                         _log.Error(ex, ex.Message);
                     }
+                }
+                else
+                {
+                    _log.Info("Successfully checked for changes");
                 }
             }
         }

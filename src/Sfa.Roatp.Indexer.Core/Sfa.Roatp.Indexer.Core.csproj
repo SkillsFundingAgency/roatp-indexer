@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Exceptions\ConnectionException.cs" />
+    <Compile Include="Models\NewProviderStats.cs" />
     <Compile Include="Models\ProviderType.cs" />
     <Compile Include="Models\RoatpProvider.cs" />
     <Compile Include="Models\RoatpProviderDocument.cs" />
