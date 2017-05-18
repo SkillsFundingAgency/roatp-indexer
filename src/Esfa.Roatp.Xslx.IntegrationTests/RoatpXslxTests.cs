@@ -4,6 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Sfa.Roatp.Indexer.ApplicationServices;
 using Sfa.Roatp.Indexer.Core.Models;
 using Sfa.Roatp.Indexer.WorkerRole.DependencyResolution;
+using System;
 
 namespace Esfa.Roatp.Xslx.IntegrationTests
 {
@@ -21,6 +22,7 @@ namespace Esfa.Roatp.Xslx.IntegrationTests
 
             // Act
             results = sut.GetRoatpData().ToList();
+            //results = GetRoatpProvider(); To test the tests
         }
 
         [TestMethod]
@@ -44,6 +46,56 @@ namespace Esfa.Roatp.Xslx.IntegrationTests
         {
             var duplicates = results.GroupBy(x => x.Ukprn).Where(g => g.Count() > 1).Select(x => x.Key).ToList();
             Assert.AreEqual(0, duplicates.Count, $"There are {duplicates.Count} duplicate ukprns [{string.Join(", ", duplicates)}]");
+        }
+
+        private List<RoatpProvider> GetRoatpProvider()
+        {
+            return new List<RoatpProvider>
+            {
+                new RoatpProvider
+                {
+                    Ukprn = "12345679",
+                    ProviderType = ProviderType.EmployerProvider,
+                    ContractedForNonLeviedEmployers = true,
+                    NewOrganisationWithoutFinancialTrackRecord = true,
+                    ParentCompanyGuarantee = true,
+                    Name = "Sample",
+                    StartDate = DateTime.Now.AddDays(-1),
+                    EndDate = null
+                },
+                new RoatpProvider
+                {
+                    Ukprn = "12345678",
+                    ProviderType = ProviderType.EmployerProvider,
+                    ContractedForNonLeviedEmployers = true,
+                    NewOrganisationWithoutFinancialTrackRecord = true,
+                    ParentCompanyGuarantee = true,
+                    Name = "Sample",
+                    StartDate = DateTime.Now.AddDays(-1),
+                    EndDate = null
+                },
+                 new RoatpProvider
+                {
+                    Ukprn = "82345678",
+                    ProviderType = ProviderType.SupportingProvider,
+                    ContractedForNonLeviedEmployers = true,
+                    NewOrganisationWithoutFinancialTrackRecord = true,
+                    ParentCompanyGuarantee = true,
+                    Name = "Sample",
+                    StartDate = DateTime.Now.AddDays(-1),
+                    EndDate = null
+                }, new RoatpProvider
+                {
+                    Ukprn = "32345678",
+                    ProviderType = ProviderType.MainProvider,
+                    ContractedForNonLeviedEmployers = true,
+                    NewOrganisationWithoutFinancialTrackRecord = true,
+                    ParentCompanyGuarantee = true,
+                    Name = "Sample",
+                    StartDate = DateTime.Now.AddDays(-1),
+                    EndDate = null
+                }
+            };
         }
     }
 }
