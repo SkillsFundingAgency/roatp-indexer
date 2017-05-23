@@ -36,8 +36,6 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
 
             Stopwatch stopwatch = Stopwatch.StartNew();
 
-            SendMonitoringNotification();
-
             _log.Debug("Checking for updates to ROATP");
 
             var roatpProviders = _indexerHelper.LoadEntries();
@@ -84,6 +82,7 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
                         {
                             _log.Info("Successfully updated and added new providers", new Dictionary<string, object> { { "TotalCount", stats.TotalCount } });
                         }
+                        SendMonitoringNotification();
                     }
                     catch (Exception ex)
                     {
@@ -93,6 +92,7 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
                 else
                 {
                     _log.Info("Successfully checked for changes");
+                    SendMonitoringNotification();
                 }
             }
         }
