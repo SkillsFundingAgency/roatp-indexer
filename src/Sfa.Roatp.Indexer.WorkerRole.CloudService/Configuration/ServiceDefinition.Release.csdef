@@ -7,6 +7,8 @@
       <Setting name="WorkerRole.RunFrequencySeconds"/>
       <Setting name="WorkerRole.PauseAfterIndexing" />
       <Setting name="WorkerRole.EnvironmentName" />
+      
+      <Setting name="StatusCakeUrl" />
 
       <Setting name="ElasticSearch.IndexShards" />
       <Setting name="ElasticSearch.IndexReplicas" />

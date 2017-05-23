@@ -5,24 +5,19 @@
     <ConfigurationSettings>
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="UseDevelopmentStorage=true" />
       <Setting name="FeatureToggle.EventsApiFeature" value="false" />
-
       <Setting name="WorkerRole.RunFrequencySeconds" value="1000" />
       <Setting name="WorkerRole.EnvironmentName" value="local" />
       <Setting name="WorkerRole.PauseAfterIndexing" value="10" />
-
-
       <Setting name="ElasticSearch.IndexShards" value="1" />
       <Setting name="ElasticSearch.IndexReplicas" value="0" />
       <Setting name="ElasticSearch.ServerUrls" value="http://127.0.0.1:9200,http://192.168.99.100:9200,http://docker.local:9200" />
-
       <Setting name="EventsApi.BaseUrl" value="" />
       <Setting name="EventsApi.ClientToken" value="" />
-
       <Setting name="Vsts.RoatpUrlFormat" value="" />
-      <Setting name="GitUsername" value=""/>
-      <Setting name="GitPassword" value=""/>
-
-      <Setting name="Logging.RedisConnectionString" value=""/>
+      <Setting name="GitUsername" value="" />
+      <Setting name="GitPassword" value="" />
+      <Setting name="Logging.RedisConnectionString" value="" />
+      <Setting name="StatusCakeUrl" value="" />
     </ConfigurationSettings>
   </Role>
 </ServiceConfiguration>

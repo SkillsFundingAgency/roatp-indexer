@@ -8,19 +8,16 @@
       <Setting name="WorkerRole.RunFrequencySeconds" value="__WorkerRole.RunFrequencySeconds__" />
       <Setting name="WorkerRole.PauseAfterIndexing" value="__WorkerRole.PauseAfterIndexing__" />
       <Setting name="WorkerRole.EnvironmentName" value="__WorkerRole.EnvironmentName__" />
-
       <Setting name="ElasticSearch.IndexShards" value="1" />
       <Setting name="ElasticSearch.IndexReplicas" value="0" />
       <Setting name="ElasticSearch.ServerUrls" value="__ElasticSearch.ServerUrls__" />
-
       <Setting name="EventsApi.BaseUrl" value="__EventsApi.BaseUrl__" />
       <Setting name="EventsApi.ClientToken" value="__EventsApi.ClientToken__" />
-
       <Setting name="Vsts.RoatpUrlFormat" value="__Vsts.RoatpUrl__" />
-      <Setting name="GitUsername" value="__Vsts.GitUsername__"/>
-      <Setting name="GitPassword" value="__VstsGitPassword__"/>
-
-      <Setting name="Logging.RedisConnectionString" value="__Logging.RedisConnectionString__"/>
+      <Setting name="GitUsername" value="__Vsts.GitUsername__" />
+      <Setting name="GitPassword" value="__VstsGitPassword__" />
+      <Setting name="Logging.RedisConnectionString" value="__Logging.RedisConnectionString__" />
+      <Setting name="StatusCakeUrl" value="__StatusCakeUrl__" />
     </ConfigurationSettings>
   </Role>
   <NetworkConfiguration>

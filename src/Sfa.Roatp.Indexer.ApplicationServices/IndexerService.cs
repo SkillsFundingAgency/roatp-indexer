@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Sfa.Roatp.Indexer.ApplicationServices.Settings;
@@ -34,6 +35,8 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
         {
 
             Stopwatch stopwatch = Stopwatch.StartNew();
+
+            SendMonitoringNotification();
 
             _log.Debug("Checking for updates to ROATP");
 
@@ -91,6 +94,17 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
                 {
                     _log.Info("Successfully checked for changes");
                 }
+            }
+        }
+
+        private void SendMonitoringNotification()
+        {
+            if (string.IsNullOrEmpty(_indexSettings.StatusCakeUrl)) return;
+
+            using (var client = new HttpClient())
+            {
+                var task = Task.Run(() => client.GetAsync(_indexSettings.StatusCakeUrl));
+                task.Wait();
             }
         }
 
