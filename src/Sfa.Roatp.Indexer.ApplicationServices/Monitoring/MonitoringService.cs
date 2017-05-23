@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Sfa.Roatp.Indexer.ApplicationServices.Settings;
 using SFA.DAS.NLog.Logger;
@@ -24,6 +25,11 @@ namespace Sfa.Roatp.Indexer.ApplicationServices.Monitoring
             {
                 var task = Task.Run(() => client.GetAsync(_monitoringSettings.StatusCakeUrl));
                 task.Wait();
+
+                if (task.Result.StatusCode != HttpStatusCode.OK)
+                {
+                    _logger.Warn("Something failed trying to send a request to StatusCake");
+                }
             }
         }
     }
