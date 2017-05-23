@@ -45,7 +45,7 @@ namespace Sfa.Roatp.Indexer.Infrastructure.Events
             {
                 if (next.ProviderType != last.ProviderType)
                 {
-                    if (next.ProviderType == ProviderType.EmployerProvider || last.ProviderType == ProviderType.MainProvider)
+                    if ((next.ProviderType == ProviderType.EmployerProvider || next.ProviderType == ProviderType.MainProvider) && (last.ProviderType == ProviderType.SupportingProvider || last.ProviderType == ProviderType.Unknown))
                     {
                         var agreementEvent = new AgreementEvent { ContractType = NewRoatpProviderContractType, Event = NewRoatpProviderEvent, ProviderId = next.Ukprn };
                         Task.WaitAll(_client.CreateAgreementEvent(agreementEvent));
