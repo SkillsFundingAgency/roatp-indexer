@@ -62,7 +62,7 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
 
                         CheckIfIndexHasBeenCreated(newIndexName);
 
-                        var stats = _indexerHelper.SendNewProviderEvents(newIndexName);
+                        var stats = _indexerHelper.SendEvents(newIndexName);
 
                         _indexerHelper.ChangeUnderlyingIndexForAlias(newIndexName);
 

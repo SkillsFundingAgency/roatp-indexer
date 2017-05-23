@@ -64,9 +64,9 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
             return false;
         }
 
-        public NewProviderStats SendNewProviderEvents(string newIndexName)
+        public NewProviderStats SendEvents(string newIndexName)
         {
-            var newProviders = CheckNewProviders(newIndexName).ToList();
+            var newProviders = IdentifyCreations(newIndexName).ToList();
             foreach (var provider in newProviders)
             {
                 try
@@ -76,6 +76,19 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
                 catch (Exception ex)
                 {
                     _log.Error(ex, ex.Message, new Dictionary<string, object> { { "ukprn", provider.Ukprn} });
+                }
+            }
+
+            var modifiedProviders = IdentifyModifications(newIndexName).ToList();
+            foreach (var provider in modifiedProviders)
+            {
+                try
+                {
+                    _providerEventConsumer.ChangedProvider(provider.Item1, provider.Item2);
+                }
+                catch (Exception ex)
+                {
+                    _log.Error(ex, ex.Message, new Dictionary<string, object> { { "ukprn", provider.Item1.Ukprn } });
                 }
             }
 
@@ -142,7 +155,7 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
             _indexMaintainer.LogResponse(await Task.WhenAll(bulkApiProviderTasks), "RoatpProviderDocument");
         }
 
-        public IEnumerable<RoatpProviderDocument> CheckNewProviders(string newIndexName)
+        public IEnumerable<RoatpProviderDocument> IdentifyCreations(string newIndexName)
         {
             var actualRoatpProviders = _indexMaintainer.LoadRoatpProvidersFromIndex(newIndexName);
             var oldProviders = _indexMaintainer.LoadRoatpProvidersFromAlias();
@@ -150,6 +163,17 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
             return (from roatpProviderDocument in actualRoatpProviders
                     let roatpProvider = oldProviders.FirstOrDefault(x => x.Ukprn == roatpProviderDocument.Ukprn)
                     where roatpProvider == null select roatpProviderDocument);
+        }
+
+        private IEnumerable<Tuple<RoatpProviderDocument, RoatpProviderDocument>> IdentifyModifications(string newIndexName)
+        {
+            var actualRoatpProviders = _indexMaintainer.LoadRoatpProvidersFromIndex(newIndexName);
+            var oldProviders = _indexMaintainer.LoadRoatpProvidersFromAlias();
+
+            return (from roatpProviderDocument in actualRoatpProviders
+                let original = oldProviders.FirstOrDefault(x => x.Ukprn == roatpProviderDocument.Ukprn)
+                where !original.Equals(roatpProviderDocument)
+                select new Tuple<RoatpProviderDocument, RoatpProviderDocument>(roatpProviderDocument, original));
         }
     }
 }
