@@ -5,7 +5,5 @@
         string IndexesAlias { get; }
 
         int PauseAfterIndexing { get; }
-
-        string StatusCakeUrl { get; }
     }
 }
