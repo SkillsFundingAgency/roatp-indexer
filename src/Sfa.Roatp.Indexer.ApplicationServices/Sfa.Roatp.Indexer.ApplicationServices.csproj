@@ -91,6 +91,9 @@
     <Compile Include="FeatureToggles\EventsApiFeature.cs" />
     <Compile Include="Events\IConsumeProviderEvents.cs" />
     <Compile Include="IElasticsearchMapper.cs" />
+    <Compile Include="Monitoring\IMonitoringService.cs" />
+    <Compile Include="Settings\IMonitoringSettings.cs" />
+    <Compile Include="Monitoring\MonitoringService.cs" />
     <Compile Include="RoatpProvidersXlsxService.cs" />
     <Compile Include="IGetRoatpProviders.cs" />
     <Compile Include="IndexerHelper.cs" />
@@ -101,6 +104,7 @@
     <Compile Include="IIndexerService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings\AppServiceSettings.cs" />
+    <Compile Include="Settings\MonitoringSettings.cs" />
     <Compile Include="Settings\ProviderIndexSettings.cs" />
     <Compile Include="Settings\IIndexSettings.cs" />
     <Compile Include="Settings\IAppServiceSettings.cs" />
