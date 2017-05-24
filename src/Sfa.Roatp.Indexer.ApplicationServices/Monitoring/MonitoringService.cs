@@ -19,7 +19,7 @@ namespace Sfa.Roatp.Indexer.ApplicationServices.Monitoring
 
         public void SendMonitoringNotification()
         {
-            if (string.IsNullOrEmpty(_monitoringSettings.StatusCakeUrl)) return;
+            if (string.IsNullOrWhiteSpace(_monitoringSettings.StatusCakeUrl)) return;
 
             var urls = _monitoringSettings.StatusCakeUrl.Split(';');
 
