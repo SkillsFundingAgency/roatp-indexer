@@ -17,7 +17,7 @@
       <Setting name="GitUsername" value="__Vsts.GitUsername__" />
       <Setting name="GitPassword" value="__VstsGitPassword__" />
       <Setting name="Logging.RedisConnectionString" value="__Logging.RedisConnectionString__" />
-      <Setting name="StatusCakeUrl" value="" />
+      <Setting name="StatusCakeUrl" value="__StatusCakeUrl__" />
     </ConfigurationSettings>
   </Role>
   <NetworkConfiguration>
