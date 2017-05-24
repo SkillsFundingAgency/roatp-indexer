@@ -37,5 +37,21 @@ namespace Sfa.Roatp.Indexer.Infrastructure.Events
                 }
             }
         }
+
+        public void ChangedProvider(RoatpProviderDocument next, RoatpProviderDocument last)
+        {
+            _log.Info($"Modified provider", new Dictionary<string, object> { { "ukprn", next.Ukprn } });
+            if (_eventsApiClientConfiguration.Enabled)
+            {
+                if (next.ProviderType != last.ProviderType)
+                {
+                    if ((next.ProviderType == ProviderType.EmployerProvider || next.ProviderType == ProviderType.MainProvider) && (last.ProviderType == ProviderType.SupportingProvider || last.ProviderType == ProviderType.Unknown))
+                    {
+                        var agreementEvent = new AgreementEvent { ContractType = NewRoatpProviderContractType, Event = NewRoatpProviderEvent, ProviderId = next.Ukprn };
+                        Task.WaitAll(_client.CreateAgreementEvent(agreementEvent));
+                    }
+                }
+            }
+        }
     }
 }
