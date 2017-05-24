@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using Sfa.Roatp.Indexer.ApplicationServices.Monitoring;
 using Sfa.Roatp.Indexer.ApplicationServices.Settings;
 using Sfa.Roatp.Indexer.Core.Services;
 using SFA.DAS.NLog.Logger;
@@ -13,6 +15,7 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
     public class IndexerService<T> : IIndexerService<T>
     {
         private readonly IGenericIndexerHelper<T> _indexerHelper;
+        private readonly IMonitoringService _monitoringService;
 
         private readonly ILog _log;
 
@@ -22,10 +25,11 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
 
         private const string IndexTypeName = "RoATP Provider Index";
 
-        public IndexerService(IIndexSettings<T> indexSettings, IGenericIndexerHelper<T> indexerHelper, ILog log)
+        public IndexerService(IIndexSettings<T> indexSettings, IGenericIndexerHelper<T> indexerHelper, IMonitoringService monitoringService, ILog log)
         {
             _indexSettings = indexSettings;
             _indexerHelper = indexerHelper;
+            _monitoringService = monitoringService;
             _log = log;
             _name = IndexTypeName;
         }
@@ -81,6 +85,7 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
                         {
                             _log.Info("Successfully updated and added new providers", new Dictionary<string, object> { { "TotalCount", stats.TotalCount } });
                         }
+                        _monitoringService.SendMonitoringNotification();
                     }
                     catch (Exception ex)
                     {
@@ -90,6 +95,7 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
                 else
                 {
                     _log.Info("Successfully checked for changes");
+                    _monitoringService.SendMonitoringNotification();
                 }
             }
         }
