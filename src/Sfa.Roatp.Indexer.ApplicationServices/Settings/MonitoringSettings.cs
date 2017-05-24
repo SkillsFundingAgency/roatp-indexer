@@ -12,6 +12,6 @@ namespace Sfa.Roatp.Indexer.ApplicationServices.Settings
             _settings = settingsProvider;
         }
 
-        public string StatusCakeUrl => _settings.GetSetting("StatusCakeUrl");
+        public string StatusCakeUrl => _settings.GetNullableSetting("StatusCakeUrl");
     }
 }

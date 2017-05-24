@@ -30,6 +30,18 @@ namespace Sfa.Roatp.Indexer.Infrastructure.Settings
             return setting;
         }
 
+        public string GetNullableSetting(string settingKey)
+        {
+            var setting = CloudConfigurationManager.GetSetting(settingKey);
+
+            if (string.IsNullOrEmpty(setting))
+            {
+                setting = TryBaseSettingsProvider(settingKey);
+            }
+
+            return setting;
+        }
+
         private string TryBaseSettingsProvider(string settingKey)
         {
             return _baseSettings.GetSetting(settingKey);
