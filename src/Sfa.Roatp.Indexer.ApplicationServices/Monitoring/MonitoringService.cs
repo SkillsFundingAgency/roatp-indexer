@@ -21,14 +21,19 @@ namespace Sfa.Roatp.Indexer.ApplicationServices.Monitoring
         {
             if (string.IsNullOrEmpty(_monitoringSettings.StatusCakeUrl)) return;
 
-            using (var client = new HttpClient())
-            {
-                var task = Task.Run(() => client.GetAsync(_monitoringSettings.StatusCakeUrl));
-                task.Wait();
+            var urls = _monitoringSettings.StatusCakeUrl.Split(';');
 
-                if (task.Result.StatusCode != HttpStatusCode.OK)
+            foreach (var url in urls)
+            {
+                using (var client = new HttpClient())
                 {
-                    _logger.Warn("Something failed trying to send a request to StatusCake");
+                    var task = Task.Run(() => client.GetAsync(url));
+                    task.Wait();
+
+                    if (task.Result.StatusCode != HttpStatusCode.OK)
+                    {
+                        _logger.Warn($"Something failed trying to send a request to StatusCake: {url}");
+                    }
                 }
             }
         }
