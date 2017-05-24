@@ -36,7 +36,7 @@ namespace Sfa.Roatp.Indexer.Infrastructure.Settings
 
             if (string.IsNullOrEmpty(setting))
             {
-                setting = TryBaseSettingsProvider(settingKey);
+                setting = _baseSettings.GetNullableSetting(settingKey);
             }
 
             return setting;
