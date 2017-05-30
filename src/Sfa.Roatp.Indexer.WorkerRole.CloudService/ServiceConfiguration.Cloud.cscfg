@@ -4,19 +4,19 @@
     <Instances count="1" />
     <ConfigurationSettings>
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="UseDevelopmentStorage=true" />
-      <Setting name="FeatureToggle.EventsApiFeature" value="__FeatureToggle_EventsApiFeature__" />
-      <Setting name="WorkerRole.RunFrequencySeconds" value="__WorkerRole_RunFrequencySeconds__" />
-      <Setting name="WorkerRole.PauseAfterIndexing" value="__WorkerRole_PauseAfterIndexing__" />
-      <Setting name="WorkerRole.EnvironmentName" value="__WorkerRole_EnvironmentName__" />
+      <Setting name="FeatureToggle.EventsApiFeature" value="__FeatureToggle.EventsApiFeature__" />
+      <Setting name="WorkerRole.RunFrequencySeconds" value="__WorkerRole.RunFrequencySeconds__" />
+      <Setting name="WorkerRole.PauseAfterIndexing" value="__WorkerRole.PauseAfterIndexing__" />
+      <Setting name="WorkerRole.EnvironmentName" value="__WorkerRole.EnvironmentName__" />
       <Setting name="ElasticSearch.IndexShards" value="1" />
       <Setting name="ElasticSearch.IndexReplicas" value="0" />
-      <Setting name="ElasticSearch.ServerUrls" value="__ElasticSearch_ServerUrls__" />
-      <Setting name="EventsApi.BaseUrl" value="__EventsApi_BaseUrl__" />
-      <Setting name="EventsApi.ClientToken" value="__EventsApi_ClientToken__" />
-      <Setting name="Vsts.RoatpUrlFormat" value="__Vsts_RoatpUrl__" />
-      <Setting name="GitUsername" value="__Vsts_GitUsername__" />
+      <Setting name="ElasticSearch.ServerUrls" value="__ElasticSearch.ServerUrls__" />
+      <Setting name="EventsApi.BaseUrl" value="__EventsApi.BaseUrl__" />
+      <Setting name="EventsApi.ClientToken" value="__EventsApi.ClientToken__" />
+      <Setting name="Vsts.RoatpUrlFormat" value="__Vsts.RoatpUrl__" />
+      <Setting name="GitUsername" value="__Vsts.GitUsername__" />
       <Setting name="GitPassword" value="__VstsGitPassword__" />
-      <Setting name="Logging.RedisConnectionString" value="__Logging_RedisConnectionString__" />
+      <Setting name="Logging.RedisConnectionString" value="__Logging.RedisConnectionString__" />
       <Setting name="StatusCakeUrl" value="__StatusCakeUrl__" />
     </ConfigurationSettings>
   </Role>
