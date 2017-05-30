@@ -27,6 +27,7 @@ namespace Sfa.Roatp.Indexer.ApplicationServices.Monitoring
             {
                 using (var client = new HttpClient())
                 {
+                    _logger.Debug($"Sending a request to {url}");
                     var task = Task.Run(() => client.GetAsync(url));
                     task.Wait();
 
