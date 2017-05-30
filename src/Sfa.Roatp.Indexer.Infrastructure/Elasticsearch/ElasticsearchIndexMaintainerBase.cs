@@ -130,7 +130,15 @@ namespace Sfa.Roatp.Indexer.Infrastructure.Elasticsearch
                 { "ExecutionTime", took },
                 { "ErrorCount", errorCount }
             };
-            Log.Info($"Total of {totalCount - errorCount} / {totalCount} {documentType} documents were indexed successfully", properties);
+            var message = $"Total of {totalCount - errorCount} / {totalCount} {documentType} documents were indexed successfully";
+            if (errorCount > 0)
+            {
+                Log.Error(null, message, properties);
+            }
+            else
+            {
+                Log.Info(message, properties);
+            }
         }
     }
 }
