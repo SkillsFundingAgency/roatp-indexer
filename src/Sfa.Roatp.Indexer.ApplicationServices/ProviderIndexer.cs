@@ -158,21 +158,21 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
         public IEnumerable<RoatpProviderDocument> IdentifyCreations(string newIndexName)
         {
             var actualRoatpProviders = _indexMaintainer.LoadRoatpProvidersFromIndex(newIndexName);
-            var oldProviders = _indexMaintainer.LoadRoatpProvidersFromAlias();
+            var oldProviders = _indexMaintainer.LoadRoatpProvidersFromAlias().ToList();
 
             return (from roatpProviderDocument in actualRoatpProviders
                     let roatpProvider = oldProviders.FirstOrDefault(x => x.Ukprn == roatpProviderDocument.Ukprn)
                     where roatpProvider == null select roatpProviderDocument);
         }
 
-        private IEnumerable<Tuple<RoatpProviderDocument, RoatpProviderDocument>> IdentifyModifications(string newIndexName)
+        public IEnumerable<Tuple<RoatpProviderDocument, RoatpProviderDocument>> IdentifyModifications(string newIndexName)
         {
             var actualRoatpProviders = _indexMaintainer.LoadRoatpProvidersFromIndex(newIndexName);
-            var oldProviders = _indexMaintainer.LoadRoatpProvidersFromAlias();
+            var oldProviders = _indexMaintainer.LoadRoatpProvidersFromAlias().ToList();
 
             return (from roatpProviderDocument in actualRoatpProviders
                 let original = oldProviders.FirstOrDefault(x => x.Ukprn == roatpProviderDocument.Ukprn)
-                where !original.Equals(roatpProviderDocument)
+                where original != null && !original.Equals(roatpProviderDocument)
                 select new Tuple<RoatpProviderDocument, RoatpProviderDocument>(roatpProviderDocument, original));
         }
     }

@@ -69,6 +69,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="ApplicationServices\ProviderIndexerTests.cs" />
     <Compile Include="ApplicationServices\RoatpProvidersXlsxServiceTests.cs" />
     <Compile Include="Core\Models\RoatpProviderDocumentTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
