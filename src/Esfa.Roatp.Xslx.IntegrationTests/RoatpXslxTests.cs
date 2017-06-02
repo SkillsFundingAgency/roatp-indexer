@@ -18,7 +18,6 @@ namespace Esfa.Roatp.Xslx.IntegrationTests
         {
             // Arrange
             var container = IoC.Initialize();
-            container.Configure();
             var sut = container.GetInstance<IGetRoatpProviders>();
 
             // Act
