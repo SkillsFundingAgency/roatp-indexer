@@ -9,5 +9,6 @@ namespace Sfa.Roatp.Indexer.ApplicationServices.Settings
         string GitPassword { get; }
 
         string VstsRoatpUrl { get; }
+        string EnvironmentName { get; }
     }
 }

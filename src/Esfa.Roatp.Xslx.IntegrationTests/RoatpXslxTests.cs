@@ -5,6 +5,8 @@ using Sfa.Roatp.Indexer.ApplicationServices;
 using Sfa.Roatp.Indexer.Core.Models;
 using Sfa.Roatp.Indexer.WorkerRole.DependencyResolution;
 using System;
+using Sfa.Roatp.Indexer.ApplicationServices.Settings;
+using SFA.DAS.NLog.Logger;
 
 namespace Esfa.Roatp.Xslx.IntegrationTests
 {
@@ -12,6 +14,7 @@ namespace Esfa.Roatp.Xslx.IntegrationTests
     public class RoatpXslxTests
     {
         List<RoatpProvider> results;
+        IGetRoatpProviders prodSut;
 
         [TestInitialize]
         public void Init()
@@ -20,9 +23,17 @@ namespace Esfa.Roatp.Xslx.IntegrationTests
             var container = IoC.Initialize();
             var sut = container.GetInstance<IGetRoatpProviders>();
 
+            using (var prodContainer = container.GetNestedContainer())
+            {
+                prodContainer.Configure(x =>
+                {
+                    x.For<IAppServiceSettings>().Use<ProdAppSettings>();
+                });
+                prodSut = prodContainer.GetInstance<IGetRoatpProviders>();
+            }
+
             // Act
             results = sut.GetRoatpData().ToList();
-            //results = GetRoatpProvider(); To test the tests
         }
 
         [TestMethod]
@@ -48,54 +59,14 @@ namespace Esfa.Roatp.Xslx.IntegrationTests
             Assert.AreEqual(0, duplicates.Count, $"There are {duplicates.Count} duplicate ukprns [{string.Join(", ", duplicates)}]");
         }
 
-        private List<RoatpProvider> GetRoatpProvider()
+        [TestMethod]
+        public void RoatpShouldntRemoveProviders()
         {
-            return new List<RoatpProvider>
-            {
-                new RoatpProvider
-                {
-                    Ukprn = "12345679",
-                    ProviderType = ProviderType.EmployerProvider,
-                    ContractedForNonLeviedEmployers = true,
-                    NewOrganisationWithoutFinancialTrackRecord = true,
-                    ParentCompanyGuarantee = true,
-                    Name = "Sample",
-                    StartDate = DateTime.Now.AddDays(-1),
-                    EndDate = null
-                },
-                new RoatpProvider
-                {
-                    Ukprn = "12345678",
-                    ProviderType = ProviderType.EmployerProvider,
-                    ContractedForNonLeviedEmployers = true,
-                    NewOrganisationWithoutFinancialTrackRecord = true,
-                    ParentCompanyGuarantee = true,
-                    Name = "Sample",
-                    StartDate = DateTime.Now.AddDays(-1),
-                    EndDate = null
-                },
-                 new RoatpProvider
-                {
-                    Ukprn = "82345678",
-                    ProviderType = ProviderType.SupportingProvider,
-                    ContractedForNonLeviedEmployers = true,
-                    NewOrganisationWithoutFinancialTrackRecord = true,
-                    ParentCompanyGuarantee = true,
-                    Name = "Sample",
-                    StartDate = DateTime.Now.AddDays(-1),
-                    EndDate = null
-                }, new RoatpProvider
-                {
-                    Ukprn = "32345678",
-                    ProviderType = ProviderType.MainProvider,
-                    ContractedForNonLeviedEmployers = true,
-                    NewOrganisationWithoutFinancialTrackRecord = true,
-                    ParentCompanyGuarantee = true,
-                    Name = "Sample",
-                    StartDate = DateTime.Now.AddDays(-1),
-                    EndDate = null
-                }
-            };
+            var existing = prodSut.GetRoatpData().ToList();
+
+            // Assert
+            var missing = existing.Where(x => !results.Select(y => y.Ukprn).Contains(x.Ukprn)).ToList();
+            Assert.AreEqual(0, missing.Count, $"missing [{string.Join(", ", missing.Select(x => x.Ukprn))}]");
         }
     }
 }
