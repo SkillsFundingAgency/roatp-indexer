@@ -110,19 +110,22 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
             for (var i = roatpWorkSheet.Dimension.Start.Row + 1; i <= roatpWorkSheet.Dimension.End.Row; i++)
             {
                 var ukprn = roatpWorkSheet.Cells[i, UkprnPosition].Value != null ? roatpWorkSheet.Cells[i, UkprnPosition].Value.ToString() : string.Empty;
-                var roatpData = new RoatpProvider
+                if (!string.IsNullOrEmpty(ukprn))
                 {
-                    Ukprn = ukprn,
-                    Name = roatpWorkSheet.Cells[i, NamePosition].Value != null ? roatpWorkSheet.Cells[i, NamePosition].Value.ToString() : string.Empty,
-                    ProviderType = GetProviderType(roatpWorkSheet.Cells[i, ProviderTypePosition].Value, ukprn),
-                    ContractedForNonLeviedEmployers = GetBooleanValue(roatpWorkSheet.Cells[i, ContractedForNonLeviedEmployersPosition]),
-                    ParentCompanyGuarantee = GetBooleanValue(roatpWorkSheet.Cells[i, ParentCompanyGuaranteePosition]),
-                    NewOrganisationWithoutFinancialTrackRecord = GetBooleanValue(roatpWorkSheet.Cells[i, NewOrganisationWithoutFinancialTrackRecordPosition]),
-                    StartDate = GetDateTimeValue(roatpWorkSheet.Cells[i, StartDatePosition]),
-                    EndDate = GetDateTimeValue(roatpWorkSheet.Cells[i, EndDatePosition]),
-                };
+                    var roatpData = new RoatpProvider
+                    {
+                        Ukprn = ukprn,
+                        Name = roatpWorkSheet.Cells[i, NamePosition].Value != null ? roatpWorkSheet.Cells[i, NamePosition].Value.ToString() : string.Empty,
+                        ProviderType = GetProviderType(roatpWorkSheet.Cells[i, ProviderTypePosition].Value, ukprn),
+                        ContractedForNonLeviedEmployers = GetBooleanValue(roatpWorkSheet.Cells[i, ContractedForNonLeviedEmployersPosition]),
+                        ParentCompanyGuarantee = GetBooleanValue(roatpWorkSheet.Cells[i, ParentCompanyGuaranteePosition]),
+                        NewOrganisationWithoutFinancialTrackRecord = GetBooleanValue(roatpWorkSheet.Cells[i, NewOrganisationWithoutFinancialTrackRecordPosition]),
+                        StartDate = GetDateTimeValue(roatpWorkSheet.Cells[i, StartDatePosition]),
+                        EndDate = GetDateTimeValue(roatpWorkSheet.Cells[i, EndDatePosition]),
+                    };
 
-                roatpProviders.Add(roatpData);
+                    roatpProviders.Add(roatpData);
+                }
             }
         }
 
