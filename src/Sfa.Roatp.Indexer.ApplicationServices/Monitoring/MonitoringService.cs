@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Sfa.Roatp.Indexer.ApplicationServices.Settings;
@@ -20,21 +21,28 @@ namespace Sfa.Roatp.Indexer.ApplicationServices.Monitoring
         public void SendMonitoringNotification()
         {
             if (string.IsNullOrWhiteSpace(_monitoringSettings.StatusCakeUrl)) return;
-
+            
             var urls = _monitoringSettings.StatusCakeUrl.Split(';');
 
             foreach (var url in urls)
             {
-                using (var client = new HttpClient())
+                try
                 {
-                    _logger.Debug($"Sending a request to {url}");
-                    var task = Task.Run(() => client.GetAsync(url));
-                    task.Wait();
-
-                    if (task.Result.StatusCode != HttpStatusCode.OK)
+                    using (var client = new HttpClient())
                     {
-                        _logger.Warn($"Something failed trying to send a request to StatusCake: {url}");
+                        _logger.Debug($"Sending a request to {url}");
+                        var task = Task.Run(() => client.GetAsync(url));
+                        task.Wait();
+
+                        if (task.Result.StatusCode != HttpStatusCode.OK)
+                        {
+                            _logger.Warn($"Something failed trying to send a request to StatusCake: {url}");
+                        }
                     }
+                }
+                catch (Exception ex)
+                {
+                    _logger.Warn(ex, $"Something failed trying to send a request to StatusCake: {url}");
                 }
             }
         }
