@@ -68,5 +68,18 @@ namespace Esfa.Roatp.Xslx.IntegrationTests
             var missing = existing.Where(x => !results.Select(y => y.Ukprn).Contains(x.Ukprn)).ToList();
             Assert.AreEqual(0, missing.Count, $"missing [{string.Join(", ", missing.Select(x => x.Ukprn))}]");
         }
+
+        [TestMethod]
+        public void GetRoatpProviderCount()
+        {
+            var activeProviders = results.Where(x => x.EndDate.HasValue == false).Count();
+            Console.WriteLine($"{activeProviders} active roatp providers found out of {results.Count} roatp providers");
+
+            var existing = prodSut.GetRoatpData().ToList();
+            var added = results.Where(x => !existing.Select(y => y.Ukprn).Contains(x.Ukprn)).ToList();
+            Console.WriteLine($"{added.Count()} new roatp providers are added.");
+            Console.WriteLine($"{string.Join(Environment.NewLine, added.Select(x => x.Ukprn))}");
+            Assert.IsTrue(true);
+        }
     }
 }
