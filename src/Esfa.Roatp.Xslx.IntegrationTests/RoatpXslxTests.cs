@@ -6,7 +6,6 @@ using Sfa.Roatp.Indexer.Core.Models;
 using Sfa.Roatp.Indexer.WorkerRole.DependencyResolution;
 using System;
 using Sfa.Roatp.Indexer.ApplicationServices.Settings;
-using SFA.DAS.NLog.Logger;
 
 namespace Esfa.Roatp.Xslx.IntegrationTests
 {
@@ -15,6 +14,9 @@ namespace Esfa.Roatp.Xslx.IntegrationTests
     {
         List<RoatpProvider> results;
         IGetRoatpProviders prodSut;
+
+        private TestContext testContextInstance;
+
 
         [TestInitialize]
         public void Init()
@@ -73,13 +75,29 @@ namespace Esfa.Roatp.Xslx.IntegrationTests
         public void GetRoatpProviderCount()
         {
             var activeProviders = results.Where(x => x.EndDate.HasValue == false).Count();
-            Console.WriteLine($"{activeProviders} active roatp providers found out of {results.Count} roatp providers");
+            this.testContextInstance.WriteLine($"{activeProviders} active roatp providers found out of {results.Count} roatp providers");
 
             var existing = prodSut.GetRoatpData().ToList();
             var added = results.Where(x => !existing.Select(y => y.Ukprn).Contains(x.Ukprn)).ToList();
-            Console.WriteLine($"{added.Count()} new roatp providers are added.");
-            Console.WriteLine($"{string.Join(Environment.NewLine, added.Select(x => x.Ukprn))}");
+            this.testContextInstance.WriteLine($"{added.Count()} new roatp providers are added.");
+            this.testContextInstance.WriteLine($"{string.Join(Environment.NewLine, added.Select(x => x.Ukprn))}");
             Assert.IsTrue(true);
+        }
+
+        /// <summary>
+        /// Gets or sets the test context which provides
+        /// information about and functionality for the current test run.
+        /// </summary>
+        public TestContext TestContext
+        {
+            get
+            {
+                return testContextInstance;
+            }
+            set
+            {
+                testContextInstance = value;
+            }
         }
     }
 }
