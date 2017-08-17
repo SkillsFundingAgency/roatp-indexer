@@ -25,6 +25,7 @@ namespace Sfa.Roatp.Indexer.Core.Models
         {
             return Ukprn == oldRoatpProvider.Ukprn &&
                    ProviderType == oldRoatpProvider.ProviderType &&
+                   Name == oldRoatpProvider.Name &&
                    ContractedForNonLeviedEmployers == oldRoatpProvider.ContractedForNonLeviedEmployers &&
                    ParentCompanyGuarantee == oldRoatpProvider.ParentCompanyGuarantee &&
                    NewOrganisationWithoutFinancialTrackRecord == oldRoatpProvider.NewOrganisationWithoutFinancialTrackRecord &&

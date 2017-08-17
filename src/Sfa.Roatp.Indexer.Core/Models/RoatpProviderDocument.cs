@@ -26,7 +26,6 @@ namespace Sfa.Roatp.Indexer.Core.Models
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
             return string.Equals(Ukprn, other.Ukprn) 
-                && string.Equals(Name, other.Name) 
                 && ProviderType == other.ProviderType 
                 && ContractedForNonLeviedEmployers == other.ContractedForNonLeviedEmployers 
                 && ParentCompanyGuarantee == other.ParentCompanyGuarantee 
