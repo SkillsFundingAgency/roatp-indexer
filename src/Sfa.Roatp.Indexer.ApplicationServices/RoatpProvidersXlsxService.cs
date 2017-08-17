@@ -76,7 +76,7 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
             return null;
         }
 
-        public ProviderType GetProviderType(object providerType, string ukprn)
+        public ProviderType GetProviderType(object providerType, string ukprn, int row)
         {
             if (providerType != null)
             {
@@ -98,7 +98,7 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
                 }
             }
 
-            _log.Warn($"Couldn't find the provider type \"{providerType}\"", new Dictionary<string, object> { { "UKPRN", ukprn } });
+            _log.Warn($"Couldn't find the provider type \"{providerType}\" in row {row}", new Dictionary<string, object> { { "UKPRN", ukprn } });
             return ProviderType.Unknown;
         }
 
@@ -116,7 +116,7 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
                     {
                         Ukprn = ukprn,
                         Name = roatpWorkSheet.Cells[i, NamePosition].Value != null ? roatpWorkSheet.Cells[i, NamePosition].Value.ToString() : string.Empty,
-                        ProviderType = GetProviderType(roatpWorkSheet.Cells[i, ProviderTypePosition].Value, ukprn),
+                        ProviderType = GetProviderType(roatpWorkSheet.Cells[i, ProviderTypePosition].Value, ukprn, i),
                         ContractedForNonLeviedEmployers = GetBooleanValue(roatpWorkSheet.Cells[i, ContractedForNonLeviedEmployersPosition]),
                         ParentCompanyGuarantee = GetBooleanValue(roatpWorkSheet.Cells[i, ParentCompanyGuaranteePosition]),
                         NewOrganisationWithoutFinancialTrackRecord = GetBooleanValue(roatpWorkSheet.Cells[i, NewOrganisationWithoutFinancialTrackRecordPosition]),
