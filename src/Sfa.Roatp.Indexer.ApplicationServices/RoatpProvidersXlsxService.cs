@@ -65,7 +65,15 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
                     {
                         extras.Add("DependencyLogEntry.ResponseCode", response.StatusCode);
                     }
-                    _log.Error(wex, "Problem downloading ROATP from VSTS", extras);
+
+                    if (response?.StatusCode == HttpStatusCode.Unauthorized)
+                    {
+                        _log.Error(wex, "Your VSTS credentials were unauthorised", extras);
+                    }
+                    else
+                    {
+                        _log.Error(wex, "Problem downloading ROATP from VSTS", extras);
+                    }
                 }
                 catch (Exception ex)
                 {
