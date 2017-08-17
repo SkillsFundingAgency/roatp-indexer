@@ -27,7 +27,7 @@ namespace Sfa.Roatp.Indexer.UnitTests.ApplicationServices
             var sut = new RoatpProvidersXlsxService(null, new Mock<ILog>().Object);
 
             // Act
-            var result = sut.GetProviderType(input, null);
+            var result = sut.GetProviderType(input, null, 1);
 
             // Assert
             Assert.AreEqual(expected, result);
@@ -45,7 +45,7 @@ namespace Sfa.Roatp.Indexer.UnitTests.ApplicationServices
             var sut = new RoatpProvidersXlsxService(null, logObject.Object);
 
             // Act
-            var result = sut.GetProviderType(input, null);
+            var result = sut.GetProviderType(input, null, 1);
 
             // Assert
             logObject.Verify(x => x.Warn(It.IsAny<string>(), It.IsAny<IDictionary<string, object>>()), Times.Once());
