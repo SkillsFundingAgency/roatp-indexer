@@ -19,6 +19,10 @@ namespace Sfa.Roatp.Indexer.Infrastructure.Settings
 
         public IEnumerable<Uri> ElasticServerUrls => GetElasticIPs("ElasticSearch.ServerUrls");
 
+        public string ElasticUsername => _settingsProvider.GetSetting("ElasticSearch.Username");
+
+        public string ElasticPassword => _settingsProvider.GetSetting("ElasticSearch.Password");
+
         private IEnumerable<Uri> GetElasticIPs(string appSetting)
         {
             return _settingsProvider.GetSetting(appSetting).Split(',').Select(url => new Uri(url));
