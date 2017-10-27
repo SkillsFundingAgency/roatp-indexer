@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
 using Elasticsearch.Net;
 using Nest;
 using Sfa.Roatp.Indexer.ApplicationServices.Extensions;
+using Sfa.Roatp.Indexer.Core.Models;
 using SFA.DAS.NLog.Logger;
 
 namespace Sfa.Roatp.Indexer.Infrastructure.Elasticsearch
@@ -128,6 +130,50 @@ namespace Sfa.Roatp.Indexer.Infrastructure.Elasticsearch
             var result = _client.BulkAsync(request);
             SendLog(null, null, timer.ElapsedMilliseconds, $"Bulk Async {callerName}");
             return result;
+        }
+
+        public void BulkAll(List<RoatpProviderDocument> documents, string indexName)
+        {
+            var count = 0;
+            var elementCount = documents.Count();
+
+            var batchSize = 1000;
+
+            var timer = Stopwatch.StartNew();
+            var waitHandle = new CountdownEvent(1);
+
+            var bulkAll = _client.BulkAll(documents, b => b
+                .Index(indexName)
+                .BackOffRetries(15)
+                .BackOffTime(TimeSpan.FromSeconds(30))
+                .RefreshOnCompleted(true)
+                .MaxDegreeOfParallelism(4)
+                .Size(batchSize));
+
+            bulkAll.Subscribe(observer: new BulkAllObserver(
+                onNext: (b) =>
+                {
+                    count = count + batchSize;
+
+                    if (count > elementCount)
+                    {
+                        count = elementCount;
+                    }
+
+                    _logger.Debug($"Indexed group of RoatpProviderDocument: {count} of {elementCount}");
+                },
+                onError: (e) =>
+                {
+                    _logger.Error(e, e.Message);
+                    throw e;
+                },
+                onCompleted: () =>
+                {
+                    waitHandle.Signal();
+                }));
+            waitHandle.Wait();
+
+            SendLog(null, null, timer.ElapsedMilliseconds, "Bulk completed for RoatpProviderDocument");
         }
 
         private void SendLog(IApiCallDetails apiCallDetails, long? took, double networkTime, string identifier)

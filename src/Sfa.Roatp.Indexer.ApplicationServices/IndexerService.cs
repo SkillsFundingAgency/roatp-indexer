@@ -62,7 +62,7 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
 
                     try
                     {
-                        await _indexerHelper.IndexEntries(newIndexName, providers).ConfigureAwait(false);
+                        _indexerHelper.IndexEntries(newIndexName, providers);
 
                         CheckIfIndexHasBeenCreated(newIndexName);
 

@@ -144,15 +144,10 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
             return _providerDataService.GetRoatpData();
         }
 
-        public async Task IndexEntries(string indexName, IEnumerable<RoatpProvider> roatpProviders)
+        public void IndexEntries(string indexName, IEnumerable<RoatpProvider> roatpProviders)
         {
-            var bulkApiProviderTasks = new List<Task<IBulkResponse>>();
-            roatpProviders = roatpProviders.ToList();
-
             _log.Debug("Indexing " + roatpProviders.Count() + " RoATP providers");
-            bulkApiProviderTasks.AddRange(_indexMaintainer.IndexRoatpProviders(indexName, roatpProviders));
-
-            _indexMaintainer.LogResponse(await Task.WhenAll(bulkApiProviderTasks), "RoatpProviderDocument");
+            _indexMaintainer.IndexRoatpProviders(indexName, roatpProviders.ToList());
         }
 
         public IEnumerable<RoatpProviderDocument> IdentifyCreations(string newIndexName)
