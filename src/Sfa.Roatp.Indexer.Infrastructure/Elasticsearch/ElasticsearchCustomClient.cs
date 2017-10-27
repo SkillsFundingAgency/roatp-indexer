@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Elasticsearch.Net;
@@ -110,7 +111,7 @@ namespace Sfa.Roatp.Indexer.Infrastructure.Elasticsearch
             var timer = Stopwatch.StartNew();
             var result = _client.GetIndicesPointingToAlias(aliasName);
             SendLog(null, null, timer.ElapsedMilliseconds, $"Get Indices Pointing To Alias {aliasName}");
-            return result;
+            return result.ToList();
         }
 
         public ICreateIndexResponse CreateIndex(IndexName index, Func<CreateIndexDescriptor, ICreateIndexRequest> selector = null, string callerName = "")
