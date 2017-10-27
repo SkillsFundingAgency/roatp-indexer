@@ -152,6 +152,8 @@
     <Compile Include="Elasticsearch\ElasticsearchProviderIndexMaintainer.cs" />
     <Compile Include="DependencyResolution\InfrastructureRegistry.cs" />
     <Compile Include="Events\EventsApiService.cs" />
+    <Compile Include="Extensions\MyCertificateIgnoringHttpConnection.cs" />
+    <Compile Include="FeatureToggles\IgnoreSslCertificateFeature.cs" />
     <Compile Include="FeatureToggles\Elk5Feature.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings\AppConfigSettingsProvider.cs" />

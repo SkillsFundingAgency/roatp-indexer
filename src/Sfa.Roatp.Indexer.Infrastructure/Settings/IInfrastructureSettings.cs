@@ -12,5 +12,9 @@ namespace Sfa.Roatp.Indexer.Infrastructure.Settings
         string ElasticUsername { get; }
 
         string ElasticPassword { get; }
+
+        bool Elk5Enabled { get; }
+
+        bool IgnoreSslCertificateEnabled { get; }
     }
 }

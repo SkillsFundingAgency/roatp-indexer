@@ -23,6 +23,10 @@ namespace Sfa.Roatp.Indexer.Infrastructure.Settings
 
         public string ElasticPassword => _settingsProvider.GetSetting("ElasticSearch.Password");
 
+        public bool Elk5Enabled => bool.Parse(_settingsProvider.GetSetting("FeatureToggle.Elk5Feature") ?? "false");
+
+        public bool IgnoreSslCertificateEnabled => bool.Parse(_settingsProvider.GetSetting("FeatureToggle.IgnoreSslCertificateFeature") ?? "false");
+
         private IEnumerable<Uri> GetElasticIPs(string appSetting)
         {
             return _settingsProvider.GetSetting(appSetting).Split(',').Select(url => new Uri(url));

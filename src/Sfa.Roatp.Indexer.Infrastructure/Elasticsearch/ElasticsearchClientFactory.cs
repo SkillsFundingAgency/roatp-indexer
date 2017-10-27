@@ -1,8 +1,6 @@
 ﻿using Elasticsearch.Net;
-using FeatureToggle.Core.Fluent;
 using Nest;
 using Sfa.Roatp.Indexer.Infrastructure.Extensions;
-using Sfa.Roatp.Indexer.Infrastructure.FeatureToggles;
 using Sfa.Roatp.Indexer.Infrastructure.Settings;
 
 namespace Sfa.Roatp.Indexer.Infrastructure.Elasticsearch
@@ -18,7 +16,7 @@ namespace Sfa.Roatp.Indexer.Infrastructure.Elasticsearch
 
         public IElasticClient GetElasticClient()
         {
-            if (Is<IgnoreSslCertificateFeature>.Enabled)
+            if (_infrastructureSettings.IgnoreSslCertificateEnabled)
             {
                 using (var settings = new ConnectionSettings(
                     new StaticConnectionPool(_infrastructureSettings.ElasticServerUrls),
@@ -40,7 +38,7 @@ namespace Sfa.Roatp.Indexer.Infrastructure.Elasticsearch
 
         private void SetDefaultSettings(ConnectionSettings settings)
         {
-            if (Is<Elk5Feature>.Enabled)
+            if (_infrastructureSettings.Elk5Enabled)
             {
                 settings.BasicAuthentication(_infrastructureSettings.ElasticUsername, _infrastructureSettings.ElasticPassword);
             }

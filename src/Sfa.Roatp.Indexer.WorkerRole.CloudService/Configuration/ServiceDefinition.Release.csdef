@@ -4,6 +4,8 @@
     <ConfigurationSettings>
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
       <Setting name="FeatureToggle.EventsApiFeature" />
+      <Setting name="FeatureToggle.Elk5Feature" />
+      <Setting name="FeatureToggle.IgnoreSslCertificateFeature" />
       <Setting name="WorkerRole.RunFrequencySeconds"/>
       <Setting name="WorkerRole.PauseAfterIndexing" />
       <Setting name="WorkerRole.EnvironmentName" />
