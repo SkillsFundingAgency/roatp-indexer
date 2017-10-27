@@ -10,6 +10,8 @@
       <Setting name="ElasticSearch.IndexShards" />
       <Setting name="ElasticSearch.IndexReplicas" />
       <Setting name="ElasticSearch.ServerUrls" />
+      <Setting name="ElasticSearch.Username" />
+      <Setting name="ElasticSearch.Password" />
       <Setting name="EventsApi.BaseUrl" />
       <Setting name="EventsApi.ClientToken" />
       <Setting name="Vsts.RoatpUrlFormat" />

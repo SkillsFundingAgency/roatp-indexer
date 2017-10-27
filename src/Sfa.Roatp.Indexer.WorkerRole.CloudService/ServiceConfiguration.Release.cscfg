@@ -11,6 +11,8 @@
       <Setting name="ElasticSearch.IndexShards" value="1" />
       <Setting name="ElasticSearch.IndexReplicas" value="0" />
       <Setting name="ElasticSearch.ServerUrls" value="__ElasticSearch.ServerUrls__" />
+      <Setting name="ElasticSearch.Username" value="__ElasticSearch.Username__" />
+      <Setting name="ElasticSearch.Password" value="__ElasticSearch.Password__" />
       <Setting name="EventsApi.BaseUrl" value="__EventsApi.BaseUrl__" />
       <Setting name="EventsApi.ClientToken" value="__EventsApi.ClientToken__" />
       <Setting name="Vsts.RoatpUrlFormat" value="__Vsts.RoatpUrl__" />
