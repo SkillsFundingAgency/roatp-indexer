@@ -1,4 +1,5 @@
-﻿using System.Configuration;
+﻿using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using Sfa.Roatp.Indexer.Core.Settings;
 
@@ -20,7 +21,7 @@ namespace Sfa.Roatp.Indexer.Infrastructure.Settings
         private string[] GetSetting(string configName)
         {
             var str = _settings.GetSetting(configName);
-            return !string.IsNullOrEmpty(str) ? str.Split('|') : new[] { string.Empty };
+            return !string.IsNullOrEmpty(str) ? str.Split('|').Select(element => element.Trim()).ToArray() : new[] {string.Empty};
         }
     }
 }

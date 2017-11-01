@@ -74,6 +74,8 @@
     <Compile Include="ApplicationServices\RoatpProvidersXlsxServiceTests.cs" />
     <Compile Include="Core\Models\RoatpProviderDocumentTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Settings\ElasticsearchSettingsTests.cs" />
+    <Compile Include="Settings\InfrastructureSettingsTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -87,6 +89,10 @@
     <ProjectReference Include="..\Sfa.Roatp.Indexer.Core\Sfa.Roatp.Indexer.Core.csproj">
       <Project>{608FB2C4-CF48-44CF-806C-BCEA20CACC9B}</Project>
       <Name>Sfa.Roatp.Indexer.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Sfa.Roatp.Indexer.Infrastructure\Sfa.Roatp.Indexer.Infrastructure.csproj">
+      <Project>{42957F05-E32C-478E-8554-E2B11E2FFF5B}</Project>
+      <Name>Sfa.Roatp.Indexer.Infrastructure</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>
