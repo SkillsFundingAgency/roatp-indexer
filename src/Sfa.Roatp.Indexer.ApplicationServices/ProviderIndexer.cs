@@ -41,7 +41,7 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
         {
             var oldProviders = _indexMaintainer.LoadRoatpProvidersFromAlias().ToList();
 
-            if (roatpProviders.Count() != oldProviders.Count())
+            if (roatpProviders.Count != oldProviders.Count)
             {
                 return true;
             }
@@ -144,9 +144,9 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
             return _providerDataService.GetRoatpData();
         }
 
-        public void IndexEntries(string indexName, IEnumerable<RoatpProvider> roatpProviders)
+        public void IndexEntries(string indexName, List<RoatpProvider> roatpProviders)
         {
-            _log.Debug("Indexing " + roatpProviders.Count() + " RoATP providers");
+            _log.Debug("Indexing " + roatpProviders.Count + " RoATP providers");
             _indexMaintainer.IndexRoatpProviders(indexName, roatpProviders.ToList());
         }
 
