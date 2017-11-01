@@ -147,7 +147,7 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
         public void IndexEntries(string indexName, List<RoatpProvider> roatpProviders)
         {
             _log.Debug("Indexing " + roatpProviders.Count + " RoATP providers");
-            _indexMaintainer.IndexRoatpProviders(indexName, roatpProviders.ToList());
+            _indexMaintainer.IndexRoatpProviders(indexName, roatpProviders);
         }
 
         public IEnumerable<RoatpProviderDocument> IdentifyCreations(string newIndexName)
