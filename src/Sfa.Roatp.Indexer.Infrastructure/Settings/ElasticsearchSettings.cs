@@ -1,4 +1,4 @@
-﻿using System.Configuration;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Sfa.Roatp.Indexer.Core.Settings;
 
@@ -17,10 +17,10 @@ namespace Sfa.Roatp.Indexer.Infrastructure.Settings
 
         public string RoatpProviderIndexReplicas => GetSetting("ElasticSearch.IndexReplicas").FirstOrDefault();
 
-        private string[] GetSetting(string configName)
+        private IEnumerable<string> GetSetting(string configName)
         {
             var str = _settings.GetSetting(configName);
-            return !string.IsNullOrEmpty(str) ? str.Split('|') : new[] { string.Empty };
+            return !string.IsNullOrEmpty(str) ? str.Split('|').Select(element => element.Trim()) : new List<string> {string.Empty};
         }
     }
 }

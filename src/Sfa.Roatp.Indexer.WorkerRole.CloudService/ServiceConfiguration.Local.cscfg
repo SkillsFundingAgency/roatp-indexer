@@ -11,6 +11,8 @@
       <Setting name="ElasticSearch.IndexShards" value="1" />
       <Setting name="ElasticSearch.IndexReplicas" value="0" />
       <Setting name="ElasticSearch.ServerUrls" value="http://127.0.0.1:9200,http://192.168.99.100:9200,http://docker.local:9200" />
+      <Setting name="ElasticSearch.Username" value="" />
+      <Setting name="ElasticSearch.Password" value="" />
       <Setting name="EventsApi.BaseUrl" value="" />
       <Setting name="EventsApi.ClientToken" value="" />
       <Setting name="Vsts.RoatpUrlFormat" value="" />
@@ -18,6 +20,8 @@
       <Setting name="GitPassword" value="" />
       <Setting name="Logging.RedisConnectionString" value="" />
       <Setting name="StatusCakeUrl" value="" />
+      <Setting name="FeatureToggle.Elk5Feature" value="true" />
+      <Setting name="FeatureToggle.IgnoreSslCertificateFeature" value="true" />
     </ConfigurationSettings>
   </Role>
 </ServiceConfiguration>

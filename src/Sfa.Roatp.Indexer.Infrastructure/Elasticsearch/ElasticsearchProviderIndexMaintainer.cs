@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Nest;
@@ -14,6 +15,7 @@ namespace Sfa.Roatp.Indexer.Infrastructure.Elasticsearch
 {
     public sealed class ElasticsearchProviderIndexMaintainer : ElasticsearchIndexMaintainerBase, IMaintainProviderIndex
     {
+        private readonly IElasticsearchCustomClient _elasticsearchClient;
         private readonly IIndexSettings<IMaintainProviderIndex> _settings;
         private readonly ILog _log;
         private readonly IElasticsearchConfiguration _elasticsearchConfiguration;
@@ -26,6 +28,7 @@ namespace Sfa.Roatp.Indexer.Infrastructure.Elasticsearch
             IElasticsearchConfiguration elasticsearchConfiguration)
             : base(elasticsearchClient, elasticsearchRoatpDocumentMapper, log, "RoatpProvider")
         {
+            _elasticsearchClient = elasticsearchClient;
             _settings = settings;
             _log = log;
             _elasticsearchConfiguration = elasticsearchConfiguration;
@@ -48,33 +51,11 @@ namespace Sfa.Roatp.Indexer.Infrastructure.Elasticsearch
             }
         }
 
-        public async Task IndexEntries(string indexName, IEnumerable<RoatpProvider> entries)
+        public void IndexRoatpProviders(string indexName, IEnumerable<RoatpProvider> indexEntries)
         {
-            var bulkRoatpProviderTasks = new List<Task<IBulkResponse>>();
+            var documents = indexEntries.Select(roatpProvider => ElasticsearchRoatpDocumentMapper.CreateRoatpProviderDocument(roatpProvider)).ToList();
 
-            bulkRoatpProviderTasks.AddRange(IndexRoatpProviders(indexName, entries));
-
-            LogResponse(await Task.WhenAll(bulkRoatpProviderTasks), "RoatpProviderDocument");
-        }
-
-        public  List<Task<IBulkResponse>> IndexRoatpProviders(string indexName, IEnumerable<RoatpProvider> indexEntries)
-        {
-            var bulkProviderLocation = new BulkProviderClient(indexName, Client);
-            try
-            {
-                foreach (var provider in indexEntries)
-                {
-                    var mappedProvider = ElasticsearchRoatpDocumentMapper.CreateRoatpProviderDocument(provider);
-                    bulkProviderLocation.Create<RoatpProviderDocument>(c => c.Document(mappedProvider));
-                }
-            }
-            catch (Exception ex)
-            {
-                _log.Error(ex, "Something failed indexing roatp provider documents:" + ex.Message);
-                throw;
-            }
-
-            return bulkProviderLocation.GetTasks();
+            _elasticsearchClient.BulkAll(documents, indexName);
         }
 
         public IEnumerable<RoatpProviderDocument> LoadRoatpProvidersFromAlias()

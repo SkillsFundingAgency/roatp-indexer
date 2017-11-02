@@ -11,6 +11,8 @@
       <Setting name="ElasticSearch.IndexShards" value="1" />
       <Setting name="ElasticSearch.IndexReplicas" value="0" />
       <Setting name="ElasticSearch.ServerUrls" value="__ElasticSearch.ServerUrls__" />
+      <Setting name="ElasticSearch.Username" value="__ElasticSearch.Username__" />
+      <Setting name="ElasticSearch.Password" value="__ElasticSearch.Password__" />
       <Setting name="EventsApi.BaseUrl" value="__EventsApi.BaseUrl__" />
       <Setting name="EventsApi.ClientToken" value="__EventsApi.ClientToken__" />
       <Setting name="Vsts.RoatpUrlFormat" value="__Vsts.RoatpUrl__" />
@@ -18,6 +20,8 @@
       <Setting name="GitPassword" value="__VstsGitPassword__" />
       <Setting name="Logging.RedisConnectionString" value="__Logging.RedisConnectionString__" />
       <Setting name="StatusCakeUrl" value="__StatusCakeUrl__" />
+      <Setting name="FeatureToggle.Elk5Feature" value="__FeatureToggle.Elk5Feature__" />
+      <Setting name="FeatureToggle.IgnoreSslCertificateFeature" value="__FeatureToggle.IgnoreSslCertificateFeature__" />
     </ConfigurationSettings>
   </Role>
 </ServiceConfiguration>

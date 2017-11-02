@@ -34,7 +34,7 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
             _name = IndexTypeName;
         }
 
-        public async Task CheckRoatpAndCreateIndexAndUpdateAlias(DateTime scheduledRefreshDateTime)
+        public void CheckRoatpAndCreateIndexAndUpdateAlias(DateTime scheduledRefreshDateTime)
         {
 
             Stopwatch stopwatch = Stopwatch.StartNew();
@@ -62,7 +62,7 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
 
                     try
                     {
-                        await _indexerHelper.IndexEntries(newIndexName, providers).ConfigureAwait(false);
+                        _indexerHelper.IndexEntries(newIndexName, providers);
 
                         CheckIfIndexHasBeenCreated(newIndexName);
 

@@ -8,7 +8,7 @@ namespace Sfa.Roatp.Indexer.Core.Services
     {
         IEnumerable<RoatpProvider> LoadEntries();
 
-        Task IndexEntries(string indexName, IEnumerable<RoatpProvider> roatpProviders);
+        void IndexEntries(string indexName, List<RoatpProvider> roatpProviders);
 
         bool IsIndexCorrectlyCreated(string indexName);
 

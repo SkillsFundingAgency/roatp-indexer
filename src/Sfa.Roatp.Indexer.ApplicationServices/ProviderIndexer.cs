@@ -41,7 +41,7 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
         {
             var oldProviders = _indexMaintainer.LoadRoatpProvidersFromAlias().ToList();
 
-            if (roatpProviders.Count() != oldProviders.Count())
+            if (roatpProviders.Count != oldProviders.Count)
             {
                 return true;
             }
@@ -144,15 +144,10 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
             return _providerDataService.GetRoatpData();
         }
 
-        public async Task IndexEntries(string indexName, IEnumerable<RoatpProvider> roatpProviders)
+        public void IndexEntries(string indexName, List<RoatpProvider> roatpProviders)
         {
-            var bulkApiProviderTasks = new List<Task<IBulkResponse>>();
-            roatpProviders = roatpProviders.ToList();
-
-            _log.Debug("Indexing " + roatpProviders.Count() + " RoATP providers");
-            bulkApiProviderTasks.AddRange(_indexMaintainer.IndexRoatpProviders(indexName, roatpProviders));
-
-            _indexMaintainer.LogResponse(await Task.WhenAll(bulkApiProviderTasks), "RoatpProviderDocument");
+            _log.Debug("Indexing " + roatpProviders.Count + " RoATP providers");
+            _indexMaintainer.IndexRoatpProviders(indexName, roatpProviders);
         }
 
         public IEnumerable<RoatpProviderDocument> IdentifyCreations(string newIndexName)

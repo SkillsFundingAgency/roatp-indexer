@@ -16,12 +16,7 @@ namespace Sfa.Roatp.Indexer.WorkerRole
 
         public void Run()
         {
-            var tasks = new List<Task>
-            {
-                _indexerService.CheckRoatpAndCreateIndexAndUpdateAlias(DateTime.Now)
-            };
-
-            Task.WaitAll(tasks.ToArray());
+            _indexerService.CheckRoatpAndCreateIndexAndUpdateAlias(DateTime.Now);
         }
     }
 }

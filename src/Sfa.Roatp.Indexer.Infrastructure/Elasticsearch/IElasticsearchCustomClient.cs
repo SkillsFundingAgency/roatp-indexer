@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Nest;
+using Sfa.Roatp.Indexer.Core.Models;
 
 namespace Sfa.Roatp.Indexer.Infrastructure.Elasticsearch
 {
@@ -35,5 +36,6 @@ namespace Sfa.Roatp.Indexer.Infrastructure.Elasticsearch
         ICreateIndexResponse CreateIndex(IndexName index, Func<CreateIndexDescriptor, ICreateIndexRequest> selector = null, [CallerMemberName] string callerName = "");
 
         Task<IBulkResponse> BulkAsync(IBulkRequest request, [CallerMemberName] string callerName = "");
+        void BulkAll(List<RoatpProviderDocument> documents, string indexName);
     }
 }
