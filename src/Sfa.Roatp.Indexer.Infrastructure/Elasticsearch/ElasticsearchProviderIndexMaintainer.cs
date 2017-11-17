@@ -43,7 +43,12 @@ namespace Sfa.Roatp.Indexer.Infrastructure.Elasticsearch
                         .NumberOfShards(_elasticsearchConfiguration.RoatpProviderIndexShards())
                         .NumberOfReplicas(_elasticsearchConfiguration.RoatpProviderIndexReplicas()))
                     .Mappings(ms => ms
-                        .Map<RoatpProviderDocument>(m => m.AutoMap())));
+                        .Map<RoatpProviderDocument>(m => m
+                            .AutoMap()
+                            .Properties(p => p
+                                .Text(t => t
+                                    .Name(n => n.Ukprn).Fielddata()))
+                        ) ));
 
             if (response.ApiCall.HttpStatusCode != (int)HttpStatusCode.OK)
             {
