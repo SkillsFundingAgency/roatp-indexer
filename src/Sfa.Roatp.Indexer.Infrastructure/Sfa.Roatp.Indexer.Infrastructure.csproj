@@ -35,12 +35,12 @@
       <HintPath>..\packages\Elasticsearch.Net.5.6.0\lib\net46\Elasticsearch.Net.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.ApplicationInsights, Version=2.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.ApplicationInsights.2.2.0\lib\net45\Microsoft.ApplicationInsights.dll</HintPath>
+    <Reference Include="Microsoft.ApplicationInsights, Version=2.4.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.2.4.0\lib\net46\Microsoft.ApplicationInsights.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.ApplicationInsights.NLogTarget, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.ApplicationInsights.NLogTarget.2.1.0\lib\net45\Microsoft.ApplicationInsights.NLogTarget.dll</HintPath>
+    <Reference Include="Microsoft.ApplicationInsights.NLogTarget, Version=2.4.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.NLogTarget.2.4.1\lib\net45\Microsoft.ApplicationInsights.NLogTarget.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Azure.KeyVault.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -80,7 +80,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
-      <HintPath>..\packages\NLog.4.3.7\lib\net45\NLog.dll</HintPath>
+      <HintPath>..\packages\NLog.4.3.8\lib\net45\NLog.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="NLog.Targets.ElasticSearch, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -107,8 +107,8 @@
       <HintPath>..\packages\SFA.DAS.NLog.Targets.Redis.1.0.0.26805\lib\net45\SFA.DAS.NLog.Targets.Redis.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="StackExchange.Redis, Version=1.1.608.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\StackExchange.Redis.1.1.608\lib\net45\StackExchange.Redis.dll</HintPath>
+    <Reference Include="StackExchange.Redis, Version=1.2.6.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\StackExchange.Redis.1.2.6\lib\net46\StackExchange.Redis.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="StructureMap, Version=4.4.2.472, Culture=neutral, processorArchitecture=MSIL">
@@ -118,6 +118,10 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Diagnostics.DiagnosticSource, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Diagnostics.DiagnosticSource.4.4.0\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.IO.Compression" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
@@ -156,55 +160,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="config\elasticsearch.yml" />
-    <None Include="config\logging.yml" />
-    <None Include="lib\sigar\libsigar-amd64-freebsd-6.so" />
-    <None Include="lib\sigar\libsigar-amd64-linux.so" />
-    <None Include="lib\sigar\libsigar-amd64-solaris.so" />
-    <None Include="lib\sigar\libsigar-ia64-linux.so" />
-    <None Include="lib\sigar\libsigar-sparc-solaris.so" />
-    <None Include="lib\sigar\libsigar-sparc64-solaris.so" />
-    <None Include="lib\sigar\libsigar-universal-macosx.dylib" />
-    <None Include="lib\sigar\libsigar-universal64-macosx.dylib" />
-    <None Include="lib\sigar\libsigar-x86-freebsd-5.so" />
-    <None Include="lib\sigar\libsigar-x86-freebsd-6.so" />
-    <None Include="lib\sigar\libsigar-x86-linux.so" />
-    <None Include="lib\sigar\libsigar-x86-solaris.so" />
-    <None Include="lib\sigar\sigar-x86-winnt.lib" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
-    <None Include="README.textile" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="lib\antlr-runtime-3.5.jar" />
-    <Content Include="lib\asm-4.1.jar" />
-    <Content Include="lib\asm-commons-4.1.jar" />
-    <Content Include="lib\elasticsearch-1.4.2.jar" />
-    <Content Include="lib\groovy-all-2.3.2.jar" />
-    <Content Include="lib\jna-4.1.0.jar" />
-    <Content Include="lib\jts-1.13.jar" />
-    <Content Include="lib\log4j-1.2.17.jar" />
-    <Content Include="lib\lucene-analyzers-common-4.10.2.jar" />
-    <Content Include="lib\lucene-core-4.10.2.jar" />
-    <Content Include="lib\lucene-expressions-4.10.2.jar" />
-    <Content Include="lib\lucene-grouping-4.10.2.jar" />
-    <Content Include="lib\lucene-highlighter-4.10.2.jar" />
-    <Content Include="lib\lucene-join-4.10.2.jar" />
-    <Content Include="lib\lucene-memory-4.10.2.jar" />
-    <Content Include="lib\lucene-misc-4.10.2.jar" />
-    <Content Include="lib\lucene-queries-4.10.2.jar" />
-    <Content Include="lib\lucene-queryparser-4.10.2.jar" />
-    <Content Include="lib\lucene-sandbox-4.10.2.jar" />
-    <Content Include="lib\lucene-spatial-4.10.2.jar" />
-    <Content Include="lib\lucene-suggest-4.10.2.jar" />
-    <Content Include="lib\sigar\sigar-1.6.4.jar" />
-    <Content Include="lib\sigar\sigar-amd64-winnt.dll" />
-    <Content Include="lib\sigar\sigar-x86-winnt.dll" />
-    <Content Include="lib\spatial4j-0.4.1.jar" />
-    <Content Include="LICENSE.txt" />
-    <Content Include="NOTICE.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Sfa.Roatp.Indexer.ApplicationServices\Sfa.Roatp.Indexer.ApplicationServices.csproj">
