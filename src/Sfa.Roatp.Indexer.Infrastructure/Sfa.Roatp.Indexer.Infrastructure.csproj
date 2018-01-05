@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Sfa.Roatp.Indexer.Infrastructure</RootNamespace>
     <AssemblyName>Sfa.Roatp.Indexer.Infrastructure</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -31,7 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Elasticsearch.Net, Version=5.0.0.0, Culture=neutral, PublicKeyToken=96c599bbe3e70f5d, processorArchitecture=MSIL">
-      <HintPath>..\packages\Elasticsearch.Net.5.5.0\lib\net45\Elasticsearch.Net.dll</HintPath>
+      <HintPath>..\packages\Elasticsearch.Net.5.6.0\lib\net46\Elasticsearch.Net.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.ApplicationInsights, Version=2.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -71,7 +72,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Nest, Version=5.0.0.0, Culture=neutral, PublicKeyToken=96c599bbe3e70f5d, processorArchitecture=MSIL">
-      <HintPath>..\packages\NEST.5.5.0\lib\net45\Nest.dll</HintPath>
+      <HintPath>..\packages\NEST.5.6.0\lib\net46\Nest.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -155,12 +156,56 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="config\elasticsearch.yml" />
+    <None Include="config\logging.yml" />
+    <None Include="lib\sigar\libsigar-amd64-freebsd-6.so" />
+    <None Include="lib\sigar\libsigar-amd64-linux.so" />
+    <None Include="lib\sigar\libsigar-amd64-solaris.so" />
+    <None Include="lib\sigar\libsigar-ia64-linux.so" />
+    <None Include="lib\sigar\libsigar-sparc-solaris.so" />
+    <None Include="lib\sigar\libsigar-sparc64-solaris.so" />
+    <None Include="lib\sigar\libsigar-universal-macosx.dylib" />
+    <None Include="lib\sigar\libsigar-universal64-macosx.dylib" />
+    <None Include="lib\sigar\libsigar-x86-freebsd-5.so" />
+    <None Include="lib\sigar\libsigar-x86-freebsd-6.so" />
+    <None Include="lib\sigar\libsigar-x86-linux.so" />
+    <None Include="lib\sigar\libsigar-x86-solaris.so" />
+    <None Include="lib\sigar\sigar-x86-winnt.lib" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
+    <None Include="README.textile" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="lib\antlr-runtime-3.5.jar" />
+    <Content Include="lib\asm-4.1.jar" />
+    <Content Include="lib\asm-commons-4.1.jar" />
+    <Content Include="lib\elasticsearch-1.4.2.jar" />
+    <Content Include="lib\groovy-all-2.3.2.jar" />
+    <Content Include="lib\jna-4.1.0.jar" />
+    <Content Include="lib\jts-1.13.jar" />
+    <Content Include="lib\log4j-1.2.17.jar" />
+    <Content Include="lib\lucene-analyzers-common-4.10.2.jar" />
+    <Content Include="lib\lucene-core-4.10.2.jar" />
+    <Content Include="lib\lucene-expressions-4.10.2.jar" />
+    <Content Include="lib\lucene-grouping-4.10.2.jar" />
+    <Content Include="lib\lucene-highlighter-4.10.2.jar" />
+    <Content Include="lib\lucene-join-4.10.2.jar" />
+    <Content Include="lib\lucene-memory-4.10.2.jar" />
+    <Content Include="lib\lucene-misc-4.10.2.jar" />
+    <Content Include="lib\lucene-queries-4.10.2.jar" />
+    <Content Include="lib\lucene-queryparser-4.10.2.jar" />
+    <Content Include="lib\lucene-sandbox-4.10.2.jar" />
+    <Content Include="lib\lucene-spatial-4.10.2.jar" />
+    <Content Include="lib\lucene-suggest-4.10.2.jar" />
+    <Content Include="lib\sigar\sigar-1.6.4.jar" />
+    <Content Include="lib\sigar\sigar-amd64-winnt.dll" />
+    <Content Include="lib\sigar\sigar-x86-winnt.dll" />
+    <Content Include="lib\spatial4j-0.4.1.jar" />
+    <Content Include="LICENSE.txt" />
+    <Content Include="NOTICE.txt" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Sfa.Roatp.Indexer.ApplicationServices\Sfa.Roatp.Indexer.ApplicationServices.csproj">
       <Project>{524ea918-a328-4980-a121-2769b7d3a286}</Project>
