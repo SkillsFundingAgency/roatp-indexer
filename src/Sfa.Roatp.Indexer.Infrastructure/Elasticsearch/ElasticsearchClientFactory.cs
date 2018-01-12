@@ -43,7 +43,6 @@ namespace Sfa.Roatp.Indexer.Infrastructure.Elasticsearch
         private void SetDefaultSettings(ConnectionSettings settings)
         {
             settings
-                .ThrowExceptions()
                 .OnRequestCompleted(r =>
             {
                 _logger.Debug(r.DebugInformation);

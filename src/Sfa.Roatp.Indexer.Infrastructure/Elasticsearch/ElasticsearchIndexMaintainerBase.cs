@@ -63,11 +63,11 @@ namespace Sfa.Roatp.Indexer.Infrastructure.Elasticsearch
             return result;
         }
 
-        public virtual bool IndexContainsDocuments(string indexName)
+        public virtual bool IndexContainsDocuments(string indexName, int documentAmount)
         {
-            var a = Client.Search<dynamic>(s => s.Index(indexName).AllTypes().From(0).Size(10).MatchAll()).Documents;
+            var documentsIntoIndex = Client.Search<dynamic>(s => s.Index(indexName).AllTypes().From(0).Size(10).MatchAll()).HitsMetaData.Total;
 
-            return a.Any();
+            return documentsIntoIndex == documentAmount;
         }
 
         public virtual bool IndexExists(string indexName)
