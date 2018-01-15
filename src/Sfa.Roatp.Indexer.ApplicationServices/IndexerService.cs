@@ -103,9 +103,9 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
             }
         }
 
-        private void CheckIfIndexHasBeenCreated(string newIndexName, int providerAmount)
+        private void CheckIfIndexHasBeenCreated(string newIndexName, int providerCount)
         {
-            if (_indexerHelper.IsIndexCorrectlyCreated(newIndexName, providerAmount))
+            if (_indexerHelper.IsIndexCorrectlyCreated(newIndexName, providerCount))
             {
                 return;
             }

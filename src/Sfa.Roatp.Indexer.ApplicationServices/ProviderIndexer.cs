@@ -124,9 +124,9 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
             return _indexMaintainer.IndexExists(indexName);
         }
 
-        public bool IsIndexCorrectlyCreated(string indexName, int documentAmount)
+        public bool IsIndexCorrectlyCreated(string indexName, int documentCount)
         {
-            return _indexMaintainer.IndexContainsDocuments(indexName, documentAmount);
+            return _indexMaintainer.IndexContainsDocuments(indexName, documentCount);
         }
 
         public void ChangeUnderlyingIndexForAlias(string newIndexName)
