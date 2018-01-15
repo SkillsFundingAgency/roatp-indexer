@@ -37,7 +37,15 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
 
         public bool HasRoatpInfoChanged(ICollection<RoatpProvider> roatpProviders)
         {
-            var oldProviders = _indexMaintainer.LoadRoatpProvidersFromAlias().ToList();
+            var oldProviders = new List<RoatpProviderDocument>();
+            try
+            {
+                oldProviders = _indexMaintainer.LoadRoatpProvidersFromAlias().ToList();
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
 
             if (roatpProviders.Count != oldProviders.Count)
             {
