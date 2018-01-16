@@ -12,7 +12,7 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
 
         void CreateIndex(string indexName);
 
-        bool IndexContainsDocuments(string indexName);
+        bool IndexContainsDocuments(string indexName, int documentCount);
 
         void CreateIndexAlias(string aliasName, string indexName);
 

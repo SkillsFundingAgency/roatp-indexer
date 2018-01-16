@@ -1,17 +1,21 @@
-﻿using Elasticsearch.Net;
+﻿using System.Linq;
+using Elasticsearch.Net;
 using Nest;
 using Sfa.Roatp.Indexer.Infrastructure.Extensions;
 using Sfa.Roatp.Indexer.Infrastructure.Settings;
+using SFA.DAS.NLog.Logger;
 
 namespace Sfa.Roatp.Indexer.Infrastructure.Elasticsearch
 {
     public class ElasticsearchClientFactory : IElasticsearchClientFactory
     {
         private readonly IInfrastructureSettings _infrastructureSettings;
+        private readonly ILog _logger;
 
-        public ElasticsearchClientFactory(IInfrastructureSettings infrastructureSettings)
+        public ElasticsearchClientFactory(IInfrastructureSettings infrastructureSettings, ILog logger)
         {
             _infrastructureSettings = infrastructureSettings;
+            _logger = logger;
         }
 
         public IElasticClient GetElasticClient()
@@ -19,7 +23,7 @@ namespace Sfa.Roatp.Indexer.Infrastructure.Elasticsearch
             if (_infrastructureSettings.IgnoreSslCertificateEnabled)
             {
                 using (var settings = new ConnectionSettings(
-                    new StaticConnectionPool(_infrastructureSettings.ElasticServerUrls),
+                    new SingleNodeConnectionPool(_infrastructureSettings.ElasticServerUrls.FirstOrDefault()),
                     new MyCertificateIgnoringHttpConnection()))
                 {
                     SetDefaultSettings(settings);
@@ -28,7 +32,7 @@ namespace Sfa.Roatp.Indexer.Infrastructure.Elasticsearch
                 }
             }
 
-            using (var settings = new ConnectionSettings(new StaticConnectionPool(_infrastructureSettings.ElasticServerUrls)))
+            using (var settings = new ConnectionSettings(new SingleNodeConnectionPool(_infrastructureSettings.ElasticServerUrls.FirstOrDefault())))
             {
                 SetDefaultSettings(settings);
 
@@ -38,6 +42,12 @@ namespace Sfa.Roatp.Indexer.Infrastructure.Elasticsearch
 
         private void SetDefaultSettings(ConnectionSettings settings)
         {
+            settings
+                .OnRequestCompleted(r =>
+            {
+                _logger.Debug(r.DebugInformation);
+            });
+
             if (_infrastructureSettings.Elk5Enabled)
             {
                 settings.BasicAuthentication(_infrastructureSettings.ElasticUsername, _infrastructureSettings.ElasticPassword);

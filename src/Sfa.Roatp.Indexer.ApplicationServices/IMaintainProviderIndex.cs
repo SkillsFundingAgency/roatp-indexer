@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Threading.Tasks;
 using Nest;
 using Sfa.Roatp.Indexer.Core.Models;
 

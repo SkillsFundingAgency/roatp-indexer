@@ -37,7 +37,15 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
 
         public bool HasRoatpInfoChanged(ICollection<RoatpProvider> roatpProviders)
         {
-            var oldProviders = _indexMaintainer.LoadRoatpProvidersFromAlias().ToList();
+            var oldProviders = new List<RoatpProviderDocument>();
+            try
+            {
+                oldProviders = _indexMaintainer.LoadRoatpProvidersFromAlias().ToList();
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
 
             if (roatpProviders.Count != oldProviders.Count)
             {
@@ -116,9 +124,9 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
             return _indexMaintainer.IndexExists(indexName);
         }
 
-        public bool IsIndexCorrectlyCreated(string indexName)
+        public bool IsIndexCorrectlyCreated(string indexName, int documentCount)
         {
-            return _indexMaintainer.IndexContainsDocuments(indexName);
+            return _indexMaintainer.IndexContainsDocuments(indexName, documentCount);
         }
 
         public void ChangeUnderlyingIndexForAlias(string newIndexName)

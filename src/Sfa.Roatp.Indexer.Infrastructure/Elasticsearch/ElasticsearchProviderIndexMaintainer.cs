@@ -90,7 +90,14 @@ namespace Sfa.Roatp.Indexer.Infrastructure.Elasticsearch
                     .From(0)
                     .MatchAll());
 
-            return result.HitsMetaData != null ? (int) result.HitsMetaData.Total : 0;
+
+            if (result.HitsMetaData!= null)
+            {
+                return (int) result.HitsMetaData.Total;
+            }
+
+            _log.Error(new ApplicationException("Elasticsearch response was null, the box is down"), "Elasticsearch box is down trying to check the RoATP index data");
+            throw new ApplicationException("Elasticsearch response was null, the box is down");
         }
     }
 }

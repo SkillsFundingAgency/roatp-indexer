@@ -25,7 +25,10 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
 
         private const string IndexTypeName = "RoATP Provider Index";
 
-        public IndexerService(IIndexSettings<T> indexSettings, IGenericIndexerHelper<T> indexerHelper, IMonitoringService monitoringService, ILog log)
+        public IndexerService(IIndexSettings<T> indexSettings, 
+            IGenericIndexerHelper<T> indexerHelper, 
+            IMonitoringService monitoringService, 
+            ILog log)
         {
             _indexSettings = indexSettings;
             _indexerHelper = indexerHelper;
@@ -64,7 +67,7 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
                     {
                         _indexerHelper.IndexEntries(newIndexName, providers);
 
-                        CheckIfIndexHasBeenCreated(newIndexName);
+                        CheckIfIndexHasBeenCreated(newIndexName, providers.Count);
 
                         var stats = _indexerHelper.SendEvents(newIndexName);
 
@@ -100,21 +103,14 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
             }
         }
 
-        private void CheckIfIndexHasBeenCreated(string newIndexName)
+        private void CheckIfIndexHasBeenCreated(string newIndexName, int providerCount)
         {
-            Thread.Sleep(TimeSpan.FromSeconds(_indexSettings.PauseAfterIndexing));
-
-            for (int i = 0; i < 3; i++)
+            if (_indexerHelper.IsIndexCorrectlyCreated(newIndexName, providerCount))
             {
-                if (_indexerHelper.IsIndexCorrectlyCreated(newIndexName))
-                {
-                    return;
-                }
-
-                Thread.Sleep(TimeSpan.FromSeconds(_indexSettings.PauseAfterIndexing));
+                return;
             }
 
-            throw new ApplicationException("The new index wasn't found after 3 checks");
+            throw new ApplicationException("The new index doesn't contain the correct amount of documents");
         }
     }
 }

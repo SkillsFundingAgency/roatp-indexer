@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net;
 using System.Reflection;
-using Microsoft.WindowsAzure.Storage.File;
 using Sfa.Das.Sas.Indexer.Infrastructure.Elasticsearch.Configuration;
 using Sfa.Roatp.Indexer.ApplicationServices;
 using Sfa.Roatp.Indexer.ApplicationServices.Events;
@@ -25,6 +25,12 @@ namespace Sfa.Roatp.Indexer.Infrastructure.DependencyResolution
             For<IElasticsearchRoatpDocumentMapper>().Use<ElasticsearchRoatpDocumentMapper>();
             For<IElasticsearchCustomClient>().Use<ElasticsearchCustomClient>();
             For<IConsumeProviderEvents>().Use<EventsApiService>();
+
+            if (Debugger.IsAttached)
+            {
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12 | SecurityProtocolType.Ssl3;
+            }
+
         }
 
         private IDictionary<string, object> GetProperties()

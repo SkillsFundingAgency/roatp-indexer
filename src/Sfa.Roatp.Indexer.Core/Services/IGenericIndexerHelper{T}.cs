@@ -10,7 +10,7 @@ namespace Sfa.Roatp.Indexer.Core.Services
 
         void IndexEntries(string indexName, List<RoatpProvider> roatpProviders);
 
-        bool IsIndexCorrectlyCreated(string indexName);
+        bool IsIndexCorrectlyCreated(string indexName, int documentCounty);
 
         bool CreateIndex(string indexName);
 
