@@ -97,7 +97,7 @@ namespace Sfa.Roatp.Indexer.Infrastructure.Elasticsearch
             }
 
             _log.Error(new ApplicationException("Elasticsearch response was null, the box is down"), "Elasticsearch box is down trying to check the RoATP index data");
-            throw new ApplicationException();
+            throw new ApplicationException("Elasticsearch response was null, the box is down");
         }
     }
 }
