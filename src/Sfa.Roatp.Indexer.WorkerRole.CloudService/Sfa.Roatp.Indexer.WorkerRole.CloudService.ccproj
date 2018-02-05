@@ -35,7 +35,8 @@
     <ServiceConfiguration Include="ServiceConfiguration.Release.cscfg" />
     <ServiceDefinition Include="ServiceDefinition.csdef" />
     <None Include="Configuration\ServiceDefinition.Release.csdef" />
-    <ServiceConfiguration Include="ServiceConfiguration.PreProd.cscfg" />
+    <None Include="ServiceConfiguration.PreProd.cscfg" />
+    <None Include="ServiceConfiguration.Prod.cscfg" />
     <ServiceConfiguration Include="ServiceConfiguration.Local.cscfg" />
     <ServiceConfiguration Include="ServiceConfiguration.Cloud.cscfg" />
   </ItemGroup>
