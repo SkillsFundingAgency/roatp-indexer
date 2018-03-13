@@ -134,5 +134,30 @@ namespace Sfa.Roatp.Indexer.UnitTests.ApplicationServices
             Assert.AreEqual(0, result.Count);
             mockMaintainer.VerifyAll();
         }
+
+        [Test]
+        public void ShouldFindModificationsForProvidersWithRepeatedUkprn()
+        {
+            // Arrange
+            var mockMaintainer = new Mock<IMaintainProviderIndex>();
+            var sut = new ProviderIndexer(null, mockMaintainer.Object, null, null, new Mock<ILog>().Object);
+
+            mockMaintainer.Setup(x => x.LoadRoatpProvidersFromAlias()).Returns(new List<RoatpProviderDocument>
+            {
+                new RoatpProviderDocument { Ukprn = "12345678", ProviderType = ProviderType.MainProvider, StartDate = DateTime.Today},
+                new RoatpProviderDocument { Ukprn = "12345678", ProviderType = ProviderType.SupportingProvider, StartDate = DateTime.Today.AddDays(-5), EndDate = DateTime.Today.AddDays(-1)}
+            });
+            mockMaintainer.Setup(x => x.LoadRoatpProvidersFromIndex(It.IsAny<string>())).Returns(new List<RoatpProviderDocument>
+            {
+                new RoatpProviderDocument { Ukprn = "12345678", ProviderType = ProviderType.SupportingProvider, StartDate = DateTime.Today.AddDays(-5), EndDate = DateTime.Today.AddDays(-2)}
+            });
+
+            // Act
+            var modifications = sut.IdentifyModifications(It.IsAny<string>()).ToList();
+
+            // Assert
+            Assert.AreEqual(1, modifications.Count);
+            mockMaintainer.VerifyAll();
+        }
     }
 }
