@@ -21,6 +21,8 @@ namespace Sfa.Roatp.Indexer.Core.Models
         [Obsolete("This value shouldn't be trusted as it should come from UKRLP")]
         public string Name { get; set; }
 
+        public bool CurrentlyNotStartingNewApprentices { get; set; }
+
         public bool IsEqual(RoatpProviderDocument oldRoatpProvider)
         {
             return Ukprn == oldRoatpProvider.Ukprn &&
@@ -30,7 +32,8 @@ namespace Sfa.Roatp.Indexer.Core.Models
                    ParentCompanyGuarantee == oldRoatpProvider.ParentCompanyGuarantee &&
                    NewOrganisationWithoutFinancialTrackRecord == oldRoatpProvider.NewOrganisationWithoutFinancialTrackRecord &&
                    StartDate == oldRoatpProvider.StartDate &&
-                   EndDate == oldRoatpProvider.EndDate;
+                   EndDate == oldRoatpProvider.EndDate &&
+                   CurrentlyNotStartingNewApprentices == oldRoatpProvider.CurrentlyNotStartingNewApprentices;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Diagnostics;
+using System.Linq;
 using Elasticsearch.Net;
 using Nest;
 using Sfa.Roatp.Indexer.Infrastructure.Extensions;
@@ -48,7 +49,7 @@ namespace Sfa.Roatp.Indexer.Infrastructure.Elasticsearch
                 _logger.Debug(r.DebugInformation);
             });
 
-            if (_infrastructureSettings.Elk5Enabled)
+            if (!Debugger.IsAttached)
             {
                 settings.BasicAuthentication(_infrastructureSettings.ElasticUsername, _infrastructureSettings.ElasticPassword);
             }

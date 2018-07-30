@@ -21,6 +21,8 @@ namespace Sfa.Roatp.Indexer.Core.Models
 
         public DateTime? EndDate { get; set; }
 
+        public bool CurrentlyNotStartingNewApprentices { get; set; }
+
         public bool Equals(RoatpProviderDocument other)
         {
             if (ReferenceEquals(null, other)) return false;
@@ -31,7 +33,8 @@ namespace Sfa.Roatp.Indexer.Core.Models
                 && ParentCompanyGuarantee == other.ParentCompanyGuarantee 
                 && NewOrganisationWithoutFinancialTrackRecord == other.NewOrganisationWithoutFinancialTrackRecord 
                 && StartDate.Equals(other.StartDate) 
-                && EndDate.Equals(other.EndDate);
+                && EndDate.Equals(other.EndDate)
+                && CurrentlyNotStartingNewApprentices == other.CurrentlyNotStartingNewApprentices;
         }
 
         public override bool Equals(object obj)
@@ -54,6 +57,7 @@ namespace Sfa.Roatp.Indexer.Core.Models
                 hashCode = (hashCode*397) ^ NewOrganisationWithoutFinancialTrackRecord.GetHashCode();
                 hashCode = (hashCode*397) ^ StartDate.GetHashCode();
                 hashCode = (hashCode*397) ^ EndDate.GetHashCode();
+                hashCode = (hashCode*397) ^ CurrentlyNotStartingNewApprentices.GetHashCode();
                 return hashCode;
             }
         }
