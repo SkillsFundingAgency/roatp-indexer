@@ -27,7 +27,8 @@ namespace Sfa.Roatp.Indexer.Infrastructure.Elasticsearch
                 EndDate = roatpProvider.EndDate,
                 NewOrganisationWithoutFinancialTrackRecord = roatpProvider.NewOrganisationWithoutFinancialTrackRecord,
                 ParentCompanyGuarantee = roatpProvider.ParentCompanyGuarantee,
-                ProviderType = roatpProvider.ProviderType
+                ProviderType = roatpProvider.ProviderType,
+                CurrentlyNotStartingNewApprentices = roatpProvider.CurrentlyNotStartingNewApprentices
             };
         }
     }
