@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using OfficeOpenXml;
+using Sfa.Roatp.Indexer.ApplicationServices.Helpers;
 using Sfa.Roatp.Indexer.ApplicationServices.Settings;
 using Sfa.Roatp.Indexer.Core.Models;
 using SFA.DAS.NLog.Logger;
@@ -24,65 +25,36 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
         private const int NotStartingNewApprenticesPosition = 9;
 
         private readonly IAppServiceSettings _appServiceSettings;
-        private readonly ILog _log;
+	    private readonly IBlobStorageHelper _blobStorageHelper;
+	    private readonly ILog _log;
 
-        public RoatpProvidersXlsxService(IAppServiceSettings appServiceSettings, ILog log)
+        public RoatpProvidersXlsxService(IAppServiceSettings appServiceSettings, IBlobStorageHelper blobStorageHelper, ILog log)
         {
             _appServiceSettings = appServiceSettings;
-            _log = log;
+	        _blobStorageHelper = blobStorageHelper;
+	        _log = log;
         }
 
         public IEnumerable<RoatpProvider> GetRoatpData()
         {
             var roatpProviders = new List<RoatpProvider>();
-            IDictionary<string, object> extras = new Dictionary<string, object>();
-            extras.Add("DependencyLogEntry.Url", _appServiceSettings.VstsRoatpUrl);
 
-            using (var client = new WebClient())
-            {
-                if (!string.IsNullOrEmpty(_appServiceSettings.GitUsername))
-                {
-                    var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes($"{_appServiceSettings.GitUsername}:{_appServiceSettings.GitPassword}"));
-                    client.Headers[HttpRequestHeader.Authorization] = $"Basic {credentials}";
-                }
+	        var container = _blobStorageHelper.GetRoatpBlobContainer();
+	        var blockBlobs = _blobStorageHelper.GetAllBlockBlobs(container);
 
-                try
-                {
-                    _log.Debug("Downloading ROATP", new Dictionary<string, object> { { "Url", _appServiceSettings.VstsRoatpUrl } });
+	        var roatpFile = blockBlobs.FirstOrDefault();
+			
+	        using (var stream = new MemoryStream())
+	        {
+		        roatpFile?.DownloadToStream(stream);
+				using (var package = new ExcelPackage(stream))
+		        {
 
-                    using (var stream = new MemoryStream(client.DownloadData(new Uri(_appServiceSettings.VstsRoatpUrl))))
-                    using (var package = new ExcelPackage(stream))
-                    {
+			        GetRoatpProviders(package, roatpProviders);
+		        }
 
-                        GetRoatpProviders(package, roatpProviders);
-                    }
-
-                    return roatpProviders.Where(roatpProviderResult => roatpProviderResult.Ukprn != string.Empty);
-                }
-                catch (WebException wex)
-                {
-                    var response = (HttpWebResponse) wex.Response;
-                    if (response != null)
-                    {
-                        extras.Add("DependencyLogEntry.ResponseCode", response.StatusCode);
-                    }
-
-                    if (response?.StatusCode == HttpStatusCode.Unauthorized)
-                    {
-                        _log.Error(wex, "Your VSTS credentials were unauthorised", extras);
-                    }
-                    else
-                    {
-                        _log.Error(wex, "Problem downloading ROATP from VSTS", extras);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    _log.Error(ex, "Problem downloading ROATP from VSTS", extras);
-                }
-            }
-
-            return null;
+		        return roatpProviders.Where(roatpProviderResult => roatpProviderResult.Ukprn != string.Empty);
+			}
         }
 
         public ProviderType GetProviderType(object providerType, string ukprn, int row)

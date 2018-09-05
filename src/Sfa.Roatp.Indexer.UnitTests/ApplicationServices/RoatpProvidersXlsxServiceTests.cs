@@ -4,6 +4,7 @@ using Sfa.Roatp.Indexer.ApplicationServices;
 using Sfa.Roatp.Indexer.Core.Models;
 using SFA.DAS.NLog.Logger;
 using System.Collections.Generic;
+using Sfa.Roatp.Indexer.ApplicationServices.Helpers;
 
 namespace Sfa.Roatp.Indexer.UnitTests.ApplicationServices
 {
@@ -24,7 +25,7 @@ namespace Sfa.Roatp.Indexer.UnitTests.ApplicationServices
         public void ShouldMatchTheProviderType(string input, ProviderType expected)
         {
             // Arrange
-            var sut = new RoatpProvidersXlsxService(null, new Mock<ILog>().Object);
+            var sut = new RoatpProvidersXlsxService(null, new Mock<IBlobStorageHelper>().Object, new Mock<ILog>().Object);
 
             // Act
             var result = sut.GetProviderType(input, null, 1);
@@ -42,7 +43,7 @@ namespace Sfa.Roatp.Indexer.UnitTests.ApplicationServices
         {
             // Arrange
             var logObject = new Mock<ILog>();
-            var sut = new RoatpProvidersXlsxService(null, logObject.Object);
+            var sut = new RoatpProvidersXlsxService(null, new Mock<IBlobStorageHelper>().Object, logObject.Object);
 
             // Act
             var result = sut.GetProviderType(input, null, 1);
