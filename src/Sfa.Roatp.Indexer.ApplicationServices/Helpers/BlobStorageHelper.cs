@@ -19,7 +19,7 @@ namespace Sfa.Roatp.Indexer.ApplicationServices.Helpers
 		
 		public CloudBlobContainer GetRoatpBlobContainer()
 		{
-			return CreateBlobContainer(_appServiceSettings.RoatpBlobContainerReference);
+			return GetBlobContainer(_appServiceSettings.RoatpBlobContainerReference);
 		}
 		
 		public IEnumerable<string> GetAllBlobs(CloudBlobContainer cloudBlobContainer)
@@ -36,7 +36,7 @@ namespace Sfa.Roatp.Indexer.ApplicationServices.Helpers
 			return (from listBlobItem in blobs where listBlobItem.GetType() == typeof(CloudBlockBlob) select listBlobItem as CloudBlockBlob).ToList();
 		}
 
-		private CloudBlobContainer CreateBlobContainer(string containerReference)
+		private CloudBlobContainer GetBlobContainer(string containerReference)
 		{
 			var storageAccount = CloudStorageAccount.Parse(_appServiceSettings.ConnectionString);
 
