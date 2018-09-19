@@ -13,6 +13,7 @@
       <Setting name="ElasticSearch.ServerUrls" value="http://127.0.0.1:9200,http://192.168.99.100:9200,http://docker.local:9200" />
       <Setting name="ElasticSearch.Username" value="" />
       <Setting name="ElasticSearch.Password" value="" />
+      <Setting name="Events.NServiceBus.ConnectionString" value="" />
       <Setting name="EventsApi.BaseUrl" value="" />
       <Setting name="EventsApi.ClientToken" value="" />
       <Setting name="Vsts.RoatpUrlFormat" value="" />

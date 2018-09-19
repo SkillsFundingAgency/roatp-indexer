@@ -18,6 +18,7 @@
       <Setting name="ElasticSearch.Username" />
       <Setting name="ElasticSearch.Password" />
 
+      <Setting name="Events.NServiceBus.ConnectionString" />
       <Setting name="EventsApi.BaseUrl" />
       <Setting name="EventsApi.ClientToken" />
 
