@@ -3,5 +3,6 @@
     public interface IWorkerRoleSettings
     {
         string WorkerRolePauseTime { get; }
+        string EventsNServiceBusConnectionString { get; }
     }
 }

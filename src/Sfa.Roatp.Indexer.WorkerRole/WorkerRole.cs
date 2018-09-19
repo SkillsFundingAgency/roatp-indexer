@@ -2,9 +2,16 @@ using System;
 using System.Net;
 using System.Threading;
 using Microsoft.WindowsAzure.ServiceRuntime;
+using NServiceBus;
+using Sfa.Roatp.Indexer.ApplicationServices.Events;
 using Sfa.Roatp.Indexer.WorkerRole.DependencyResolution;
 using Sfa.Roatp.Indexer.WorkerRole.Settings;
 using SFA.DAS.NLog.Logger;
+using SFA.DAS.NServiceBus;
+using SFA.DAS.NServiceBus.AzureServiceBus;
+using SFA.DAS.NServiceBus.NewtonsoftJsonSerializer;
+using SFA.DAS.NServiceBus.NLog;
+using SFA.DAS.NServiceBus.StructureMap;
 using StructureMap;
 
 namespace Sfa.Roatp.Indexer.WorkerRole
@@ -16,6 +23,7 @@ namespace Sfa.Roatp.Indexer.WorkerRole
         private IContainer _container;
         private ILog _logger;
         private IWorkerRoleSettings _commonSettings;
+        private IEndpointInstance _endpoint;
 
         public override void Run()
         {
@@ -45,6 +53,9 @@ namespace Sfa.Roatp.Indexer.WorkerRole
             _logger = _container.GetInstance<ILog>();
             _commonSettings = _container.GetInstance<IWorkerRoleSettings>();
 
+
+
+
             // For information on handling configuration changes
             // see the MSDN topic at http://go.microsoft.com/fwlink/?LinkId=166357.
 
@@ -65,6 +76,29 @@ namespace Sfa.Roatp.Indexer.WorkerRole
             base.OnStop();
 
             _logger.Debug("Worker role has stopped");
+        }
+
+        private void StartServiceBusEndpoint()
+        {
+            var container = _container;
+
+            var endpointConfiguration = new EndpointConfiguration("SFA.DAS.Roatp.Indexer")
+                  .UseAzureServiceBusTransport(true,() => _commonSettings.EventsNServiceBusConnectionString, r => { })
+                .UseErrorQueue()
+                .UseInstallers()
+                //.UseLicense(container.GetInstance<EmployerFinanceConfiguration>().NServiceBusLicense.HtmlDecode())
+                // .UseSqlServerPersistence(() => container.GetInstance<DbConnection>())
+                .UseNewtonsoftJsonSerializer()
+                .UseNLogFactory()
+                .UseOutbox()
+                .UseStructureMapBuilder(container);
+
+            _endpoint = Endpoint.Start(endpointConfiguration).GetAwaiter().GetResult();
+
+            container.Configure(c =>
+            {
+                c.For<IMessageSession>().Use(_endpoint);
+            });
         }
     }
 }

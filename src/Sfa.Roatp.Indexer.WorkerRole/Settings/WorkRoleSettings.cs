@@ -14,5 +14,6 @@ namespace Sfa.Roatp.Indexer.WorkerRole.Settings
 
 
         public string WorkerRolePauseTime => _settings.GetSetting("WorkerRole.RunFrequencySeconds");
+        public string EventsNServiceBusConnectionString => _settings.GetSetting("Events.NServiceBus.ConnectionString");
     }
 }
