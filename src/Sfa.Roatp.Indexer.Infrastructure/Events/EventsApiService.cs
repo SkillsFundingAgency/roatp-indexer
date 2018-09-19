@@ -1,10 +1,7 @@
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Sfa.Roatp.Indexer.ApplicationServices.Events;
 using Sfa.Roatp.Indexer.Core.Models;
-using SFA.DAS.Events.Api.Client;
-using SFA.DAS.Events.Api.Types;
-using SFA.DAS.NLog.Logger;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Sfa.Roatp.Indexer.Infrastructure.Events
 {
@@ -24,41 +21,40 @@ namespace Sfa.Roatp.Indexer.Infrastructure.Events
             _log = log;
         }
 
-        public void NewProvider(RoatpProviderDocument provider)
+        public void ProcessNewProviderEvents(RoatpProviderDocument provider)
         {
             _log.Info($"New provider", new Dictionary<string, object> { { "ukprn", provider.Ukprn } });
 
             if (_eventsApiClientConfiguration.Enabled)
             {
-                if (provider.ProviderType == ProviderType.EmployerProvider || provider.ProviderType == ProviderType.MainProvider)
+                if (provider.RequiresAgreement)
                 {
-                    var agreementEvent = new AgreementEvent {ContractType = NewRoatpProviderContractType, Event = NewRoatpProviderEvent, ProviderId = provider.Ukprn};
-                    _log.Info($"FCS Provider Event", new Dictionary<string, object> { { "Ukprn", agreementEvent.ProviderId } });
-                    Task.WaitAll(_client.CreateAgreementEvent(agreementEvent));
+                    PublishAgreementInitializedEvent(provider.Ukprn);
                 }
             }
         }
 
-        public void ChangedProvider(RoatpProviderDocument next, RoatpProviderDocument last)
+        public void ProcessChangedProviderEvents(RoatpProviderDocument next, RoatpProviderDocument last)
         {
             if (_eventsApiClientConfiguration.Enabled)
             {
-                if (next.ProviderType != last.ProviderType)
+
+                if (next.RequiresAgreement && last.RequiresAgreement == false)
                 {
-                    _log.Info($"Modified ProviderType", new Dictionary<string, object> {{"Ukprn", next.Ukprn}, {"OldValue", last.ProviderType}, {"NewValue", next.ProviderType}});
-                    if ((next.ProviderType == ProviderType.EmployerProvider || next.ProviderType == ProviderType.MainProvider) &&
-                        (last.ProviderType == ProviderType.SupportingProvider || last.ProviderType == ProviderType.Unknown))
-                    {
-                        var agreementEvent = new AgreementEvent {ContractType = NewRoatpProviderContractType, Event = NewRoatpProviderEvent, ProviderId = next.Ukprn};
-                        _log.Info($"FCS Provider Event", new Dictionary<string, object> { { "Ukprn", agreementEvent.ProviderId } });
-                        Task.WaitAll(_client.CreateAgreementEvent(agreementEvent));
-                    }
+                    _log.Info($"Modified ProviderType", new Dictionary<string, object> { { "Ukprn", next.Ukprn }, { "OldValue", last.ProviderType }, { "NewValue", next.ProviderType } });
+                    PublishAgreementInitializedEvent(next.Ukprn);
                 }
-                else
-                {
-                    _log.Info($"Modified provider", new Dictionary<string, object> { { "ukprn", next.Ukprn } });
-                }
+
+                _log.Info($"Modified provider", new Dictionary<string, object> { { "ukprn", next.Ukprn } });
+
             }
+        }
+
+        private void PublishAgreementInitializedEvent(string ukprn)
+        {
+            var agreementEvent = new AgreementEvent { ContractType = NewRoatpProviderContractType, Event = NewRoatpProviderEvent, ProviderId = ukprn };
+            _log.Info($"FCS Provider Event", new Dictionary<string, object> { { "Ukprn", agreementEvent.ProviderId } });
+            Task.WaitAll(_client.CreateAgreementEvent(agreementEvent));
         }
     }
 }
