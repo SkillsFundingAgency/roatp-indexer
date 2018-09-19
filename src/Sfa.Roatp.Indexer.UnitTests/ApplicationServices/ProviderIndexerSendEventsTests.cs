@@ -51,12 +51,12 @@ namespace Sfa.Roatp.Indexer.UnitTests.ApplicationServices
         {
 
             // Assert
-            _providerEventConsumer.Verify(v => v.NewProvider(It.Is<RoatpProviderDocument>(provider => provider.Ukprn == newproviderukprn)));
-            _providerEventConsumer.Verify(v => v.ChangedProvider(
+            _providerEventConsumer.Verify(v => v.ProcessNewProviderEvents(It.Is<RoatpProviderDocument>(provider => provider.Ukprn == newproviderukprn)));
+            _providerEventConsumer.Verify(v => v.ProcessChangedProviderEvents(
                 It.Is<RoatpProviderDocument>(p => p.Ukprn == changedproviderukprn && p.ProviderType == ProviderType.EmployerProvider), 
                 It.Is<RoatpProviderDocument>(p => p.Ukprn == changedproviderukprn && p.ProviderType == ProviderType.SupportingProvider)));
 
-            _providerEventConsumer.Verify(v => v.ChangedProvider(
+            _providerEventConsumer.Verify(v => v.ProcessChangedProviderEvents(
                 It.Is<RoatpProviderDocument>(p => p.Ukprn == removedproviderukprn && p.EndDate == enddate),
                 It.Is<RoatpProviderDocument>(p => p.Ukprn == removedproviderukprn && p.EndDate == null)));
         }
@@ -67,8 +67,8 @@ namespace Sfa.Roatp.Indexer.UnitTests.ApplicationServices
         {
 
             // Assert
-            _providerEventConsumer.Verify(v => v.NewProvider(It.IsAny<RoatpProviderDocument>()), Times.Once);
-            _providerEventConsumer.Verify(v => v.ChangedProvider(It.IsAny<RoatpProviderDocument>(), It.IsAny<RoatpProviderDocument>()), Times.Exactly(2));
+            _providerEventConsumer.Verify(v => v.ProcessNewProviderEvents(It.IsAny<RoatpProviderDocument>()), Times.Once);
+            _providerEventConsumer.Verify(v => v.ProcessChangedProviderEvents(It.IsAny<RoatpProviderDocument>(), It.IsAny<RoatpProviderDocument>()), Times.Exactly(2));
 
         }
 
