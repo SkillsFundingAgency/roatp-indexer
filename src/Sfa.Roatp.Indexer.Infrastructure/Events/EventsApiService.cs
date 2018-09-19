@@ -2,6 +2,9 @@ using Sfa.Roatp.Indexer.ApplicationServices.Events;
 using Sfa.Roatp.Indexer.Core.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using SFA.DAS.Events.Api.Client;
+using SFA.DAS.Events.Api.Types;
+using SFA.DAS.NLog.Logger;
 
 namespace Sfa.Roatp.Indexer.Infrastructure.Events
 {
