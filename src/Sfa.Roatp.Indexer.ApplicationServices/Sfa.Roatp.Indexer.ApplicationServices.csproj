@@ -106,8 +106,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DependencyResolution\ApplicationServicesRegistry.cs" />
-    <Compile Include="Events\EventsSettings.cs" />
-    <Compile Include="Events\IEventsApiSettings.cs" />
+    <Compile Include="Settings\EventsSettings.cs" />
+    <Compile Include="Settings\IEventsSettings.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Events\IConsumeProviderEvents.cs" />
     <Compile Include="IElasticsearchMapper.cs" />
