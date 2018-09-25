@@ -4,16 +4,17 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.WindowsAzure.ServiceRuntime;
 using NServiceBus;
+using NServiceBus.Logging;
 using Sfa.Roatp.Indexer.ApplicationServices.Events;
 using Sfa.Roatp.Indexer.WorkerRole.DependencyResolution;
 using Sfa.Roatp.Indexer.WorkerRole.Settings;
-using SFA.DAS.NLog.Logger;
 using SFA.DAS.NServiceBus;
 using SFA.DAS.NServiceBus.AzureServiceBus;
 using SFA.DAS.NServiceBus.NewtonsoftJsonSerializer;
 using SFA.DAS.NServiceBus.NLog;
 using SFA.DAS.NServiceBus.StructureMap;
 using StructureMap;
+using ILog = SFA.DAS.NLog.Logger.ILog;
 
 namespace Sfa.Roatp.Indexer.WorkerRole
 {
@@ -90,6 +91,36 @@ namespace Sfa.Roatp.Indexer.WorkerRole
                 .UseNewtonsoftJsonSerializer()
                 .UseNLogFactory()
                 .UseStructureMapBuilder(_container);
+
+
+            //TODO: move to the nservicebus shared package
+            endpointConfiguration.DefineCriticalErrorAction(
+                onCriticalError: context =>
+                {
+                    if (Environment.UserInteractive)
+                    {
+                        // so that user can see on their screen the problem
+                        Thread.Sleep(10000);
+                    }
+
+                    var message = $"Critical error encountered:\n{context.Error}\nNServiceBus is shutting down.";
+                    _logger.Fatal(context.Exception,message);
+                    Environment.FailFast(message, context.Exception);
+                    return Task.CompletedTask;
+                });
+
+            //TODO: move to the nservicebus shared package
+            if (SafeRoleEnvironment.IsAvailable)
+            {
+                var host = SafeRoleEnvironment.CurrentRoleName;
+                var instance = SafeRoleEnvironment.CurrentRoleInstanceId;
+                var displayName = $"{host}_{instance}";
+                endpointConfiguration
+                    .UniquelyIdentifyRunningInstance()
+                    .UsingNames(instance, host)
+                    .UsingCustomDisplayName(displayName);
+            }
+
 
             _endpoint = await Endpoint.Start(endpointConfiguration).ConfigureAwait(false);
 
