@@ -9,6 +9,7 @@ using Sfa.Roatp.Indexer.Infrastructure.Elasticsearch;
 using Sfa.Roatp.Indexer.Infrastructure.Elasticsearch.Configuration;
 using Sfa.Roatp.Indexer.Infrastructure.Events;
 using Sfa.Roatp.Indexer.Infrastructure.Settings;
+using SFA.DAS.Events.Api.Client;
 using SFA.DAS.NLog.Logger;
 
 namespace Sfa.Roatp.Indexer.Infrastructure.DependencyResolution
@@ -25,6 +26,7 @@ namespace Sfa.Roatp.Indexer.Infrastructure.DependencyResolution
             For<IElasticsearchRoatpDocumentMapper>().Use<ElasticsearchRoatpDocumentMapper>();
             For<IElasticsearchCustomClient>().Use<ElasticsearchCustomClient>();
             For<IConsumeProviderEvents>().Use<EventsApiService>();
+            For<IEventsApi>().Use<EventsApi>();
 
             if (Debugger.IsAttached)
             {

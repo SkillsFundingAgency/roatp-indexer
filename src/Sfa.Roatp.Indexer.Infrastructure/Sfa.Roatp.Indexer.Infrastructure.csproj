@@ -198,6 +198,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Sfa.Roatp.Events\Sfa.Roatp.Events.csproj">
+      <Project>{c6a50a3b-cb6f-4a61-af0b-6fa34e47af84}</Project>
+      <Name>Sfa.Roatp.Events</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Sfa.Roatp.Indexer.ApplicationServices\Sfa.Roatp.Indexer.ApplicationServices.csproj">
       <Project>{524ea918-a328-4980-a121-2769b7d3a286}</Project>
       <Name>Sfa.Roatp.Indexer.ApplicationServices</Name>

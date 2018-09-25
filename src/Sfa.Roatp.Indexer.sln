@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2003
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{2CCA15D3-1DB8-4080-9A2C-60AF8F8CF1A2}"
 EndProject
@@ -24,6 +24,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sfa.Roatp.Indexer.Infrastructure", "Sfa.Roatp.Indexer.Infrastructure\Sfa.Roatp.Indexer.Infrastructure.csproj", "{42957F05-E32C-478E-8554-E2B11E2FFF5B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Esfa.Roatp.Xslx.IntegrationTests", "Esfa.Roatp.Xslx.IntegrationTests\Esfa.Roatp.Xslx.IntegrationTests.csproj", "{FD1130E0-684C-4586-B4F4-B51DA59FFC0B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sfa.Roatp.Events", "Sfa.Roatp.Events\Sfa.Roatp.Events.csproj", "{C6A50A3B-CB6F-4A61-AF0B-6FA34E47AF84}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -59,6 +61,10 @@ Global
 		{FD1130E0-684C-4586-B4F4-B51DA59FFC0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FD1130E0-684C-4586-B4F4-B51DA59FFC0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FD1130E0-684C-4586-B4F4-B51DA59FFC0B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C6A50A3B-CB6F-4A61-AF0B-6FA34E47AF84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6A50A3B-CB6F-4A61-AF0B-6FA34E47AF84}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6A50A3B-CB6F-4A61-AF0B-6FA34E47AF84}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6A50A3B-CB6F-4A61-AF0B-6FA34E47AF84}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -71,5 +77,9 @@ Global
 		{608FB2C4-CF48-44CF-806C-BCEA20CACC9B} = {2CCA15D3-1DB8-4080-9A2C-60AF8F8CF1A2}
 		{42957F05-E32C-478E-8554-E2B11E2FFF5B} = {8B2D4C24-488F-4A0B-B95A-7A0A41FABF3E}
 		{FD1130E0-684C-4586-B4F4-B51DA59FFC0B} = {F05ED0D6-CE7B-4CD7-A44B-08AA8580D05D}
+		{C6A50A3B-CB6F-4A61-AF0B-6FA34E47AF84} = {2CCA15D3-1DB8-4080-9A2C-60AF8F8CF1A2}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5CA497CC-04EB-46A7-86A7-713759A6EF01}
 	EndGlobalSection
 EndGlobal

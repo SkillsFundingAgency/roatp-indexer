@@ -7,6 +7,7 @@ using SFA.DAS.NLog.Logger;
 using Sfa.Roatp.Indexer.Core.Models;
 using System.Collections.Generic;
 using System;
+using NServiceBus;
 
 namespace Sfa.Roatp.Indexer.UnitTests.ApplicationServices
 {
@@ -25,6 +26,8 @@ namespace Sfa.Roatp.Indexer.UnitTests.ApplicationServices
         private readonly string removedproviderukprn = "55555555";
         private readonly string changedproviderukprn = "33333333";
         private readonly DateTime enddate = DateTime.Now.AddDays(-1);
+
+  
 
         [SetUp]
         public void TestSetup()

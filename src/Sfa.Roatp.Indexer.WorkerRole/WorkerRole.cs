@@ -1,6 +1,7 @@
 using System;
 using System.Net;
 using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.WindowsAzure.ServiceRuntime;
 using NServiceBus;
 using Sfa.Roatp.Indexer.ApplicationServices.Events;
@@ -53,7 +54,7 @@ namespace Sfa.Roatp.Indexer.WorkerRole
             _logger = _container.GetInstance<ILog>();
             _commonSettings = _container.GetInstance<IWorkerRoleSettings>();
 
-
+            StartServiceBusEndpoint().GetAwaiter().GetResult();
 
 
             // For information on handling configuration changes
@@ -72,30 +73,27 @@ namespace Sfa.Roatp.Indexer.WorkerRole
 
             this.cancellationTokenSource.Cancel();
             this.runCompleteEvent.WaitOne();
+            _endpoint.Stop().GetAwaiter().GetResult();
 
             base.OnStop();
 
             _logger.Debug("Worker role has stopped");
         }
 
-        private void StartServiceBusEndpoint()
+        private async Task StartServiceBusEndpoint()
         {
-            var container = _container;
-
-            var endpointConfiguration = new EndpointConfiguration("SFA.DAS.Roatp.Indexer")
-                  .UseAzureServiceBusTransport(true,() => _commonSettings.EventsNServiceBusConnectionString, r => { })
+            var endpointConfiguration = new EndpointConfiguration(_commonSettings.EventsNServiceBusEndpointName)
+                  .UseAzureServiceBusTransport(_commonSettings.EventsNServiceBusDevelopmentMode,() => _commonSettings.EventsNServiceBusConnectionString, r => { })
                 .UseErrorQueue()
                 .UseInstallers()
                 //.UseLicense(container.GetInstance<EmployerFinanceConfiguration>().NServiceBusLicense.HtmlDecode())
-                // .UseSqlServerPersistence(() => container.GetInstance<DbConnection>())
                 .UseNewtonsoftJsonSerializer()
                 .UseNLogFactory()
-                .UseOutbox()
-                .UseStructureMapBuilder(container);
+                .UseStructureMapBuilder(_container);
 
-            _endpoint = Endpoint.Start(endpointConfiguration).GetAwaiter().GetResult();
+            _endpoint = await Endpoint.Start(endpointConfiguration).ConfigureAwait(false);
 
-            container.Configure(c =>
+            _container.Configure(c =>
             {
                 c.For<IMessageSession>().Use(_endpoint);
             });

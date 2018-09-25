@@ -1,9 +1,10 @@
 ﻿using System;
 using Sfa.Roatp.Events.Types;
+using SFA.DAS.NServiceBus;
 
 namespace Sfa.Roatp.Events
 {
-    public class RoatpProviderMessage
+    public class RoatpProviderMessage : Event
     {
         public MessageType MessageType { get; set; }
         public string Ukprn { get; set; }
