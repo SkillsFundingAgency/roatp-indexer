@@ -85,12 +85,11 @@ namespace Sfa.Roatp.Indexer.UnitTests.Infrastructure
                 ParentCompanyGuarantee = roatpNextDocument.ParentCompanyGuarantee,
                 RequiresAgreement = roatpNextDocument.RequiresAgreement
             };
-
-           
+            
             _sut.ProcessChangedProviderEvents(roatpNextDocument, roatpLastDocument);
 
             _messageSession.PublishedMessages.Count().Should().Be(1);
-            _messageSession.PublishedMessages.FirstOrDefault().Should().BeEquivalentTo(message);
+            _messageSession.PublishedMessages.FirstOrDefault()?.Message.Should().BeEquivalentTo(message);
         }
     }
 }
