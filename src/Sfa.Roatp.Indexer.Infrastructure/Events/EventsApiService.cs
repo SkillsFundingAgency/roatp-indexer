@@ -69,7 +69,7 @@ namespace Sfa.Roatp.Indexer.Infrastructure.Events
 
         private async void PublishRoatpProviderMessage(RoatpProviderDocument doc, MessageType messageType)
         {
-            var roatpProviderMessage = new RoatpProviderMessage()
+            var roatpProviderMessage = new RoatpProviderUpdated()
             {
                 MessageType = messageType,
                 Ukprn = doc.Ukprn,

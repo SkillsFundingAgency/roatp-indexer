@@ -4,7 +4,7 @@ using SFA.DAS.NServiceBus;
 
 namespace Sfa.Roatp.Events
 {
-    public class RoatpProviderMessage : Event
+    public class RoatpProviderUpdated : Event
     {
         public MessageType MessageType { get; set; }
         public string Ukprn { get; set; }

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using Moq;
 using NServiceBus;
+using NServiceBus.Testing;
 using NUnit.Framework;
 using Sfa.Roatp.Events;
 using Sfa.Roatp.Events.Types;
@@ -25,7 +26,7 @@ namespace Sfa.Roatp.Indexer.UnitTests.Infrastructure
     {
         private Mock<IEventsSettings> _eventsApiClientConfiguration;
         private Mock<ILog> _log;
-        private Mock<IMessageSession> _eventPublisher;
+        private TestableMessageSession _messageSession;
         private EventsApiService _sut;
 
 
@@ -34,11 +35,11 @@ namespace Sfa.Roatp.Indexer.UnitTests.Infrastructure
         {
             _eventsApiClientConfiguration = new Mock<IEventsSettings>(MockBehavior.Strict);
             _log = new Mock<ILog>();
-            _eventPublisher = new Mock<IMessageSession>();
+            _messageSession = new TestableMessageSession();
             
             _eventsApiClientConfiguration.Setup(s => s.ApiEnabled).Returns(false);
 
-            _sut = new EventsApiService(_eventsApiClientConfiguration.Object,_log.Object,_eventPublisher.Object);
+            _sut = new EventsApiService(_eventsApiClientConfiguration.Object,_log.Object,_messageSession);
         }
 
         [Test]
@@ -57,7 +58,7 @@ namespace Sfa.Roatp.Indexer.UnitTests.Infrastructure
                 ProviderType = Sfa.Roatp.Indexer.Core.Models.ProviderType.MainProvider
             };
 
-            var message = new RoatpProviderMessage()
+            var message = new RoatpProviderUpdated()
             {
                 
                 MessageType = MessageType.Added,
@@ -75,10 +76,8 @@ namespace Sfa.Roatp.Indexer.UnitTests.Infrastructure
 
             _sut.ProcessNewProviderEvents(roatpDocument);
 
-            _eventPublisher.Verify(s => s.Publish(It.Is<RoatpProviderMessage>(p => p == message)));
-
-            //_eventPublisher.Events.Count().Should().Be(1);
-            //_eventPublisher.Events.FirstOrDefault().Should().BeEquivalentTo(message);
+            _messageSession.PublishedMessages.Count().Should().Be(1);
+            _messageSession.PublishedMessages.FirstOrDefault().Should().BeEquivalentTo(message);
 
         }
     }

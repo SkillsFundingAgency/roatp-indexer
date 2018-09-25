@@ -156,6 +156,7 @@
     <Compile Include="IIndexerJob.cs" />
     <Compile Include="IndexerJob.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SafeRoleEnvironment.cs" />
     <Compile Include="Settings\WorkRoleSettings.cs" />
     <Compile Include="Settings\IWorkerRoleSettings.cs" />
     <Compile Include="WorkerRole.cs" />
