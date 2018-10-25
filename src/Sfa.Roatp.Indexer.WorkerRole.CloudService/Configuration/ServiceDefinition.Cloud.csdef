@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ServiceDefinition name="Sfa.Roatp.Indexer.WorkerRole.CloudService" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceDefinition" schemaVersion="2015-04.2.6">
+  <WorkerRole name="Sfa.Roatp.Indexer.WorkerRole" vmsize="Small">
+    <ConfigurationSettings>
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
+      <Setting name="FeatureToggle.EventsApiFeature" />
+      <Setting name="WorkerRole.RunFrequencySeconds" />
+      <Setting name="WorkerRole.PauseAfterIndexing" />
+      <Setting name="WorkerRole.EnvironmentName" />
+      <Setting name="ElasticSearch.IndexShards" />
+      <Setting name="ElasticSearch.IndexReplicas" />
+      <Setting name="ElasticSearch.ServerUrls" />
+      <Setting name="ElasticSearch.Username" />
+      <Setting name="ElasticSearch.Password" />
+      <Setting name="EventsApi.BaseUrl" />
+      <Setting name="EventsApi.ClientToken" />
+      <Setting name="Vsts.RoatpUrlFormat" />
+      <Setting name="GitUsername" />
+      <Setting name="GitPassword" />
+      <Setting name="Logging.RedisConnectionString" />
+      <Setting name="StatusCakeUrl" />
+      <Setting name="FeatureToggle.Elk5Feature" />
+      <Setting name="FeatureToggle.IgnoreSslCertificateFeature" />
+    </ConfigurationSettings>
+  </WorkerRole>
+</ServiceDefinition>
