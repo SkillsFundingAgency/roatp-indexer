@@ -254,3 +254,5 @@ paket-files/
 
 # NServiceBus Local Learning Transport directory
 .learningtransport/
+/src/Tools/**/*.*
+/src/Tools/**/*
