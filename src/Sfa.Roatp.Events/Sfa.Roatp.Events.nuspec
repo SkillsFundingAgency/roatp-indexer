@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>Sfa.Roatp.Events</id>
+    <version>1.0.0</version>
+    <authors>ESFA</authors>
+    <owners>ESFA</owners>
+    <licenseUrl>https://github.com/SkillsFundingAgency/das-employerapprenticeshipsservice/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/SkillsFundingAgency/das-employerapprenticeshipsservice</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Events for Roatp</description>
+    <summary>Events for Roatp</summary>
+    <releaseNotes />
+    <dependencies>
+      <group targetFramework=".NETFramework4.62">
+		<dependency id="Newtonsoft.Json" version="11.0.1"/>
+		<dependency id="SFA.DAS.NServiceBus" version="5.0.1"/>
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="bin\Release\Sfa.Roatp.Events.dll" target="lib\net45\Sfa.Roatp.Events.dll" />
+  </files>
+</package>
