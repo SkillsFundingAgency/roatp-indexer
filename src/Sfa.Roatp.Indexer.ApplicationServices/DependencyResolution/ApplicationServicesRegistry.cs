@@ -1,4 +1,5 @@
 ﻿using Sfa.Roatp.Indexer.ApplicationServices.Events;
+using Sfa.Roatp.Indexer.ApplicationServices.Helpers;
 using Sfa.Roatp.Indexer.ApplicationServices.Monitoring;
 using Sfa.Roatp.Indexer.ApplicationServices.Settings;
 using Sfa.Roatp.Indexer.Core.Services;
@@ -10,8 +11,9 @@ namespace Sfa.Roatp.Indexer.ApplicationServices.DependencyResolution
     {
         public ApplicationServicesRegistry()
         {
+            For<IBlobStorageHelper>().Use<BlobStorageHelper>();
             For<IGetRoatpProviders>().Use<RoatpProvidersXlsxService>();
-            For<IIndexSettings<IMaintainProviderIndex>>().Use<ProviderIndexSettings>();
+			For<IIndexSettings<IMaintainProviderIndex>>().Use<ProviderIndexSettings>();
             For<IMonitoringSettings>().Use<MonitoringSettings>();
             For<IAppServiceSettings>().Use<AppServiceSettings>();
             For<IIndexerService<IMaintainProviderIndex>>().Use<IndexerService<IMaintainProviderIndex>>();

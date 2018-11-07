@@ -7,8 +7,11 @@ namespace Sfa.Roatp.Indexer.ApplicationServices.Settings
         string GitUsername { get; }
 
         string GitPassword { get; }
-
-        string VstsRoatpUrl { get; }
+		
         string EnvironmentName { get; }
+
+		string ConnectionString { get; }
+
+		string RoatpBlobContainerReference { get; }
     }
 }

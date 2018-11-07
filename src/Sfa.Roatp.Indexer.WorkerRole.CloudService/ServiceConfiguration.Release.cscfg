@@ -15,13 +15,14 @@
       <Setting name="ElasticSearch.Password" value="__ElasticSearch.Password__" />
       <Setting name="EventsApi.BaseUrl" value="__EventsApi.BaseUrl__" />
       <Setting name="EventsApi.ClientToken" value="__EventsApi.ClientToken__" />
-      <Setting name="Vsts.RoatpUrlFormat" value="__Vsts.RoatpUrl__" />
       <Setting name="GitUsername" value="__Vsts.GitUsername__" />
       <Setting name="GitPassword" value="__VstsGitPassword__" />
       <Setting name="Logging.RedisConnectionString" value="__Logging.RedisConnectionString__" />
       <Setting name="StatusCakeUrl" value="__StatusCakeUrl__" />
       <Setting name="FeatureToggle.Elk5Feature" value="__FeatureToggle.Elk5Feature__" />
       <Setting name="FeatureToggle.IgnoreSslCertificateFeature" value="__FeatureToggle.IgnoreSslCertificateFeature__" />
+      <Setting name="RoatpBlobContainerReference" value="__RoatpBlobContainerReference__" />
+      <Setting name="StorageConnectionString" value="__StorageConnectionString__" />
     </ConfigurationSettings>
   </Role>
   <NetworkConfiguration>

@@ -6,7 +6,7 @@
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="UseDevelopmentStorage=true" />
       <Setting name="FeatureToggle.EventsApiFeature" value="false" />
       <Setting name="WorkerRole.RunFrequencySeconds" value="1000" />
-      <Setting name="WorkerRole.EnvironmentName" value="local" />
+      <Setting name="WorkerRole.EnvironmentName" value="PREPROD" />
       <Setting name="WorkerRole.PauseAfterIndexing" value="10" />
       <Setting name="ElasticSearch.IndexShards" value="1" />
       <Setting name="ElasticSearch.IndexReplicas" value="0" />
@@ -15,13 +15,14 @@
       <Setting name="ElasticSearch.Password" value="" />
       <Setting name="EventsApi.BaseUrl" value="" />
       <Setting name="EventsApi.ClientToken" value="" />
-      <Setting name="Vsts.RoatpUrlFormat" value="" />
       <Setting name="GitUsername" value="" />
       <Setting name="GitPassword" value="" />
       <Setting name="Logging.RedisConnectionString" value="" />
       <Setting name="StatusCakeUrl" value="" />
       <Setting name="FeatureToggle.Elk5Feature" value="true" />
       <Setting name="FeatureToggle.IgnoreSslCertificateFeature" value="true" />
+      <Setting name="RoatpBlobContainerReference" value="roatp" />
+      <Setting name="StorageConnectionString" value="UseDevelopmentStorage=true;" />
     </ConfigurationSettings>
   </Role>
 </ServiceConfiguration>
