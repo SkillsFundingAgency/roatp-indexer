@@ -5,8 +5,8 @@
     <version>1.0.0</version>
     <authors>ESFA</authors>
     <owners>ESFA</owners>
-    <licenseUrl>https://github.com/SkillsFundingAgency/das-employerapprenticeshipsservice/blob/master/LICENSE</licenseUrl>
-    <projectUrl>https://github.com/SkillsFundingAgency/das-employerapprenticeshipsservice</projectUrl>
+    <licenseUrl>https://github.com/SkillsFundingAgency/roatp-indexer/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/SkillsFundingAgency/roatp-indexer</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Events for Roatp</description>
     <summary>Events for Roatp</summary>
