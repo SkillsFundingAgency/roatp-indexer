@@ -11,6 +11,8 @@ namespace Sfa.Roatp.Indexer.Core.Models
 
         public ProviderType ProviderType { get; set; }
 
+        public bool RequiresAgreement => ProviderType == ProviderType.EmployerProvider || ProviderType == ProviderType.MainProvider;
+
         public bool ContractedForNonLeviedEmployers { get; set; }
 
         public bool ParentCompanyGuarantee { get; set; }

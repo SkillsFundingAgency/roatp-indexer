@@ -76,7 +76,7 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
             {
                 try
                 {
-                    _providerEventConsumer.NewProvider(provider);
+                    _providerEventConsumer.ProcessNewProviderEvents(provider);
                 }
                 catch (Exception ex)
                 {
@@ -89,7 +89,7 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
             {
                 try
                 {
-                    _providerEventConsumer.ChangedProvider(provider.Item1, provider.Item2);
+                    _providerEventConsumer.ProcessChangedProviderEvents(provider.Item1, provider.Item2);
                 }
                 catch (Exception ex)
                 {

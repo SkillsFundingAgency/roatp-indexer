@@ -5,7 +5,7 @@ using SFA.DAS.Events.Api.Client.Configuration;
 
 namespace Sfa.Roatp.Indexer.ApplicationServices.Events
 {
-    public class EventsSettings : IEventsApiSettings
+    public class EventsSettings : IEventsSettings
     {
         private readonly IProvideSettings _settings;
 
@@ -14,7 +14,8 @@ namespace Sfa.Roatp.Indexer.ApplicationServices.Events
             _settings = settings;
         }
 
-        public bool Enabled => bool.Parse(_settings.GetSetting("FeatureToggle.EventsApiFeature")??"false");
+        public bool ApiEnabled => bool.Parse(_settings.GetSetting("FeatureToggle.EventsApiFeature")??"false");
+        public string ServiceBusConnectionString => _settings.GetSetting("Events.NServiceBus.ConnectionString");
 
         public string BaseUrl => _settings.GetSetting("EventsApi.BaseUrl");
 

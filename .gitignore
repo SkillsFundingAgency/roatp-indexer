@@ -251,9 +251,8 @@ paket-files/
 .idea/
 *.sln.iml
 .DS_Store
-/src/Tools/FAKE/**/*.*
+
+# NServiceBus Local Learning Transport directory
+.learningtransport/
 /src/Tools/**/*.*
-!/src/Tools/**/nuget.exe
-/src/Sfa.Roatp.Indexer.sln.DotSettings
-/src/Tools/PhantomJS/tools/phantomjs/ChangeLog
-/src/Sfa.Roatp.Indexer.sln.DotSettings
+/src/Tools/**/*
