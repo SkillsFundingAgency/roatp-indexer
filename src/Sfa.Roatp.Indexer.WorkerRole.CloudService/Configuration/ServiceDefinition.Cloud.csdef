@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <ServiceDefinition name="Sfa.Roatp.Indexer.WorkerRole.CloudService" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceDefinition" schemaVersion="2015-04.2.6">
   <WorkerRole name="Sfa.Roatp.Indexer.WorkerRole" vmsize="Small">
     <ConfigurationSettings>
@@ -17,14 +17,13 @@
       <Setting name="Events.NServiceBus.ConnectionString" />
       <Setting name="EventsApi.BaseUrl" />
       <Setting name="EventsApi.ClientToken" />
+      <Setting name="Vsts.RoatpUrlFormat" />
       <Setting name="GitUsername" />
       <Setting name="GitPassword" />
       <Setting name="Logging.RedisConnectionString" />
       <Setting name="StatusCakeUrl" />
       <Setting name="FeatureToggle.Elk5Feature" />
       <Setting name="FeatureToggle.IgnoreSslCertificateFeature" />
-      <Setting name="RoatpBlobContainerReference" />
-      <Setting name="StorageConnectionString" />
     </ConfigurationSettings>
   </WorkerRole>
 </ServiceDefinition>
