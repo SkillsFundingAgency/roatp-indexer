@@ -24,6 +24,8 @@
       <Setting name="StatusCakeUrl" />
       <Setting name="FeatureToggle.Elk5Feature" />
       <Setting name="FeatureToggle.IgnoreSslCertificateFeature" />
+      <Setting name="RoatpBlobContainerReference" />
+      <Setting name="StorageConnectionString" />
     </ConfigurationSettings>
   </WorkerRole>
 </ServiceDefinition>
