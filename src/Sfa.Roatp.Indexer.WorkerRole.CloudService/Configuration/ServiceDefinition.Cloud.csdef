@@ -17,7 +17,6 @@
       <Setting name="Events.NServiceBus.ConnectionString" />
       <Setting name="EventsApi.BaseUrl" />
       <Setting name="EventsApi.ClientToken" />
-      <Setting name="Vsts.RoatpUrlFormat" />
       <Setting name="GitUsername" />
       <Setting name="GitPassword" />
       <Setting name="Logging.RedisConnectionString" />
