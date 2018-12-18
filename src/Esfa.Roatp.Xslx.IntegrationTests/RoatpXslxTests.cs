@@ -13,10 +13,6 @@ namespace Esfa.Roatp.Xslx.IntegrationTests
     public class RoatpXslxTests
     {
         List<RoatpProvider> results;
-        IGetRoatpProviders prodSut;
-
-        private TestContext testContextInstance;
-
 
         [TestInitialize]
         public void Init()
@@ -25,18 +21,19 @@ namespace Esfa.Roatp.Xslx.IntegrationTests
             var container = IoC.Initialize();
             var sut = container.GetInstance<IGetRoatpProviders>();
 
-            using (var prodContainer = container.GetNestedContainer())
-            {
-                prodContainer.Configure(x =>
-                {
-                    x.For<IAppServiceSettings>().Use<ProdAppSettings>();
-                });
-                prodSut = prodContainer.GetInstance<IGetRoatpProviders>();
-            }
+	        using (var prodContainer = container.GetNestedContainer())
+	        {
+		        prodContainer.Configure(_ =>
+		        {
+			        _.For<IAppServiceSettings>().Use<ProdAppSettings>();
+			        _.For<IGetRoatpProviders>().Use<GetRoatpProvidersIntegrationService>();
+		        });
+		        sut = prodContainer.GetInstance<IGetRoatpProviders>();
+		        results = sut.GetRoatpData().ToList();
+			}
 
-            // Act
-            results = sut.GetRoatpData().ToList();
-        }
+			// Act
+		}
 
         [TestMethod]
         public void RoatpShouldntHaveUnknownProviders()
@@ -59,45 +56,6 @@ namespace Esfa.Roatp.Xslx.IntegrationTests
         {
             var duplicates = results.GroupBy(x => x.Ukprn).Where(g => g.Count() > 1).Select(x => x.Key).ToList();
             Assert.AreEqual(0, duplicates.Count, $"There are {duplicates.Count} duplicate ukprns [{string.Join(", ", duplicates)}]");
-        }
-
-        [TestMethod]
-        public void RoatpShouldntRemoveProviders()
-        {
-            var existing = prodSut.GetRoatpData().ToList();
-
-            // Assert
-            var missing = existing.Where(x => !results.Select(y => y.Ukprn).Contains(x.Ukprn)).ToList();
-            Assert.AreEqual(0, missing.Count, $"missing [{string.Join(", ", missing.Select(x => x.Ukprn))}]");
-        }
-
-        [TestMethod]
-        public void GetRoatpProviderCount()
-        {
-            var activeProviders = results.Where(x => x.EndDate.HasValue == false).Count();
-            this.testContextInstance.WriteLine($"{activeProviders} active roatp providers found out of {results.Count} roatp providers");
-
-            var existing = prodSut.GetRoatpData().ToList();
-            var added = results.Where(x => !existing.Select(y => y.Ukprn).Contains(x.Ukprn)).ToList();
-            this.testContextInstance.WriteLine($"{added.Count()} new roatp providers are added.");
-            this.testContextInstance.WriteLine($"{string.Join(Environment.NewLine, added.Select(x => x.Ukprn))}");
-            Assert.IsTrue(true);
-        }
-
-        /// <summary>
-        /// Gets or sets the test context which provides
-        /// information about and functionality for the current test run.
-        /// </summary>
-        public TestContext TestContext
-        {
-            get
-            {
-                return testContextInstance;
-            }
-            set
-            {
-                testContextInstance = value;
-            }
         }
     }
 }

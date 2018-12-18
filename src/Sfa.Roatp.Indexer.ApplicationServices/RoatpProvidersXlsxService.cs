@@ -23,13 +23,15 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
         private const int EndDatePosition = 8;
         private const int NotStartingNewApprenticesPosition = 9;
 
-        private readonly IAppServiceSettings _appServiceSettings;
+        protected readonly IAppServiceSettings _appServiceSettings;
         private readonly ILog _log;
+	    protected WebClient _client;
 
         public RoatpProvidersXlsxService(IAppServiceSettings appServiceSettings, ILog log)
         {
             _appServiceSettings = appServiceSettings;
             _log = log;
+			_client = new WebClient();
         }
 
         public IEnumerable<RoatpProvider> GetRoatpData()
@@ -38,48 +40,45 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
             IDictionary<string, object> extras = new Dictionary<string, object>();
             extras.Add("DependencyLogEntry.Url", _appServiceSettings.VstsRoatpUrl);
 
-            using (var client = new WebClient())
+            if (!string.IsNullOrEmpty(_appServiceSettings.GitUsername))
             {
-                if (!string.IsNullOrEmpty(_appServiceSettings.GitUsername))
+                var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes($"{_appServiceSettings.GitUsername}:{_appServiceSettings.GitPassword}"));
+                _client.Headers[HttpRequestHeader.Authorization] = $"Basic {credentials}";
+            }
+
+            try
+            {
+                _log.Debug("Downloading ROATP", new Dictionary<string, object> { { "Url", _appServiceSettings.VstsRoatpUrl } });
+
+                using (var stream = GetFileStream())
+                using (var package = new ExcelPackage(stream))
                 {
-                    var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes($"{_appServiceSettings.GitUsername}:{_appServiceSettings.GitPassword}"));
-                    client.Headers[HttpRequestHeader.Authorization] = $"Basic {credentials}";
+
+                    GetRoatpProviders(package, roatpProviders);
                 }
 
-                try
+                return roatpProviders.Where(roatpProviderResult => roatpProviderResult.Ukprn != string.Empty);
+            }
+            catch (WebException wex)
+            {
+                var response = (HttpWebResponse) wex.Response;
+                if (response != null)
                 {
-                    _log.Debug("Downloading ROATP", new Dictionary<string, object> { { "Url", _appServiceSettings.VstsRoatpUrl } });
-
-                    using (var stream = new MemoryStream(client.DownloadData(new Uri(_appServiceSettings.VstsRoatpUrl))))
-                    using (var package = new ExcelPackage(stream))
-                    {
-
-                        GetRoatpProviders(package, roatpProviders);
-                    }
-
-                    return roatpProviders.Where(roatpProviderResult => roatpProviderResult.Ukprn != string.Empty);
+                    extras.Add("DependencyLogEntry.ResponseCode", response.StatusCode);
                 }
-                catch (WebException wex)
+
+                if (response?.StatusCode == HttpStatusCode.Unauthorized)
                 {
-                    var response = (HttpWebResponse) wex.Response;
-                    if (response != null)
-                    {
-                        extras.Add("DependencyLogEntry.ResponseCode", response.StatusCode);
-                    }
-
-                    if (response?.StatusCode == HttpStatusCode.Unauthorized)
-                    {
-                        _log.Error(wex, "Your VSTS credentials were unauthorised", extras);
-                    }
-                    else
-                    {
-                        _log.Error(wex, "Problem downloading ROATP from VSTS", extras);
-                    }
+                    _log.Error(wex, "Your VSTS credentials were unauthorised", extras);
                 }
-                catch (Exception ex)
+                else
                 {
-                    _log.Error(ex, "Problem downloading ROATP from VSTS", extras);
+                    _log.Error(wex, "Problem downloading ROATP from VSTS", extras);
                 }
+            }
+            catch (Exception ex)
+            {
+                _log.Error(ex, "Problem downloading ROATP from VSTS", extras);
             }
 
             return null;
@@ -110,6 +109,11 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
             _log.Warn($"Couldn't find the provider type \"{providerType}\" in row {row}", new Dictionary<string, object> { { "UKPRN", ukprn } });
             return ProviderType.Unknown;
         }
+
+	    public virtual Stream GetFileStream()
+	    {
+		    return new MemoryStream(_client.DownloadData(new Uri(_appServiceSettings.VstsRoatpUrl)));
+	    }
 
         private void GetRoatpProviders(ExcelPackage package, List<RoatpProvider> roatpProviders)
         {
