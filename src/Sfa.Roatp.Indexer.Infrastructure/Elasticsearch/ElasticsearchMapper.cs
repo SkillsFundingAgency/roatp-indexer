@@ -25,7 +25,6 @@ namespace Sfa.Roatp.Indexer.Infrastructure.Elasticsearch
                 ContractedForNonLeviedEmployers = roatpProvider.ContractedForNonLeviedEmployers,
                 StartDate = roatpProvider.StartDate,
                 EndDate = roatpProvider.EndDate,
-                RefreshDate = roatpProvider.RefreshDate,
                 NewOrganisationWithoutFinancialTrackRecord = roatpProvider.NewOrganisationWithoutFinancialTrackRecord,
                 ParentCompanyGuarantee = roatpProvider.ParentCompanyGuarantee,
                 ProviderType = roatpProvider.ProviderType,

@@ -17,7 +17,6 @@ namespace Sfa.Roatp.Indexer.Core.Models
         public DateTime? StartDate { get; set; }
 
         public DateTime? EndDate { get; set; }
-        public DateTime? RefreshDate { get; set; }
 
         [Obsolete("This value shouldn't be trusted as it should come from UKRLP")]
         public string Name { get; set; }
@@ -34,7 +33,6 @@ namespace Sfa.Roatp.Indexer.Core.Models
                    NewOrganisationWithoutFinancialTrackRecord == oldRoatpProvider.NewOrganisationWithoutFinancialTrackRecord &&
                    StartDate == oldRoatpProvider.StartDate &&
                    EndDate == oldRoatpProvider.EndDate &&
-                   RefreshDate == oldRoatpProvider.RefreshDate &&
                    CurrentlyNotStartingNewApprentices == oldRoatpProvider.CurrentlyNotStartingNewApprentices;
         }
     }
