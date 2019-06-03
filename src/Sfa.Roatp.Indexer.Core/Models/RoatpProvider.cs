@@ -21,6 +21,7 @@ namespace Sfa.Roatp.Indexer.Core.Models
         [Obsolete("This value shouldn't be trusted as it should come from UKRLP")]
         public string Name { get; set; }
 
+
         public bool CurrentlyNotStartingNewApprentices { get; set; }
 
         public bool IsEqual(RoatpProviderDocument oldRoatpProvider)
