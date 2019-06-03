@@ -22,7 +22,6 @@ namespace Sfa.Roatp.Indexer.Core.Models
         public DateTime? StartDate { get; set; }
 
         public DateTime? EndDate { get; set; }
-        public DateTime? RefreshDate { get; set; }
 
         public bool CurrentlyNotStartingNewApprentices { get; set; }
 
