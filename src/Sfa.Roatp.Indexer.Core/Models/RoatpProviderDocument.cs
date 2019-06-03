@@ -61,7 +61,6 @@ namespace Sfa.Roatp.Indexer.Core.Models
                 hashCode = (hashCode*397) ^ NewOrganisationWithoutFinancialTrackRecord.GetHashCode();
                 hashCode = (hashCode*397) ^ StartDate.GetHashCode();
                 hashCode = (hashCode*397) ^ EndDate.GetHashCode();
-                hashCode = (hashCode * 397) ^ RefreshDate.GetHashCode();
                 hashCode = (hashCode*397) ^ CurrentlyNotStartingNewApprentices.GetHashCode();
                 return hashCode;
             }

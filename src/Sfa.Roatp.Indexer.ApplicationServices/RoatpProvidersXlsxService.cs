@@ -137,7 +137,7 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
                         StartDate = GetDateTimeValue(roatpWorkSheet.Cells[i, StartDatePosition]),
                         EndDate = GetDateTimeValue(roatpWorkSheet.Cells[i, EndDatePosition]),
                         CurrentlyNotStartingNewApprentices = GetDateTimeValue(roatpWorkSheet.Cells[i, NotStartingNewApprenticesPosition]) != null,
-                        RefreshDate = GetDateTimeValue(roatpWorkSheet.Cells[i, RefreshDatePosition]),
+                        RefreshDate = GetDateTimeValue(roatpWorkSheet.Cells[i, RefreshDatePosition])
                     };
 
                     roatpProviders.Add(roatpData);
