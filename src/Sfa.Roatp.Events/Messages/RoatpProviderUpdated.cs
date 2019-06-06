@@ -25,6 +25,7 @@ namespace Sfa.Roatp.Events
 
         public DateTime? EndDate { get; set; }
 
+        public DateTime? ApplicationDeterminedDate { get; set; }
         public bool CurrentlyNotStartingNewApprentices { get; set; }
     }
 }
