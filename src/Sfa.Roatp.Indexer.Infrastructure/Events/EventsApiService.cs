@@ -76,6 +76,7 @@ namespace Sfa.Roatp.Indexer.Infrastructure.Events
                 Name = doc.Name,
                 StartDate = doc.StartDate,
                 EndDate = doc.EndDate,
+                ApplicationDeterminedDate = doc.ApplicationDeterminedDate,
                 ProviderType = (ProviderType)(int)doc.ProviderType,
                 ContractedForNonLeviedEmployers = doc.ContractedForNonLeviedEmployers,
                 CurrentlyNotStartingNewApprentices = doc.CurrentlyNotStartingNewApprentices,

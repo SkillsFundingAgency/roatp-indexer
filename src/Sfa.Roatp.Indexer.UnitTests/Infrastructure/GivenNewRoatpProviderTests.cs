@@ -66,6 +66,7 @@ namespace Sfa.Roatp.Indexer.UnitTests.Infrastructure
                 Name = roatpDocument.Name,
                 StartDate = roatpDocument.StartDate,
                 EndDate = roatpDocument.EndDate,
+                ApplicationDeterminedDate = roatpDocument.ApplicationDeterminedDate,
                 ProviderType = (ProviderType)(int) roatpDocument.ProviderType,
                 ContractedForNonLeviedEmployers = roatpDocument.ContractedForNonLeviedEmployers,
                 CurrentlyNotStartingNewApprentices = roatpDocument.CurrentlyNotStartingNewApprentices,

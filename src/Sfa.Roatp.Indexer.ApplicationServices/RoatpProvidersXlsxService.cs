@@ -22,6 +22,7 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
         private const int StartDatePosition = 7;
         private const int EndDatePosition = 8;
         private const int NotStartingNewApprenticesPosition = 9;
+        private const int ApplicationDeterminedDatePosition = 10;
 
         protected readonly IAppServiceSettings _appServiceSettings;
         private readonly ILog _log;
@@ -135,6 +136,7 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
                         NewOrganisationWithoutFinancialTrackRecord = GetBooleanValue(roatpWorkSheet.Cells[i, NewOrganisationWithoutFinancialTrackRecordPosition]),
                         StartDate = GetDateTimeValue(roatpWorkSheet.Cells[i, StartDatePosition]),
                         EndDate = GetDateTimeValue(roatpWorkSheet.Cells[i, EndDatePosition]),
+                        ApplicationDeterminedDate = GetDateTimeValue(roatpWorkSheet.Cells[i, ApplicationDeterminedDatePosition]),
                         CurrentlyNotStartingNewApprentices = GetDateTimeValue(roatpWorkSheet.Cells[i, NotStartingNewApprenticesPosition]) != null
                     };
 
