@@ -34,6 +34,7 @@ namespace Sfa.Roatp.Indexer.Core.Models
                    NewOrganisationWithoutFinancialTrackRecord == oldRoatpProvider.NewOrganisationWithoutFinancialTrackRecord &&
                    StartDate == oldRoatpProvider.StartDate &&
                    EndDate == oldRoatpProvider.EndDate &&
+                   ApplicationDeterminedDate  == oldRoatpProvider.ApplicationDeterminedDate &&
                    CurrentlyNotStartingNewApprentices == oldRoatpProvider.CurrentlyNotStartingNewApprentices;
         }
     }
