@@ -25,6 +25,14 @@
       <Setting name="StatusCakeUrl" value="" />
       <Setting name="FeatureToggle.Elk5Feature" value="true" />
       <Setting name="FeatureToggle.IgnoreSslCertificateFeature" value="true" />
+      <Setting name="RoatpApiClientBaseUrl" value ="http://localhost:37951" />
+      <Setting name="RoatpApiAuthenticationInstance"  value ="" />
+      <Setting name="RoatpApiAuthenticationTenantId"  value =""/>
+      <Setting name="RoatpApiAuthenticationClientId"  value =""/>
+      <Setting name="RoatpApiAuthenticationClientSecret"  value =""/>
+      <Setting name="RoatpApiAuthenticationResourceId"  value =""/>
+      <Setting name="RoatpApiAuthenticationApiBaseAddress"  value ="http://localhost:37951"/>
+
     </ConfigurationSettings>
   </Role>
 </ServiceConfiguration>

@@ -25,6 +25,14 @@
       <Setting name="StatusCakeUrl" value="__StatusCakeUrl__" />
       <Setting name="FeatureToggle.Elk5Feature" value="__FeatureToggle.Elk5Feature__" />
       <Setting name="FeatureToggle.IgnoreSslCertificateFeature" value="__FeatureToggle.IgnoreSslCertificateFeature__" />
+      <Setting name="RoatpApiClientBaseUrl" value ="__RoatpApiClientBaseUrl__" />
+      <Setting name="RoatpApiAuthenticationInstance"  value ="__RoatpApiAuthenticationInstance__"/>
+      <Setting name="RoatpApiAuthenticationTenantId"  value ="__RoatpApiAuthenticationTenantId__"/>
+      <Setting name="RoatpApiAuthenticationClientId"  value ="__RoatpApiAuthenticationClientId__"/>
+      <Setting name="RoatpApiAuthenticationClientSecret"  value ="__RoatpApiAuthenticationClientSecret__"/>
+      <Setting name="RoatpApiAuthenticationResourceId"  value ="__RoatpApiAuthenticationResourceId__"/>
+      <Setting name="RoatpApiAuthenticationApiBaseAddress"  value ="__RoatpApiAuthenticationApiBaseAddress__"/>
+
     </ConfigurationSettings>
   </Role>
 </ServiceConfiguration>

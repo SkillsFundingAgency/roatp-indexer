@@ -106,6 +106,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DependencyResolution\ApplicationServicesRegistry.cs" />
+    <Compile Include="RoatpClient\IRoatpApiClient.cs" />
+    <Compile Include="RoatpClient\IRoatpMapper.cs" />
+    <Compile Include="RoatpClient\ITokenService.cs" />
+    <Compile Include="RoatpClient\RoatpApiClient.cs" />
+    <Compile Include="RoatpClient\RoatpMapper.cs" />
+    <Compile Include="RoatpClient\RoatpResult.cs" />
+    <Compile Include="RoatpClient\TokenService.cs" />
     <Compile Include="Settings\EventsSettings.cs" />
     <Compile Include="Settings\IEventsSettings.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using OfficeOpenXml;
+using Sfa.Roatp.Indexer.ApplicationServices.RoatpClient;
 using Sfa.Roatp.Indexer.ApplicationServices.Settings;
 using Sfa.Roatp.Indexer.Core.Models;
 using SFA.DAS.NLog.Logger;
@@ -25,19 +26,23 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
         private const int ApplicationDeterminedDatePosition = 10;
 
         protected readonly IAppServiceSettings _appServiceSettings;
+        protected readonly IRoatpApiClient _apiClient;
         private readonly ILog _log;
 	    protected WebClient _client;
 
-        public RoatpProvidersXlsxService(IAppServiceSettings appServiceSettings, ILog log)
+        public RoatpProvidersXlsxService(IAppServiceSettings appServiceSettings, ILog log, IRoatpApiClient apiClient)
         {
             _appServiceSettings = appServiceSettings;
             _log = log;
-			_client = new WebClient();
+            _apiClient = apiClient;
+            _client = new WebClient();
         }
 
         public IEnumerable<RoatpProvider> GetRoatpData()
         {
             var roatpProviders = new List<RoatpProvider>();
+            var roatpProviders2 = new List<RoatpProvider>();
+
             IDictionary<string, object> extras = new Dictionary<string, object>();
             extras.Add("DependencyLogEntry.Url", _appServiceSettings.VstsRoatpUrl);
 
@@ -51,14 +56,17 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
             {
                 _log.Debug("Downloading ROATP", new Dictionary<string, object> { { "Url", _appServiceSettings.VstsRoatpUrl } });
 
-                using (var stream = GetFileStream())
-                using (var package = new ExcelPackage(stream))
-                {
+                //MFCMFC
+                roatpProviders2 = _apiClient.GetRoatpSummary().Result;
+                
+                //using (var stream = GetFileStream())
+                //using (var package = new ExcelPackage(stream))
+                //{
 
-                    GetRoatpProviders(package, roatpProviders);
-                }
+                //    GetRoatpProviders(package, roatpProviders);
+                //}
 
-                return roatpProviders.Where(roatpProviderResult => roatpProviderResult.Ukprn != string.Empty);
+                return roatpProviders2.Where(roatpProviderResult => roatpProviderResult.Ukprn != string.Empty);
             }
             catch (WebException wex)
             {
