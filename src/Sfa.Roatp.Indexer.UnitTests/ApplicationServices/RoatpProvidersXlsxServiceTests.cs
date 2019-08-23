@@ -24,7 +24,7 @@ namespace Sfa.Roatp.Indexer.UnitTests.ApplicationServices
         public void ShouldMatchTheProviderType(string input, ProviderType expected)
         {
             // Arrange
-            var sut = new RoatpProvidersXlsxService(null, new Mock<ILog>().Object);
+            var sut = new RoatpProvidersXlsxService(null, new Mock<ILog>().Object,null);
 
             // Act
             var result = sut.GetProviderType(input, null, 1);
@@ -42,7 +42,7 @@ namespace Sfa.Roatp.Indexer.UnitTests.ApplicationServices
         {
             // Arrange
             var logObject = new Mock<ILog>();
-            var sut = new RoatpProvidersXlsxService(null, logObject.Object);
+            var sut = new RoatpProvidersXlsxService(null, logObject.Object,null);
 
             // Act
             var result = sut.GetProviderType(input, null, 1);
