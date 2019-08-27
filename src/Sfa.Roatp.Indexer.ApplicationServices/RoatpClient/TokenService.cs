@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using Sfa.Roatp.Indexer.ApplicationServices.Settings;
 using SFA.DAS.NLog.Logger;
@@ -41,9 +42,24 @@ namespace Sfa.Roatp.Indexer.ApplicationServices.RoatpClient
                     _logger.Debug("access token gathered");
                     return result.AccessToken;
                 }
+                catch (AggregateException agg)
+                {
+                    var sb = new StringBuilder();
+
+                    foreach (var inner in agg.InnerExceptions)
+                    {
+                        sb.AppendLine(inner.ToString());
+                    }
+
+                    _logger.Fatal(agg, $@"Fatal aggregate exception error in getting token: [{sb.ToString()}]");
+
+                    throw agg;
+                }
                 catch (Exception e)
                 {
                     _logger.Fatal(e,$@"Fatal error in getting token: [{e.Message}]");
+
+                    
                     throw e;
                 }
                
