@@ -40,10 +40,7 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
 
         public IEnumerable<RoatpProvider> GetRoatpData()
         {
-            var roatpProviders = new List<RoatpProvider>();
-            var roatpProviders2 = new List<RoatpProvider>();
-
-            IDictionary<string, object> extras = new Dictionary<string, object>();
+                IDictionary<string, object> extras = new Dictionary<string, object>();
             extras.Add("DependencyLogEntry.Url", _appServiceSettings.VstsRoatpUrl);
 
             if (!string.IsNullOrEmpty(_appServiceSettings.GitUsername))
@@ -54,19 +51,9 @@ namespace Sfa.Roatp.Indexer.ApplicationServices
 
             try
             {
-                _log.Debug("Downloading ROATP", new Dictionary<string, object> { { "Url", _appServiceSettings.VstsRoatpUrl } });
-
-                //MFCMFC
-                roatpProviders2 = _apiClient.GetRoatpSummary().Result;
-                
-                //using (var stream = GetFileStream())
-                //using (var package = new ExcelPackage(stream))
-                //{
-
-                //    GetRoatpProviders(package, roatpProviders);
-                //}
-
-                return roatpProviders2.Where(roatpProviderResult => roatpProviderResult.Ukprn != string.Empty);
+                   _log.Debug("Getting roatp data from roatp api endpoint");
+                var roatpProviders = _apiClient.GetRoatpSummary().Result;
+                return roatpProviders.Where(roatpProviderResult => roatpProviderResult.Ukprn != string.Empty);
             }
             catch (WebException wex)
             {
