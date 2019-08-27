@@ -1,15 +1,18 @@
-﻿using Microsoft.IdentityModel.Clients.ActiveDirectory;
+﻿using System;
+using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using Sfa.Roatp.Indexer.ApplicationServices.Settings;
+using SFA.DAS.NLog.Logger;
 
 namespace Sfa.Roatp.Indexer.ApplicationServices.RoatpClient
 {
     public class TokenService: ITokenService
     {
         private readonly IAppServiceSettings _settings;
-
-        public TokenService(IAppServiceSettings settings)
+        private readonly ILog _logger;
+        public TokenService(IAppServiceSettings settings, ILog logger)
         {
             _settings = settings;
+            _logger = logger;
         }
 
         public string GetToken()
@@ -27,11 +30,23 @@ namespace Sfa.Roatp.Indexer.ApplicationServices.RoatpClient
                 var instance = _settings.RoatpApiAuthenticationInstance;
 
                 var authority = $"{instance}/{tenantId}";
-                var clientCredential = new ClientCredential(clientId, appKey);
-                var context = new AuthenticationContext(authority, true);
-                var result = context.AcquireTokenAsync(resourceId, clientCredential).Result;
-
-                return result.AccessToken;
+                try
+                {
+                    _logger.Debug("Getting client credential");
+                    var clientCredential = new ClientCredential(clientId, appKey);
+                    _logger.Debug("Getting cotext");
+                    var context = new AuthenticationContext(authority, true);
+                    _logger.Debug("acquiring token");
+                    var result = context.AcquireTokenAsync(resourceId, clientCredential).Result;
+                    _logger.Debug("access token gathered");
+                    return result.AccessToken;
+                }
+                catch (Exception e)
+                {
+                    _logger.Fatal(e,$@"Fatal error in getting token: [{e.Message}]");
+                    throw e;
+                }
+               
 
             }
         }
