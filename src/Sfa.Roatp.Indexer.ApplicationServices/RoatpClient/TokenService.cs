@@ -35,9 +35,9 @@ namespace Sfa.Roatp.Indexer.ApplicationServices.RoatpClient
                 {
                     _logger.Debug("Getting client credential");
                     var clientCredential = new ClientCredential(clientId, appKey);
-                    _logger.Debug("Getting cotext");
+                    _logger.Debug($@"Getting context from authority: {authority}");
                     var context = new AuthenticationContext(authority, true);
-                    _logger.Debug("acquiring token");
+                    _logger.Debug($@"acquiring token from resource Id [{resourceId}]");
                     var result = context.AcquireTokenAsync(resourceId, clientCredential).Result;
                     _logger.Debug("access token gathered");
                     return result.AccessToken;
