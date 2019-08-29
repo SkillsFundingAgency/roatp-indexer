@@ -30,6 +30,8 @@ namespace Sfa.Roatp.Indexer.ApplicationServices.RoatpClient
                 var resourceId = _settings.RoatpApiAuthenticationResourceId;
                 var instance = _settings.RoatpApiAuthenticationInstance;
 
+                instance = instance.TrimEnd('/');
+
                 var authority = $"{instance}/{tenantId}";
                 try
                 {
