@@ -29,6 +29,13 @@
       <Setting name="GitPassword" />
 
       <Setting name="Logging.RedisConnectionString"/>
+      <Setting name="RoatpApiClientBaseUrl" />
+      <Setting name="RoatpApiAuthenticationInstance" />
+      <Setting name="RoatpApiAuthenticationTenantId" />
+      <Setting name="RoatpApiAuthenticationClientId" />
+      <Setting name="RoatpApiAuthenticationClientSecret" />
+      <Setting name="RoatpApiAuthenticationResourceId" />
+      <Setting name="RoatpApiAuthenticationApiBaseAddress" />
     </ConfigurationSettings>
   </WorkerRole>
 </ServiceDefinition>

@@ -10,5 +10,14 @@ namespace Sfa.Roatp.Indexer.ApplicationServices.Settings
 
         string VstsRoatpUrl { get; }
         string EnvironmentName { get; }
+
+        string RoatpApiClientBaseUrl { get; }
+        string RoatpApiAuthenticationInstance { get; }
+        string RoatpApiAuthenticationTenantId { get; }
+        string RoatpApiAuthenticationClientId { get; }
+        string RoatpApiAuthenticationClientSecret { get; }
+        string RoatpApiAuthenticationResourceId { get; }
+        string RoatpApiAuthenticationApiBaseAddress { get; }
+
     }
 }

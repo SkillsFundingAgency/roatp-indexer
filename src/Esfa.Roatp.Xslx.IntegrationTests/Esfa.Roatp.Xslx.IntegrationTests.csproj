@@ -113,7 +113,6 @@
   <ItemGroup>
     <Compile Include="GetRoatpProvidersIntegrationService.cs" />
     <Compile Include="ProdAppSettings.cs" />
-    <Compile Include="RoatpXslxTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
